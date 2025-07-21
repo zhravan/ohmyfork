@@ -2,6 +2,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Clock, User, Mail, X } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeHighlight from "rehype-highlight";
 
 interface NewsletterIssue {
   title: string;
@@ -85,8 +88,41 @@ export function NewsletterPreviewModal({ isOpen, onClose, issue }: NewsletterPre
                     <p className="text-base italic font-medium">{issue.description}</p>
                   </div>
                   
-                  <div className="whitespace-pre-wrap leading-relaxed text-foreground">
-                    {issue.content}
+                  <div className="prose prose-slate dark:prose-invert max-w-none">
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      rehypePlugins={[rehypeHighlight]}
+                      components={{
+                        img: ({ src, alt, ...props }) => (
+                          <img 
+                            src={src} 
+                            alt={alt} 
+                            {...props}
+                            className="max-w-full h-auto rounded-lg border border-border"
+                          />
+                        ),
+                        code: ({ children, className, ...props }) => {
+                          const match = /language-(\w+)/.exec(className || '');
+                          const isInline = !match;
+                          
+                          if (isInline) {
+                            return (
+                              <code className="bg-muted px-2 py-1 rounded text-sm font-mono" {...props}>
+                                {children}
+                              </code>
+                            );
+                          }
+                          
+                          return (
+                            <code className={className} {...props}>
+                              {children}
+                            </code>
+                          );
+                        }
+                      }}
+                    >
+                      {issue.content}
+                    </ReactMarkdown>
                   </div>
                   
                   <div className="mt-8 p-4 border border-border rounded-md bg-muted/30">

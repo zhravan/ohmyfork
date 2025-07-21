@@ -13,63 +13,65 @@ export function ReadmeSection() {
           <span className="font-mono text-sm font-medium">README.md</span>
         </div>
         
-        <div className="p-6 prose prose-sm max-w-none dark:prose-invert">
-          <h1 className="flex items-center gap-3 mb-6">
-            👋 Hi there, I'm John Doe
-            <Badge variant="secondary" className="ml-auto">Available for hire</Badge>
-          </h1>
+        <div className="p-8 prose prose-slate dark:prose-invert max-w-none">
+          <div className="flex items-start justify-between mb-8">
+            <h1 className="flex items-center gap-3 text-2xl font-bold">
+              👋 Hi there, I'm John Doe
+            </h1>
+            <Badge variant="secondary" className="px-3 py-1">Available for hire</Badge>
+          </div>
           
-          <div className="grid md:grid-cols-2 gap-6 mb-8">
+          <div className="grid md:grid-cols-2 gap-8 mb-8">
             <div>
-              <h3 className="text-lg font-semibold mb-3">Quick Stats</h3>
-              <ul className="space-y-2 text-sm">
-                <li className="flex items-center gap-2">
-                  <MapPin className="w-4 h-4 text-muted-foreground" />
-                  <span>San Francisco, CA</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4 text-muted-foreground" />
-                  <span>5+ years experience</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <code className="text-xs bg-muted px-2 py-1 rounded">TypeScript</code>
-                  <code className="text-xs bg-muted px-2 py-1 rounded">React</code>
-                  <code className="text-xs bg-muted px-2 py-1 rounded">Node.js</code>
-                </li>
-              </ul>
+              <h2 className="text-lg font-semibold mb-4 text-foreground">Quick Stats</h2>
+              <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                  <MapPin className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+                  <span className="text-foreground">San Francisco, CA</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Calendar className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+                  <span className="text-foreground">5+ years experience</span>
+                </div>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <code className="text-xs bg-muted px-2 py-1 rounded text-foreground">TypeScript</code>
+                  <code className="text-xs bg-muted px-2 py-1 rounded text-foreground">React</code>
+                  <code className="text-xs bg-muted px-2 py-1 rounded text-foreground">Node.js</code>
+                </div>
+              </div>
             </div>
             
             <div>
-              <h3 className="text-lg font-semibold mb-3">Connect</h3>
-              <div className="flex gap-2">
-                <Button variant="outline" size="sm">
-                  <Github className="w-4 h-4 mr-1" />
+              <h2 className="text-lg font-semibold mb-4 text-foreground">Connect</h2>
+              <div className="grid grid-cols-2 gap-2">
+                <Button variant="outline" size="sm" className="justify-start">
+                  <Github className="w-4 h-4 mr-2" />
                   GitHub
                 </Button>
-                <Button variant="outline" size="sm">
-                  <Linkedin className="w-4 h-4 mr-1" />
+                <Button variant="outline" size="sm" className="justify-start">
+                  <Linkedin className="w-4 h-4 mr-2" />
                   LinkedIn
                 </Button>
-                <Button variant="outline" size="sm">
-                  <Twitter className="w-4 h-4 mr-1" />
+                <Button variant="outline" size="sm" className="justify-start">
+                  <Twitter className="w-4 h-4 mr-2" />
                   Twitter
                 </Button>
-                <Button variant="outline" size="sm">
-                  <Mail className="w-4 h-4 mr-1" />
+                <Button variant="outline" size="sm" className="justify-start">
+                  <Mail className="w-4 h-4 mr-2" />
                   Email
                 </Button>
               </div>
             </div>
           </div>
           
-          <h2>About Me</h2>
-          <p>
+          <h2 className="text-xl font-semibold mb-4 text-foreground">About Me</h2>
+          <p className="text-foreground leading-relaxed mb-6">
             I'm a passionate full-stack developer with a love for building robust, scalable applications. 
             My journey spans from crafting pixel-perfect UIs to architecting complex backend systems.
           </p>
           
-          <h3>🔧 Tech Stack</h3>
-          <div className="flex flex-wrap gap-2 mb-4">
+          <h3 className="text-lg font-semibold mb-4 text-foreground">🔧 Tech Stack</h3>
+          <div className="flex flex-wrap gap-2 mb-8">
             {['JavaScript', 'TypeScript', 'React', 'Node.js', 'Python', 'PostgreSQL', 'Docker', 'AWS', 'Git'].map((tech) => (
               <Badge key={tech} variant="outline" className="text-xs">
                 {tech}
@@ -77,38 +79,56 @@ export function ReadmeSection() {
             ))}
           </div>
           
-          <h3>📊 GitHub Stats</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-            <div className="text-center p-4 border border-border rounded-md">
-              <div className="text-2xl font-bold text-foreground">127</div>
+          <h3 className="text-lg font-semibold mb-4 text-foreground">📊 GitHub Stats</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+            <div className="text-center p-6 border border-border rounded-lg bg-muted/20">
+              <div className="text-3xl font-bold text-foreground mb-1">127</div>
               <div className="text-sm text-muted-foreground">Repositories</div>
             </div>
-            <div className="text-center p-4 border border-border rounded-md">
-              <div className="text-2xl font-bold text-foreground">2.1k</div>
+            <div className="text-center p-6 border border-border rounded-lg bg-muted/20">
+              <div className="text-3xl font-bold text-foreground mb-1">2.1k</div>
               <div className="text-sm text-muted-foreground">Contributions</div>
             </div>
-            <div className="text-center p-4 border border-border rounded-md">
-              <div className="text-2xl font-bold text-foreground">48</div>
+            <div className="text-center p-6 border border-border rounded-lg bg-muted/20">
+              <div className="text-3xl font-bold text-foreground mb-1">48</div>
               <div className="text-sm text-muted-foreground">Stars Earned</div>
             </div>
           </div>
           
-          <h3>🚀 Featured Projects</h3>
-          <ul>
-            <li><strong>E-commerce Platform</strong> - Full-stack React/Node.js application with payment integration</li>
-            <li><strong>Real-time Chat App</strong> - WebSocket-based messaging platform with React and Socket.io</li>
-            <li><strong>API Gateway</strong> - Microservices architecture with Docker and Kubernetes</li>
-          </ul>
+          <h3 className="text-lg font-semibold mb-4 text-foreground">🚀 Featured Projects</h3>
+          <div className="space-y-3 mb-8">
+            <div className="border-l-4 border-primary pl-4">
+              <div className="font-semibold text-foreground">E-commerce Platform</div>
+              <div className="text-muted-foreground text-sm">Full-stack React/Node.js application with payment integration</div>
+            </div>
+            <div className="border-l-4 border-primary pl-4">
+              <div className="font-semibold text-foreground">Real-time Chat App</div>
+              <div className="text-muted-foreground text-sm">WebSocket-based messaging platform with React and Socket.io</div>
+            </div>
+            <div className="border-l-4 border-primary pl-4">
+              <div className="font-semibold text-foreground">API Gateway</div>
+              <div className="text-muted-foreground text-sm">Microservices architecture with Docker and Kubernetes</div>
+            </div>
+          </div>
           
-          <h3>📝 Latest Blog Posts</h3>
-          <ul>
-            <li><a href="#" className="text-primary hover:underline">Building Scalable React Applications with TypeScript</a></li>
-            <li><a href="#" className="text-primary hover:underline">Mastering Async/Await in JavaScript</a></li>
-            <li><a href="#" className="text-primary hover:underline">Docker Best Practices for Node.js Apps</a></li>
-          </ul>
+          <h3 className="text-lg font-semibold mb-4 text-foreground">📝 Latest Blog Posts</h3>
+          <div className="space-y-2 mb-8">
+            <div className="border-l-4 border-accent pl-4">
+              <a href="#" className="text-primary hover:underline font-medium">Building Scalable React Applications with TypeScript</a>
+            </div>
+            <div className="border-l-4 border-accent pl-4">
+              <a href="#" className="text-primary hover:underline font-medium">Mastering Async/Await in JavaScript</a>
+            </div>
+            <div className="border-l-4 border-accent pl-4">
+              <a href="#" className="text-primary hover:underline font-medium">Docker Best Practices for Node.js Apps</a>
+            </div>
+          </div>
           
-          <blockquote className="border-l-4 border-primary pl-4 italic text-muted-foreground">
-            "Code is like humor. When you have to explain it, it's bad." - Cory House
+          <blockquote className="border-l-4 border-primary pl-6 py-4 bg-muted/30 rounded-r-lg">
+            <p className="italic text-muted-foreground text-lg leading-relaxed">
+              "Code is like humor. When you have to explain it, it's bad."
+            </p>
+            <cite className="text-sm text-muted-foreground font-medium block mt-2">- Cory House</cite>
           </blockquote>
         </div>
       </div>
