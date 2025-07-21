@@ -52,16 +52,35 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				sidebar: {
-					DEFAULT: 'hsl(var(--sidebar-background))',
-					foreground: 'hsl(var(--sidebar-foreground))',
-					primary: 'hsl(var(--sidebar-primary))',
-					'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-					accent: 'hsl(var(--sidebar-accent))',
-					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-					border: 'hsl(var(--sidebar-border))',
-					ring: 'hsl(var(--sidebar-ring))'
+				// GitHub-specific colors
+				github: {
+					canvas: {
+						default: 'hsl(var(--github-canvas-default))',
+						subtle: 'hsl(var(--github-canvas-subtle))'
+					},
+					border: {
+						default: 'hsl(var(--github-border-default))',
+						muted: 'hsl(var(--github-border-muted))'
+					},
+					accent: 'hsl(var(--github-accent-emphasis))',
+					success: 'hsl(var(--github-success-emphasis))',
+					attention: 'hsl(var(--github-attention-emphasis))',
+					severe: 'hsl(var(--github-severe-emphasis))'
+				},
+				file: {
+					directory: 'hsl(var(--file-directory))',
+					text: 'hsl(var(--file-text))',
+					code: 'hsl(var(--file-code))',
+					markdown: 'hsl(var(--file-markdown))'
+				},
+				syntax: {
+					bg: 'hsl(var(--syntax-bg))',
+					border: 'hsl(var(--syntax-border))'
 				}
+			},
+			fontFamily: {
+				mono: ['SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Consolas', 'monospace'],
+				sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif']
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

@@ -2,41 +2,62 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* GitHub-inspired design system. All colors MUST be HSL. */
 
 @layer base {
   :root {
+    /* GitHub Light Theme */
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 213 12% 9%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 213 12% 9%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 213 12% 9%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 212 92% 45%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 213 13% 93%;
+    --secondary-foreground: 213 12% 9%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 213 13% 93%;
+    --muted-foreground: 213 12% 40%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 213 13% 93%;
+    --accent-foreground: 213 12% 9%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 213 13% 87%;
+    --input: 213 13% 87%;
+    --ring: 212 92% 45%;
 
-    --radius: 0.5rem;
+    --radius: 0.375rem;
+
+    /* GitHub specific colors */
+    --github-canvas-default: 0 0% 100%;
+    --github-canvas-subtle: 213 13% 97%;
+    --github-border-default: 213 13% 87%;
+    --github-border-muted: 213 13% 93%;
+    
+    /* File type colors */
+    --file-directory: 79 100% 37%;
+    --file-text: 213 12% 40%;
+    --file-code: 212 92% 45%;
+    --file-markdown: 213 12% 9%;
+
+    /* GitHub accent colors */
+    --github-accent-emphasis: 212 92% 45%;
+    --github-success-emphasis: 137 55% 36%;
+    --github-attention-emphasis: 32 100% 50%;
+    --github-severe-emphasis: 0 84% 60%;
+
+    /* Code highlighting */
+    --syntax-bg: 213 13% 97%;
+    --syntax-border: 213 13% 87%;
 
     --sidebar-background: 0 0% 98%;
 
@@ -56,41 +77,107 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    /* GitHub Dark Theme */
+    --background: 220 13% 9%;
+    --foreground: 213 13% 93%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 220 13% 9%;
+    --card-foreground: 213 13% 93%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 220 13% 9%;
+    --popover-foreground: 213 13% 93%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 212 92% 62%;
+    --primary-foreground: 220 13% 9%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 215 14% 14%;
+    --secondary-foreground: 213 13% 93%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 215 14% 14%;
+    --muted-foreground: 213 12% 60%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 215 14% 14%;
+    --accent-foreground: 213 13% 93%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 215 14% 18%;
+    --input: 215 14% 18%;
+    --ring: 212 92% 62%;
+
+    /* GitHub Dark specific colors */
+    --github-canvas-default: 220 13% 9%;
+    --github-canvas-subtle: 215 14% 14%;
+    --github-border-default: 215 14% 18%;
+    --github-border-muted: 215 14% 14%;
+    
+    /* File type colors dark */
+    --file-directory: 79 100% 47%;
+    --file-text: 213 12% 60%;
+    --file-code: 212 92% 62%;
+    --file-markdown: 213 13% 93%;
+
+    /* GitHub accent colors dark */
+    --github-accent-emphasis: 212 92% 62%;
+    --github-success-emphasis: 137 55% 46%;
+    --github-attention-emphasis: 32 100% 60%;
+    --github-severe-emphasis: 0 84% 60%;
+
+    /* Code highlighting dark */
+    --syntax-bg: 215 14% 14%;
+    --syntax-border: 215 14% 18%;
+  }
+}
+
+@layer components {
+  /* GitHub-specific component styles */
+  .repo-file-list {
+    @apply border border-border rounded-md overflow-hidden;
+  }
+  
+  .file-row {
+    @apply flex items-center px-4 py-2 hover:bg-muted/50 transition-colors cursor-pointer border-b border-border last:border-b-0;
+  }
+  
+  .file-icon {
+    @apply w-4 h-4 mr-3 flex-shrink-0;
+  }
+  
+  .directory-icon {
+    @apply text-blue-600 dark:text-blue-400;
+  }
+  
+  .file-icon-text {
+    @apply text-muted-foreground;
+  }
+  
+  .commit-message {
+    @apply text-sm text-muted-foreground truncate flex-1 mx-4;
+  }
+  
+  .commit-time {
+    @apply text-sm text-muted-foreground;
+  }
+  
+  .readme-section {
+    @apply prose prose-sm max-w-none dark:prose-invert;
+  }
+  
+  .code-font {
+    @apply font-mono text-sm;
+  }
+  
+  .github-button {
+    @apply inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50;
+  }
+  
+  .github-button-primary {
+    @apply github-button bg-primary text-primary-foreground hover:bg-primary/90 px-4 py-2;
+  }
+  
+  .github-button-secondary {
+    @apply github-button border border-border bg-background hover:bg-accent hover:text-accent-foreground px-4 py-2;
   }
 }
 
