@@ -141,7 +141,7 @@ Still investigating the exact trigger mechanism.`,
   }
 ];
 
-const TALES_PER_PAGE = 2;
+const TALES_PER_PAGE = 6;
 
 export default function BugTalesPage() {
   const navigate = useNavigate();

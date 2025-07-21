@@ -411,7 +411,7 @@ The best choice depends on your team, project size, and complexity requirements.
   }
 ];
 
-const POSTS_PER_PAGE = 2;
+const POSTS_PER_PAGE = 6;
 
 export default function BlogsPage() {
   const navigate = useNavigate();

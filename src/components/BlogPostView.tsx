@@ -90,8 +90,8 @@ export function BlogPostView({ post, onBack }: BlogPostViewProps) {
                 <p className="text-lg italic">{post.excerpt}</p>
               </div>
               
-              <div className="whitespace-pre-wrap leading-relaxed">
-                {post.content}
+              <div className="prose prose-slate dark:prose-invert max-w-none leading-relaxed">
+                <div dangerouslySetInnerHTML={{ __html: post.content.replace(/\n/g, '<br/>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>').replace(/`(.*?)`/g, '<code class="bg-muted px-1 py-0.5 rounded text-sm">$1</code>') }} />
               </div>
             </div>
           </div>
