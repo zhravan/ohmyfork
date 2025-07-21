@@ -27,6 +27,8 @@ const blogPosts: BlogPost[] = [
     author: "John Doe",
     content: `# Building Scalable React Applications with TypeScript
 
+![TypeScript and React Development](https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=400&fit=crop)
+
 ## Introduction
 
 TypeScript has revolutionized the way we build React applications. By adding static type checking to JavaScript, it helps catch errors early and improves the overall developer experience.

@@ -1,6 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Calendar, Clock, User, Star, GitFork } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import rehypeHighlight from 'rehype-highlight';
 
 interface BlogPost {
   title: string;
@@ -90,8 +93,70 @@ export function BlogPostView({ post, onBack }: BlogPostViewProps) {
                 <p className="text-lg italic">{post.excerpt}</p>
               </div>
               
-              <div className="prose prose-slate dark:prose-invert max-w-none leading-relaxed">
-                <div dangerouslySetInnerHTML={{ __html: post.content.replace(/\n/g, '<br/>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>').replace(/`(.*?)`/g, '<code class="bg-muted px-1 py-0.5 rounded text-sm">$1</code>') }} />
+              <div className="prose prose-slate dark:prose-invert max-w-none">
+                <ReactMarkdown 
+                  remarkPlugins={[remarkGfm]} 
+                  rehypePlugins={[rehypeHighlight]}
+                  components={{
+                    img: ({node, ...props}) => (
+                      <img 
+                        {...props} 
+                        className="rounded-lg border border-border shadow-sm max-w-full h-auto" 
+                        loading="lazy"
+                      />
+                    ),
+                    code: ({node, className, children, ...props}: any) => {
+                      const isInline = !className || !className.includes('language-');
+                      return !isInline ? (
+                        <pre className="bg-muted p-4 rounded-lg overflow-x-auto border border-border">
+                          <code className={className} {...props}>
+                            {children}
+                          </code>
+                        </pre>
+                      ) : (
+                        <code className="bg-muted px-2 py-1 rounded text-sm font-mono" {...props}>
+                          {children}
+                        </code>
+                      );
+                    },
+                    blockquote: ({children}) => (
+                      <blockquote className="border-l-4 border-primary pl-4 italic bg-muted/30 p-4 rounded-r-lg">
+                        {children}
+                      </blockquote>
+                    ),
+                    h1: ({children}) => <h1 className="text-3xl font-bold mt-8 mb-4 first:mt-0">{children}</h1>,
+                    h2: ({children}) => <h2 className="text-2xl font-semibold mt-6 mb-3">{children}</h2>,
+                    h3: ({children}) => <h3 className="text-xl font-semibold mt-5 mb-2">{children}</h3>,
+                    h4: ({children}) => <h4 className="text-lg font-semibold mt-4 mb-2">{children}</h4>,
+                    ul: ({children}) => <ul className="list-disc pl-6 space-y-1 my-4">{children}</ul>,
+                    ol: ({children}) => <ol className="list-decimal pl-6 space-y-1 my-4">{children}</ol>,
+                    li: ({children}) => <li className="leading-relaxed">{children}</li>,
+                    p: ({children}) => <p className="mb-4 leading-relaxed">{children}</p>,
+                    a: ({href, children}) => (
+                      <a 
+                        href={href} 
+                        className="text-primary hover:text-primary/80 underline transition-colors"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {children}
+                      </a>
+                    ),
+                    table: ({children}) => (
+                      <div className="overflow-x-auto my-6">
+                        <table className="min-w-full border border-border rounded-lg">
+                          {children}
+                        </table>
+                      </div>
+                    ),
+                    thead: ({children}) => <thead className="bg-muted">{children}</thead>,
+                    th: ({children}) => <th className="border border-border px-4 py-2 text-left font-semibold">{children}</th>,
+                    td: ({children}) => <td className="border border-border px-4 py-2">{children}</td>,
+                    hr: () => <hr className="border-t border-border my-8" />
+                  }}
+                >
+                  {post.content}
+                </ReactMarkdown>
               </div>
             </div>
           </div>
