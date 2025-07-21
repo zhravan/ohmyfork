@@ -2,6 +2,8 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Button } from './ui/button';
+import { Input } from './ui/input';
 
 const schema = z.object({
   name: z.string().min(2, 'Name is required'),
@@ -24,15 +26,15 @@ export default function FormDemo() {
       <h3 className="text-lg font-semibold">Form Example</h3>
       <div>
         <label className="block mb-1">Name</label>
-        <input {...register('name')} className="input input-bordered w-full" />
+        <Input {...register('name')} />
         {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
       </div>
       <div>
         <label className="block mb-1">Email</label>
-        <input {...register('email')} className="input input-bordered w-full" />
+        <Input {...register('email')} />
         {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
       </div>
-      <button type="submit" className="btn btn-primary">Submit</button>
+      <Button type="submit">Submit</Button>
     </form>
   );
 }
