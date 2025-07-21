@@ -1,8 +1,10 @@
 import { GitHubHeader } from "@/components/GitHubHeader";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { ArrowLeft, ExternalLink, Github, Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 interface Project {
   name: string;
@@ -72,8 +74,15 @@ const projects: Project[] = [
   }
 ];
 
+const PROJECTS_PER_PAGE = 3;
+
 export default function ProjectsPage() {
   const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(1);
+  
+  const totalPages = Math.ceil(projects.length / PROJECTS_PER_PAGE);
+  const startIndex = (currentPage - 1) * PROJECTS_PER_PAGE;
+  const currentProjects = projects.slice(startIndex, startIndex + PROJECTS_PER_PAGE);
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -114,7 +123,7 @@ export default function ProjectsPage() {
           </div>
           
           <div className="divide-y divide-border">
-            {projects.map((project, index) => (
+            {currentProjects.map((project, index) => (
               <div key={index} className="p-6 hover:bg-muted/30 transition-colors">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">

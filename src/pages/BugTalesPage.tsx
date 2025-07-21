@@ -1,95 +1,173 @@
 import { GitHubHeader } from "@/components/GitHubHeader";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Bug, Clock, ThumbsUp, MessageCircle } from "lucide-react";
+import { BugReportModal } from "@/components/BugReportModal";
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
+import { ArrowLeft, Bug, Clock, AlertTriangle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 interface BugTale {
   title: string;
-  synopsis: string;
-  problem: string;
+  severity: 'critical' | 'high' | 'medium' | 'low';
+  status: 'solved' | 'investigating' | 'wontfix';
+  description: string;
+  reproduction: string;
   solution: string;
-  difficulty: 'Easy' | 'Medium' | 'Hard' | 'Nightmare';
-  timeSpent: string;
-  technologies: string[];
-  date: string;
-  likes: number;
-  comments: number;
+  tags: string[];
+  timeToSolve: string;
+  assignee: string;
+  dateReported: string;
 }
 
 const bugTales: BugTale[] = [
   {
-    title: "The Vanishing CSS: A Tale of Z-Index Hell",
-    synopsis: "A perfectly styled modal suddenly disappears in production, leading to a deep dive into the mysterious world of stacking contexts.",
-    problem: "Modal component worked flawlessly in development but was invisible in production. No console errors, no obvious differences.",
-    solution: "Third-party library was injecting CSS with higher z-index values. Created a new stacking context by adding transform: translateZ(0) to modal container.",
-    difficulty: "Medium",
-    timeSpent: "4 hours",
-    technologies: ["CSS", "React", "Z-Index", "Stacking Context"],
-    date: "2024-01-10",
-    likes: 23,
-    comments: 8
+    title: "The Vanishing CSS: A Tale of Disappearing Styles",
+    severity: 'high',
+    status: 'solved',
+    description: "Users reported that the entire navigation bar would randomly disappear, but only on Tuesdays, and only for users with names starting with 'M'.",
+    reproduction: `1. Log in as a user with name starting with 'M'
+2. Wait for Tuesday
+3. Navigate to any page
+4. Observe disappearing navigation bar
+5. Refresh page - navigation returns
+6. Wait 5 minutes - navigation disappears again`,
+    solution: `The issue was caused by a CSS animation that was triggered by a specific combination of:
+    - CSS class naming collision with a third-party library
+    - Browser timezone calculations for Tuesday detection
+    - Username-based cache keys that conflicted with CSS selectors
+    
+Fixed by:
+- Renaming CSS classes with proper BEM methodology
+- Removing date-based conditional styling
+- Implementing proper CSS scoping`,
+    tags: ['CSS', 'Frontend', 'Browser Bug'],
+    timeToSolve: '3 days',
+    assignee: 'Sarah Chen',
+    dateReported: '2024-01-10'
   },
   {
-    title: "The Case of the Schrödinger's Variable",
-    synopsis: "A variable that existed and didn't exist at the same time, quantum mechanics in JavaScript, or just a really weird closure bug?",
-    problem: "Variable was undefined in callback but defined everywhere else. Same exact scope, same exact timing, but somehow undefined.",
-    solution: "Event loop timing issue. The variable was being set in a microtask queue while callback was in macrotask queue. Used Promise.resolve().then() to synchronize.",
-    difficulty: "Hard",
-    timeSpent: "6 hours",
-    technologies: ["JavaScript", "Event Loop", "Promises", "Closure"],
-    date: "2024-01-05",
-    likes: 45,
-    comments: 12
+    title: "The Infinite Loop of API Calls",
+    severity: 'critical', 
+    status: 'solved',
+    description: "A simple data fetch turned into a DDoS attack on our own servers when useEffect decided to party like it's 1999.",
+    reproduction: `1. Open the user dashboard
+2. useEffect triggers API call
+3. API response updates state
+4. State update triggers useEffect again
+5. Infinite loop of API calls begins
+6. Server performance degrades rapidly`,
+    solution: `The useEffect was missing a proper dependency array:
+
+// Before (WRONG):
+useEffect(() => {
+  fetchUserData(user.id);
+}); // No dependency array = runs on every render
+
+// After (CORRECT):
+useEffect(() => {
+  fetchUserData(user.id);
+}, [user.id]); // Only runs when user.id changes
+
+Also implemented:
+- Request debouncing
+- Circuit breaker pattern
+- Request cancellation with AbortController`,
+    tags: ['React', 'API', 'Performance'],
+    timeToSolve: '6 hours',
+    assignee: 'Mike Johnson',
+    dateReported: '2024-01-08'
   },
   {
-    title: "Memory Leak from the Future",
-    synopsis: "A React component was causing memory leaks, but only when users traveled to the future. Time-based debugging at its finest.",
-    problem: "Memory usage kept growing over time, but only after 24 hours of continuous usage. Component was holding references to setTimeout intervals.",
-    solution: "Date.now() was being called in useEffect dependency array, causing re-renders every millisecond. Moved date calculation inside effect.",
-    difficulty: "Medium",
-    timeSpent: "8 hours",
-    technologies: ["React", "Memory Leaks", "useEffect", "Performance"],
-    date: "2023-12-28",
-    likes: 67,
-    comments: 19
+    title: "The Case of the Missing Database Connection",
+    severity: 'critical',
+    status: 'solved', 
+    description: "Production database connections were mysteriously dropping every hour. Turned out the janitor was unplugging the server to charge his phone.",
+    reproduction: `1. Deploy application to production
+2. Wait approximately 1 hour
+3. Observe database connection timeout errors
+4. Check server room at exactly 2:00 PM
+5. Find janitor unplugging ethernet cable
+6. Connection restored automatically after 5 minutes`,
+    solution: `This was a physical infrastructure issue:
+
+Root cause:
+- Janitor unplugged ethernet cable daily at 2 PM
+- Cable was near a power outlet used for phone charging
+- No proper cable management in server room
+
+Solutions implemented:
+- Proper cable management and labeling
+- Restricted access to server room
+- Added redundant network connections
+- Implemented connection pooling with retry logic
+- Added monitoring alerts for connection drops`,
+    tags: ['Database', 'Infrastructure', 'Human Error'],
+    timeToSolve: '2 weeks',
+    assignee: 'Alex Rodriguez',
+    dateReported: '2023-12-15'
   },
   {
-    title: "The Docker Container That Worked Only on Tuesdays",
-    synopsis: "Production container failed consistently except on Tuesdays. The solution involved timezones, cron jobs, and a very specific date format.",
-    problem: "Container deployment succeeded on Tuesdays but failed every other day. No changes to code, no changes to infrastructure.",
-    solution: "Cron job was clearing logs every Tuesday. On other days, logs filled up disk space causing deployment failure. Increased disk space and fixed log rotation.",
-    difficulty: "Easy",
-    timeSpent: "2 hours",
-    technologies: ["Docker", "DevOps", "Cron", "Disk Management"],
-    date: "2023-12-15",
-    likes: 89,
-    comments: 25
-  },
-  {
-    title: "The Async/Await Paradox",
-    synopsis: "Function that returned a promise wrapped in a promise wrapped in another promise. Inception level async/await confusion.",
-    problem: "API calls were taking 30+ seconds. No network issues, no server problems. The mystery deepened when adding console.logs made it faster.",
-    solution: "Triple-nested async/await was creating promise chains. Each await was waiting for the previous promise to resolve, creating artificial delays.",
-    difficulty: "Nightmare",
-    timeSpent: "12 hours",
-    technologies: ["JavaScript", "Async/Await", "Promises", "Performance"],
-    date: "2023-12-01",
-    likes: 156,
-    comments: 34
+    title: "The Ghost in the Machine: Phantom Form Submissions",
+    severity: 'medium',
+    status: 'investigating',
+    description: "Forms were submitting themselves at 3:33 AM every night. Spoiler alert: it wasn't ghosts, but it was equally terrifying.",
+    reproduction: `1. Deploy contact form to production
+2. Wait until 3:33 AM (any timezone)
+3. Check form submission logs
+4. Find entries with no user interaction
+5. Forms contain preset data: name="Test", email="test@example.com"
+6. No IP address or user agent in logs`,
+    solution: `Investigation ongoing. Current findings:
+
+Suspected causes:
+- Automated testing scripts running in production
+- Bot submissions with spoofed timestamps
+- Scheduled task misconfiguration
+- Possible XSS vulnerability
+
+Steps taken:
+- Added CAPTCHA verification
+- Implemented rate limiting
+- Added request origin validation
+- Deployed honeypot fields
+- Enhanced logging and monitoring
+
+Still investigating the exact trigger mechanism.`,
+    tags: ['Forms', 'JavaScript', 'Mystery'],
+    timeToSolve: 'ongoing',
+    assignee: 'Emma Davis',
+    dateReported: '2024-01-05'
   }
 ];
 
+const TALES_PER_PAGE = 2;
+
 export default function BugTalesPage() {
   const navigate = useNavigate();
+  const [selectedBug, setSelectedBug] = useState<BugTale | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  
+  const totalPages = Math.ceil(bugTales.length / TALES_PER_PAGE);
+  const startIndex = (currentPage - 1) * TALES_PER_PAGE;
+  const currentTales = bugTales.slice(startIndex, startIndex + TALES_PER_PAGE);
 
-  const getDifficultyColor = (difficulty: string) => {
-    switch (difficulty) {
-      case 'Easy': return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300';
-      case 'Medium': return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300';
-      case 'Hard': return 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-300';
-      case 'Nightmare': return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300';
-      default: return 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300';
+  const getSeverityColor = (severity: string) => {
+    switch (severity) {
+      case 'critical': return 'destructive';
+      case 'high': return 'destructive';
+      case 'medium': return 'secondary';
+      case 'low': return 'outline';
+      default: return 'outline';
+    }
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'solved': return 'default';
+      case 'investigating': return 'secondary';
+      case 'wontfix': return 'outline';
+      default: return 'outline';
     }
   };
 
@@ -114,12 +192,6 @@ export default function BugTalesPage() {
           </div>
         </div>
         
-        <div className="mb-6 p-4 border border-border rounded-md bg-muted/20">
-          <p className="text-muted-foreground">
-            <strong>Welcome to Bug Tales!</strong> A collection of real debugging adventures, mysterious issues, 
-            and the sometimes surprising solutions that saved the day. Every developer has battle stories - these are mine.
-          </p>
-        </div>
         
         <div className="border border-border rounded-md bg-background">
           <div className="bg-muted/30 px-4 py-3 border-b border-border">
@@ -130,89 +202,118 @@ export default function BugTalesPage() {
           </div>
           
           <div className="divide-y divide-border">
-            {bugTales.map((tale, index) => (
-              <article key={index} className="p-6 hover:bg-muted/30 transition-colors cursor-pointer">
-                <div className="flex items-start justify-between gap-4">
+            {currentTales.map((tale, index) => (
+              <div 
+                key={index} 
+                className="p-6 hover:bg-muted/30 transition-colors cursor-pointer"
+                onClick={() => setSelectedBug(tale)}
+              >
+                <div className="flex items-start gap-4">
+                  <AlertTriangle className="w-6 h-6 text-destructive mt-1" />
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
-                      <Bug className="w-5 h-5 text-red-500" />
                       <h2 className="text-xl font-semibold text-foreground hover:text-primary transition-colors">
                         {tale.title}
                       </h2>
-                      <Badge 
-                        variant="outline" 
-                        className={`text-xs ${getDifficultyColor(tale.difficulty)}`}
-                      >
-                        {tale.difficulty}
+                      <Badge variant={getSeverityColor(tale.severity)}>
+                        {tale.severity.toUpperCase()}
+                      </Badge>
+                      <Badge variant={getStatusColor(tale.status)}>
+                        {tale.status.toUpperCase()}
                       </Badge>
                     </div>
                     
-                    <p className="text-muted-foreground mb-4 leading-relaxed font-medium">
-                      {tale.synopsis}
+                    <p className="text-muted-foreground mb-4 leading-relaxed">
+                      {tale.description}
                     </p>
                     
-                    <div className="space-y-3 mb-4">
-                      <div>
-                        <h4 className="font-semibold text-sm text-foreground mb-1">The Problem:</h4>
-                        <p className="text-sm text-muted-foreground">{tale.problem}</p>
-                      </div>
-                      
-                      <div>
-                        <h4 className="font-semibold text-sm text-foreground mb-1">The Solution:</h4>
-                        <p className="text-sm text-muted-foreground">{tale.solution}</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-4">
+                    <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-3">
                       <div className="flex items-center gap-1">
                         <Clock className="w-4 h-4" />
-                        {tale.timeSpent} debugging
+                        {tale.timeToSolve}
                       </div>
                       <div>
-                        {new Date(tale.date).toLocaleDateString('en-US', { 
-                          year: 'numeric', 
-                          month: 'long', 
-                          day: 'numeric' 
-                        })}
+                        Reported: {new Date(tale.dateReported).toLocaleDateString()}
                       </div>
-                      <div className="flex items-center gap-4">
-                        <div className="flex items-center gap-1">
-                          <ThumbsUp className="w-4 h-4" />
-                          {tale.likes}
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <MessageCircle className="w-4 h-4" />
-                          {tale.comments}
-                        </div>
+                      <div>
+                        Assignee: {tale.assignee}
                       </div>
                     </div>
                     
                     <div className="flex flex-wrap gap-2">
-                      {tale.technologies.map((tech) => (
-                        <Badge key={tech} variant="secondary" className="text-xs">
-                          {tech}
+                      {tale.tags.map((tag) => (
+                        <Badge key={tag} variant="outline" className="text-xs">
+                          {tag}
                         </Badge>
                       ))}
                     </div>
                   </div>
                 </div>
-              </article>
+              </div>
             ))}
           </div>
         </div>
         
+        {totalPages > 1 && (
+          <div className="mt-8 flex justify-center">
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious 
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (currentPage > 1) setCurrentPage(currentPage - 1);
+                    }}
+                    className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
+                  />
+                </PaginationItem>
+                
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                  <PaginationItem key={page}>
+                    <PaginationLink
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setCurrentPage(page);
+                      }}
+                      isActive={currentPage === page}
+                    >
+                      {page}
+                    </PaginationLink>
+                  </PaginationItem>
+                ))}
+                
+                <PaginationItem>
+                  <PaginationNext
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+                    }}
+                    className={currentPage === totalPages ? "pointer-events-none opacity-50" : ""}
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          </div>
+        )}
+        
         <div className="mt-8 text-center">
           <p className="text-muted-foreground mb-4">
-            Have a debugging story to share? I'd love to hear it!
+            Got a debugging story to share? We'd love to hear it!
           </p>
-          <Button 
-            className="github-button-primary" 
-            onClick={() => navigate('/contact')}
-          >
-            Share Your Bug Tale
+          <Button className="github-button-primary">
+            Submit Your Bug Tale
           </Button>
         </div>
       </div>
+      
+      <BugReportModal 
+        bug={selectedBug}
+        isOpen={!!selectedBug}
+        onClose={() => setSelectedBug(null)}
+      />
     </div>
   );
 }
