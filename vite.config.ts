@@ -5,24 +5,24 @@ import mdx from "@mdx-js/rollup";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 
-
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  base: mode === "development" ? "/" : "/ohmyfork/",
   server: {
     host: "::",
-    port: 8080,
+    port: 8080
   },
   plugins: [
     mdx({
       remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
       rehypePlugins: [],
-      development: process.env.NODE_ENV === 'development',
+      development: process.env.NODE_ENV === "development"
     }),
-    react(),
+    react()
   ],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
-    },
-  },
+      "@": path.resolve(__dirname, "./src")
+    }
+  }
 }));
