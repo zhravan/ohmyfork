@@ -1,0 +1,46 @@
+import { useParams, useNavigate } from 'react-router-dom';
+import { useContentItem } from '@/hooks/use-content';
+import { ContentPreview } from '@/components/ContentPreview';
+import { GitHubHeader } from '@/components/GitHubHeader';
+import type { BlogPost } from '@/types/content';
+
+export default function BlogPostPage() {
+  const { slug } = useParams<{ slug: string }>();
+  const navigate = useNavigate();
+  
+  const { item: blogPost, loading, error } = useContentItem<BlogPost>('blogs', slug || null);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <GitHubHeader />
+        <div className="container mx-auto px-4 py-6">
+          <div className="text-center">Loading blog post...</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !blogPost) {
+    return (
+      <div className="min-h-screen bg-background">
+        <GitHubHeader />
+        <div className="container mx-auto px-4 py-6">
+          <div className="text-center text-red-500">
+            {error || 'Blog post not found'}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <GitHubHeader />
+      <ContentPreview 
+        content={blogPost} 
+        onBack={() => navigate('/blogs')} 
+      />
+    </>
+  );
+}
