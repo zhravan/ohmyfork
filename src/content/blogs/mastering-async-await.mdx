@@ -1,0 +1,84 @@
+---
+title: "Mastering Async/Await in JavaScript"
+excerpt: "Deep dive into asynchronous programming patterns and best practices for handling promises in modern JavaScript."
+date: "2024-01-10"
+readTime: "6 min read"
+tags: ["JavaScript", "Async", "Promises"]
+author: "Shravan K B"
+---
+
+# Mastering Async/Await in JavaScript
+
+## The Evolution of Asynchronous JavaScript
+
+JavaScript's asynchronous nature has evolved significantly:
+- **Callbacks** → **Promises** → **Async/Await**
+
+## Understanding Async/Await
+
+Async/await is syntactic sugar over Promises, making asynchronous code look and behave more like synchronous code.
+
+### Basic Syntax
+```javascript
+async function fetchUserData(userId) {
+  try {
+    const response = await fetch(`/api/users/${userId}`);
+    const user = await response.json();
+    return user;
+  } catch (error) {
+    console.error('Failed to fetch user:', error);
+    throw error;
+  }
+}
+```
+
+## Common Patterns
+
+### Sequential vs Parallel Execution
+```javascript
+// Sequential (slower)
+const user = await fetchUser(id);
+const posts = await fetchUserPosts(id);
+
+// Parallel (faster)
+const [user, posts] = await Promise.all([
+  fetchUser(id),
+  fetchUserPosts(id)
+]);
+```
+
+### Error Handling
+```javascript
+async function robustApiCall() {
+  try {
+    const result = await apiCall();
+    return { success: true, data: result };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+}
+```
+
+## Advanced Techniques
+
+### Timeout with Promise.race
+```javascript
+function withTimeout(promise, ms) {
+  const timeout = new Promise((_, reject) =>
+    setTimeout(() => reject(new Error('Timeout')), ms)
+  );
+  
+  return Promise.race([promise, timeout]);
+}
+```
+
+## Best Practices
+
+1. Always handle errors appropriately
+2. Use Promise.all() for parallel operations
+3. Be careful with async in loops
+4. Consider using libraries like Axios for HTTP requests
+
+## Conclusion
+
+Mastering async/await is crucial for modern JavaScript development. It makes complex asynchronous operations readable and maintainable.

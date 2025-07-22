@@ -1,59 +1,71 @@
 # ohmyfork
 
-A modern, production-grade React app scaffolded with Vite, TypeScript, Tailwind CSS, shadcn/ui, and a rich UI ecosystem.
+Personal portfolio and development showcase built with modern web technologies.
 
-## Getting Started
+## How can I edit this code?
 
-### Install dependencies
+There are several ways of editing your application.
 
-```bash
-npm install
-```
 
-### Run the development server
 
-```bash
+
+
+
+
+**Use your preferred IDE**
+
+
+
+The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+
+Follow these steps:
+
+```sh
+# Step 1: Clone the repository using the project's Git URL.
+git clone <YOUR_GIT_URL>
+
+# Step 2: Navigate to the project directory.
+cd <YOUR_PROJECT_NAME>
+
+# Step 3: Install the necessary dependencies.
+npm i
+
+# Step 4: Start the development server with auto-reloading and an instant preview.
 npm run dev
 ```
 
-### Build for production
+**Edit a file directly in GitHub**
 
-```bash
-npm run build
-```
+- Navigate to the desired file(s).
+- Click the "Edit" button (pencil icon) at the top right of the file view.
+- Make your changes and commit the changes.
 
-### Preview production build
+**Use GitHub Codespaces**
 
-```bash
-npm run preview
-```
+- Navigate to the main page of your repository.
+- Click on the "Code" button (green button) near the top right.
+- Select the "Codespaces" tab.
+- Click on "New codespace" to launch a new Codespace environment.
+- Edit files directly within the Codespace and commit and push your changes once you're done.
 
-### Lint the codebase
+## What technologies are used for this project?
 
-```bash
-npm run lint
-```
+This project is built with:
 
-## Features
-- Vite + React + SWC
+- Vite
 - TypeScript
-- Tailwind CSS (with @tailwindcss/typography, tailwindcss-animate)
-- shadcn/ui (Radix UI components)
-- React Router DOM
-- TanStack Query
-- Zod
-- React Hook Form
-- Markdown rendering (react-markdown + plugins)
-- next-themes (theme support)
-- lucide-react (icons)
-- canvas-confetti (confetti)
-- Recharts (charts)
+- React
+- shadcn-ui
+- Tailwind CSS
 
-## Example Components
-- Form
-- Table
-- Dialog
-- Chart
+## How can I deploy this project?
 
-## License
-MIT
+
+
+
+
+Yes, you can!
+
+To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+
+
