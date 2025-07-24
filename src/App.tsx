@@ -22,7 +22,7 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter>
+        <BrowserRouter basename="/ohmyfork/">
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/blogs" element={<BlogsPage />} />
