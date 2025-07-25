@@ -1,6 +1,66 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Github, Linkedin, Twitter, Mail, MapPin, Calendar } from "lucide-react";
+import { Github, Linkedin, Twitter, Mail, MapPin, Calendar, Coffee, ListTodo, PanelsTopLeft } from "lucide-react";
+import React, { useRef, useEffect, useState } from "react";
+
+// Animated badge color cycling hook
+const badgeColors = [
+  "bg-green-500 text-white",
+  "bg-blue-500 text-white",
+  "bg-yellow-500 text-black",
+  "bg-pink-500 text-white",
+  "bg-purple-500 text-white",
+  "bg-red-500 text-white",
+];
+
+function useAnimatedBadgeColor(intervalMs = 900) {
+  const [colorIdx, setColorIdx] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setColorIdx((idx) => (idx + 1) % badgeColors.length);
+    }, intervalMs);
+    return () => clearInterval(interval);
+  }, [intervalMs]);
+  return badgeColors[colorIdx];
+}
+
+function useCountUp(target: number, duration = 1200, start = 0, ref: React.RefObject<HTMLElement>) {
+  const [count, setCount] = useState(start);
+  const [hasAnimated, setHasAnimated] = useState(false);
+
+  useEffect(() => {
+    if (!ref.current) return;
+    const observer = new window.IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated) {
+          setHasAnimated(true);
+        }
+      },
+      { threshold: 0.5 }
+    );
+    observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [ref, hasAnimated]);
+
+  useEffect(() => {
+    if (!hasAnimated) return;
+    let startTimestamp: number | null = null;
+    const step = (timestamp: number) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      setCount(Math.floor(progress * (target - start) + start));
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        setCount(target);
+      }
+    };
+    requestAnimationFrame(step);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hasAnimated, target, duration, start]);
+
+  return count;
+}
 
 export function ReadmeSection() {
   return (
@@ -16,9 +76,14 @@ export function ReadmeSection() {
         <div className="p-8 prose prose-slate dark:prose-invert max-w-none">
           <div className="flex items-start justify-between mb-8">
             <h1 className="flex items-center gap-3 text-2xl font-bold">
-              👋 Hi there, I'm <a href="https://github.com/shravan20" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Shravan K B</a>
+              👋‎ ‎ Hi there, I'm <a href="https://github.com/shravan20" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Shravan K B</a>
             </h1>
-            <Badge variant="secondary" className="px-3 py-1">Available for hire</Badge>
+            {(() => {
+              const animatedClass = useAnimatedBadgeColor();
+              return (
+                <Badge variant="secondary" className={`px-3 py-1 transition-colors duration-500 ${animatedClass}`}>Available for hire</Badge>
+              );
+            })()}
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 mb-8">
@@ -87,19 +152,40 @@ export function ReadmeSection() {
             ))}
           </div>
 
-          <h3 className="text-lg font-semibold mb-4 text-foreground">📊 GitHub Stats</h3>
+          <h3 className="text-lg font-semibold mb-4 text-foreground">📊 Stats beyond GitHub</h3>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-            <div className="text-center p-6 border border-border rounded-lg bg-muted/20">
-              <div className="text-3xl font-bold text-foreground mb-1">127</div>
-              <div className="text-sm text-muted-foreground">Repositories</div>
+            <div className="text-center p-6 border border-border rounded-lg bg-muted/20 flex flex-col items-center">
+              <Coffee className="w-8 h-8 text-primary mb-2" />
+              <div className="text-3xl font-bold text-foreground mb-1">
+                {(() => {
+                  const ref = useRef<HTMLSpanElement>(null);
+                  const count = useCountUp(2400, 1200, 0, ref);
+                  return <span ref={ref}>{count.toLocaleString()}</span>;
+                })()}/week
+              </div>
+              <div className="text-sm text-muted-foreground">Coffee Consumption</div>
             </div>
-            <div className="text-center p-6 border border-border rounded-lg bg-muted/20">
-              <div className="text-3xl font-bold text-foreground mb-1">2.1k</div>
-              <div className="text-sm text-muted-foreground">Contributions</div>
+            <div className="text-center p-6 border border-border rounded-lg bg-muted/20 flex flex-col items-center">
+              <ListTodo className="w-8 h-8 text-primary mb-2" />
+              <div className="text-3xl font-bold text-foreground mb-1">
+                {(() => {
+                  const ref = useRef<HTMLSpanElement>(null);
+                  const count = useCountUp(3773, 1200, 0, ref);
+                  return <span ref={ref}>{count.toLocaleString()}</span>;
+                })()}
+              </div>
+              <div className="text-sm text-muted-foreground">TODOs left to fate</div>
             </div>
-            <div className="text-center p-6 border border-border rounded-lg bg-muted/20">
-              <div className="text-3xl font-bold text-foreground mb-1">48</div>
-              <div className="text-sm text-muted-foreground">Stars Earned</div>
+            <div className="text-center p-6 border border-border rounded-lg bg-muted/20 flex flex-col items-center">
+              <PanelsTopLeft className="w-8 h-8 text-primary mb-2" />
+              <div className="text-3xl font-bold text-foreground mb-1">
+                {(() => {
+                  const ref = useRef<HTMLSpanElement>(null);
+                  const count = useCountUp(73, 1200, 0, ref);
+                  return <span ref={ref}>{count}</span>;
+                })()}
+              </div>
+              <div className="text-sm text-muted-foreground">Tabs opened to fix one bug</div>
             </div>
           </div>
 
