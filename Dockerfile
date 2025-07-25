@@ -7,7 +7,7 @@ COPY . .
 RUN npm run build
 
 # Stage 2: Serve
-FROM nginx:alpine
-COPY --from=builder /app/dist /usr/share/nginx/html
+FROM caddy:alpine
+COPY --from=builder /app/dist /srv
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["caddy", "file-server", "--root", "/srv", "--listen", ":80"]

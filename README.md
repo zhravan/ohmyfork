@@ -1,16 +1,24 @@
 
-# ohmyfork
+# OhMyFork.dev
 
-Minimal portfolio & dev showcase by Shravan K B.
+Minimal portfolio & dev showcase
 
-## Setup
+## Preview
+
+![Demo Preview](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/9pphhianf3zo5jvpzpi3.png)
+
+---
+
+## Quick Start
 
 ```sh
 git clone <YOUR_GIT_URL>
 cd <YOUR_PROJECT_NAME>
-npm install
-npm run dev
+bun install
+bun run dev
 ```
+
+---
 
 ## Tech Stack
 
@@ -20,20 +28,34 @@ npm run dev
 - Tailwind CSS
 - shadcn-ui
 
+---
+
 ## Deployment
 
-You can deploy this project to any modern static hosting provider, such as:
+### Self-Hosting (Docker + Caddy)
+
+```sh
+make docker-build
+make docker-run
+# App available at http://localhost
+```
+
+### Static Hosting
+
+Build and deploy the `dist/` folder to:
 
 - Vercel
 - Netlify
 - GitHub Pages
 - Azure Static Web Apps
 
-Just build the project and follow your provider's instructions:
-
 ```sh
-npm run build
-# then deploy the output in the dist/ folder
+bun run build
+# deploy dist/ folder
 ```
 
+---
 
+## Useful Commands
+
+See the `Makefile` for build, run, clean, and more.
