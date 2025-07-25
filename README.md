@@ -1,5 +1,5 @@
 
-# ohmyfork
+# OhMyFork.dev
 
 Minimal portfolio & dev showcase
 
