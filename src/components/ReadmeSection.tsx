@@ -1,4 +1,8 @@
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Github, Linkedin, Twitter, Mail, MapPin, Calendar, Coffee, ListTodo, PanelsTopLeft } from "lucide-react";
+import React, { useRef, useEffect, useState } from "react";
+
 // Animated badge color cycling hook
 const badgeColors = [
   "bg-green-500 text-white",
@@ -8,6 +12,7 @@ const badgeColors = [
   "bg-purple-500 text-white",
   "bg-red-500 text-white",
 ];
+
 function useAnimatedBadgeColor(intervalMs = 900) {
   const [colorIdx, setColorIdx] = useState(0);
   useEffect(() => {
@@ -18,10 +23,7 @@ function useAnimatedBadgeColor(intervalMs = 900) {
   }, [intervalMs]);
   return badgeColors[colorIdx];
 }
-import { Button } from "@/components/ui/button";
-import { Github, Linkedin, Twitter, Mail, MapPin, Calendar, Coffee, ListTodo, PanelsTopLeft } from "lucide-react";
-import React, { useRef, useEffect, useState } from "react";
-// Simple count-up animation hook
+
 function useCountUp(target: number, duration = 1200, start = 0, ref: React.RefObject<HTMLElement>) {
   const [count, setCount] = useState(start);
   const [hasAnimated, setHasAnimated] = useState(false);
