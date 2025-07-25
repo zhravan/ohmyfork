@@ -1,11 +1,25 @@
 
+<div align="center">
+
 # OhMyFork.dev
 
 Minimal portfolio & dev showcase
 
+</div>
+
 ## Preview
 
-![Demo Preview](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/9pphhianf3zo5jvpzpi3.png)
+<div align="center">
+  <img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/9pphhianf3zo5jvpzpi3.png" alt="Demo Preview" width="400" />
+</div>
+
+---
+
+## Lighthouse Report
+
+<div align="center">
+  <img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/vcf49389sh09hhme3u4g.png" alt="Lighthouse Report" width="400" />
+</div>
 
 ---
 
