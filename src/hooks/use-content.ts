@@ -1,9 +1,7 @@
-import { useState, useEffect, useCallback } from 'react';
-import { 
-  loadContent, 
-  getContentTags, 
-  getContentBySlug 
-} from '@/lib/content-loader';
+import { useCallback, useEffect, useState } from 'react';
+
+import { getContentBySlug, getContentTags, loadContent } from '@/lib/content-loader';
+
 import type { 
   ContentType, 
   ContentResult, 

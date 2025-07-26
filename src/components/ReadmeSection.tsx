@@ -1,7 +1,10 @@
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Github, Linkedin, Twitter, Mail, MapPin, Calendar, Coffee, ListTodo, PanelsTopLeft } from "lucide-react";
-import React, { useRef, useEffect, useState } from "react";
+import {
+    Calendar, Coffee, Github, Linkedin, ListTodo, Mail, MapPin, PanelsTopLeft, Twitter
+} from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 
 // Animated badge color cycling hook
 const badgeColors = [

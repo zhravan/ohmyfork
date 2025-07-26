@@ -1,11 +1,15 @@
-import { GitHubHeader } from "@/components/GitHubHeader";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { BugReportModal } from "@/components/BugReportModal";
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
-import { ArrowLeft, Bug, Clock, AlertTriangle } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { AlertTriangle, ArrowLeft, Bug, Clock } from 'lucide-react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { BugReportModal } from '@/components/BugReportModal';
+import { GitHubHeader } from '@/components/GitHubHeader';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import {
+    Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext,
+    PaginationPrevious
+} from '@/components/ui/pagination';
 
 interface BugTale {
   title: string;

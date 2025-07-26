@@ -1,4 +1,5 @@
-import * as React from "react";
+import * as React from 'react';
+
 import type { ToastActionElement, ToastProps } from "../components/ui/toast";
 
 const NOTIFY_LIMIT = 1;

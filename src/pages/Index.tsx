@@ -1,6 +1,6 @@
-import { GitHubHeader } from "@/components/GitHubHeader";
-import { FileExplorer } from "@/components/FileExplorer";
-import { ReadmeSection } from "@/components/ReadmeSection";
+import { FileExplorer } from '@/components/FileExplorer';
+import { GitHubHeader } from '@/components/GitHubHeader';
+import { ReadmeSection } from '@/components/ReadmeSection';
 
 const Index = () => {
   return (

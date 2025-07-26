@@ -1,13 +1,17 @@
-import { GitHubHeader } from "@/components/GitHubHeader";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { ArrowLeft, Calendar, Clock, Search, User } from 'lucide-react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
-import { ArrowLeft, Calendar, Clock, User, Search } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { useContent } from "@/hooks/use-content";
+import { GitHubHeader } from '@/components/GitHubHeader';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import {
+    Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext,
+    PaginationPrevious
+} from '@/components/ui/pagination';
+import { useContent } from '@/hooks/use-content';
+
 import type { BlogPost, ContentItem } from "@/types/content";export default function BlogsPage() {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');

@@ -1,12 +1,13 @@
-import { GitHubHeader } from "@/components/GitHubHeader";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
-import { NewsletterPreviewModal } from "@/components/NewsletterPreviewModal";
-import { ArrowLeft, Mail, Calendar, Users, TrendingUp } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { ArrowLeft, Calendar, Mail, TrendingUp, Users } from 'lucide-react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { GitHubHeader } from '@/components/GitHubHeader';
+import { NewsletterPreviewModal } from '@/components/NewsletterPreviewModal';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 interface NewsletterIssue {
   title: string;
