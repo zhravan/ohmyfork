@@ -1,5 +1,5 @@
 import {
-    Calendar, Coffee, Github, Linkedin, ListTodo, Mail, MapPin, PanelsTopLeft, Twitter
+  Calendar, Coffee, Github, Linkedin, ListTodo, Mail, MapPin, PanelsTopLeft, Twitter
 } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
 
@@ -121,7 +121,7 @@ export function ReadmeSection() {
                 </Button>
                 <Button asChild variant="outline" size="sm" className="justify-start">
                   <a href="https://x.com/zhravan" target="_blank" rel="noopener noreferrer" className="text-primary no-underline">
-                    <span className="w-4 h-4 mr-2 flex items-center justify-center" style={{fontWeight: 'bold', fontSize: '1.1em'}}>𝕏</span>
+                    <span className="w-4 h-4 mr-2 flex items-center justify-center" style={{ fontWeight: 'bold', fontSize: '1.1em' }}>𝕏</span>
                     X
                   </a>
                 </Button>
@@ -223,9 +223,9 @@ export function ReadmeSection() {
 
           <blockquote className="border-l-4 border-primary pl-6 py-4 bg-muted/30 rounded-r-lg">
             <p className="italic text-muted-foreground text-lg leading-relaxed">
-              "Code is like humor. When you have to explain it, it's bad."
+              Be brave enough to suck at something enough.
             </p>
-            <cite className="text-sm text-muted-foreground font-medium block mt-2">- Cory House</cite>
+            <cite className="text-sm text-muted-foreground font-medium block mt-2">- Shravan Kumar B</cite>
           </blockquote>
         </div>
       </div>
