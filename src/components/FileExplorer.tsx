@@ -1,6 +1,8 @@
-import { useNavigate } from "react-router-dom";
-import { FileIcon } from "./FileIcon";
-import { FileText } from "lucide-react";
+import { FileText } from 'lucide-react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { FileIcon } from './FileIcon';
 
 interface FileItem {
   name: string;
@@ -21,8 +23,6 @@ const fileStructure: FileItem[] = [
   { name: 'README.md', type: 'file', path: '#readme', lastCommit: 'Update README with latest info', commitTime: '1 day ago' },
   { name: 'package.json', type: 'file', path: '#', lastCommit: 'Update dependencies', commitTime: '1 week ago' },
 ];
-
-import React, { useState } from "react";
 
 export function FileExplorer() {
   const navigate = useNavigate();

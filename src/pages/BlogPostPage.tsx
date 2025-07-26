@@ -1,7 +1,9 @@
-import { useParams, useNavigate } from 'react-router-dom';
-import { useContentItem } from '@/hooks/use-content';
+import { useNavigate, useParams } from 'react-router-dom';
+
 import { ContentPreview } from '@/components/ContentPreview';
 import { GitHubHeader } from '@/components/GitHubHeader';
+import { useContentItem } from '@/hooks/use-content';
+
 import type { BlogPost } from '@/types/content';
 
 export default function BlogPostPage() {

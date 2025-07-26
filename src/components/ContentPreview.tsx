@@ -1,8 +1,10 @@
+import { ArrowLeft, Calendar, Clock, Tag, User } from 'lucide-react';
 import React from 'react';
-import { MDXProvider } from '@mdx-js/react';
-import { Button } from '@/components/ui/button';
+
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, Calendar, Clock, User, Tag } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { MDXProvider } from '@mdx-js/react';
+
 import type { ContentItem, BaseContent } from '@/types/content';
 
 // MDX components for consistent styling

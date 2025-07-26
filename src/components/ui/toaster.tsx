@@ -1,12 +1,7 @@
-import { useMessageHandler } from "@/hooks/message-handler"
 import {
-  Toast,
-  ToastClose,
-  ToastDescription,
-  ToastProvider,
-  ToastTitle,
-  ToastViewport,
-} from "@/components/ui/toast"
+    Toast, ToastClose, ToastDescription, ToastProvider, ToastTitle, ToastViewport
+} from '@/components/ui/toast';
+import { useMessageHandler } from '@/hooks/message-handler';
 
 export function Toaster() {
   const { toasts } = useMessageHandler()

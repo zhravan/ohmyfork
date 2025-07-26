@@ -1,18 +1,20 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { ThemeProvider } from "next-themes";
-import Index from "./pages/Index";
-import BlogsPage from "./pages/BlogsPage";
-import BlogPostPage from "./pages/BlogPostPage";
-import ProjectsPage from "./pages/ProjectsPage";
-import ProjectPage from "./pages/ProjectPage";
-import ContactPage from "./pages/ContactPage";
-import BugTalesPage from "./pages/BugTalesPage";
-import NewsletterPage from "./pages/NewsletterPage";
-import NotFound from "./pages/NotFound";
+import { ThemeProvider } from 'next-themes';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
+import { Toaster as Sonner } from '@/components/ui/sonner';
+import { Toaster } from '@/components/ui/toaster';
+import { TooltipProvider } from '@/components/ui/tooltip';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+import BlogPostPage from './pages/BlogPostPage';
+import BlogsPage from './pages/BlogsPage';
+import BugTalesPage from './pages/BugTalesPage';
+import ContactPage from './pages/ContactPage';
+import Index from './pages/Index';
+import NewsletterPage from './pages/NewsletterPage';
+import NotFound from './pages/NotFound';
+import ProjectPage from './pages/ProjectPage';
+import ProjectsPage from './pages/ProjectsPage';
 
 const queryClient = new QueryClient();
 

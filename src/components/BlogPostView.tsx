@@ -1,9 +1,10 @@
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, Calendar, Clock, User, Star, GitFork } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { ArrowLeft, Calendar, Clock, GitFork, Star, User } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
+import remarkGfm from 'remark-gfm';
+
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 
 interface BlogPost {
   title: string;

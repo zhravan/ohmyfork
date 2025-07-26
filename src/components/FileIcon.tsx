@@ -1,13 +1,4 @@
-import { 
-  Folder, 
-  FileText, 
-  Code, 
-  FileCode, 
-  Mail, 
-  Bug, 
-  BookOpen,
-  Rss
-} from "lucide-react";
+import { BookOpen, Bug, Code, FileCode, FileText, Folder, Mail, Rss } from 'lucide-react';
 
 interface FileIconProps {
   type: 'directory' | 'file';

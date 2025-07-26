@@ -1,8 +1,9 @@
-import { Button } from "@/components/ui/button";
-import { Star, GitFork, Eye } from "lucide-react";
-import { useState, useEffect } from "react";
-import { useMessageHandler } from "@/hooks/message-handler";
-import confetti from "canvas-confetti";
+import confetti from 'canvas-confetti';
+import { Eye, GitFork, Star } from 'lucide-react';
+import { useEffect, useState } from 'react';
+
+import { Button } from '@/components/ui/button';
+import { useMessageHandler } from '@/hooks/message-handler';
 
 export function GitHubHeader() {
   const [isStarred, setIsStarred] = useState(false);
