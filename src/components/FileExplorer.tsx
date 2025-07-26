@@ -87,11 +87,12 @@ export function FileExplorer() {
             <h2 className="text-lg font-semibold mb-4">CV Preview</h2>
             <div className="w-full h-[70vh] flex items-center justify-center">
               <iframe
-                src="https://raw.githubusercontent.com/shravan20/ohmyfork/refs/heads/main/public/cv.pdf"
+                src={`${import.meta.env.BASE_URL}cv.pdf`}
                 title="CV PDF Preview"
                 className="w-full h-full rounded border border-border"
                 frameBorder="0"
                 aria-label="CV PDF Preview"
+                allow="autoplay"
               />
             </div>
           </div>
