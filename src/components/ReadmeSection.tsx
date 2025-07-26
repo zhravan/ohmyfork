@@ -76,7 +76,7 @@ export function ReadmeSection() {
         <div className="p-8 prose prose-slate dark:prose-invert max-w-none">
           <div className="flex items-start justify-between mb-8">
             <h1 className="flex items-center gap-3 text-2xl font-bold">
-              👋‎ ‎ Hi there, I'm <a href="https://github.com/shravan20" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Shravan K B</a>
+              👋‎ ‎ Hi there, I'm <a href="https://github.com/shravan20" target="_blank" rel="noopener noreferrer" className="text-primary">Shravan K B</a>
             </h1>
             {(() => {
               const animatedClass = useAnimatedBadgeColor();
@@ -105,25 +105,25 @@ export function ReadmeSection() {
               <h2 className="text-lg font-semibold mb-4 text-foreground">Connect</h2>
               <div className="grid grid-cols-2 gap-2">
                 <Button asChild variant="outline" size="sm" className="justify-start">
-                  <a href="https://github.com/shravan20" target="_blank" rel="noopener noreferrer">
+                  <a href="https://github.com/shravan20" target="_blank" rel="noopener noreferrer" className="text-primary no-underline">
                     <Github className="w-4 h-4 mr-2" />
                     GitHub
                   </a>
                 </Button>
                 <Button asChild variant="outline" size="sm" className="justify-start">
-                  <a href="https://www.linkedin.com/in/zhravan/" target="_blank" rel="noopener noreferrer">
+                  <a href="https://www.linkedin.com/in/zhravan/" target="_blank" rel="noopener noreferrer" className="text-primary no-underline">
                     <Linkedin className="w-4 h-4 mr-2" />
                     LinkedIn
                   </a>
                 </Button>
                 <Button asChild variant="outline" size="sm" className="justify-start">
-                  <a href="https://x.com/zhravan" target="_blank" rel="noopener noreferrer">
-                    <Twitter className="w-4 h-4 mr-2" />
-                    Twitter
+                  <a href="https://x.com/zhravan" target="_blank" rel="noopener noreferrer" className="text-primary no-underline">
+                    <span className="w-4 h-4 mr-2 flex items-center justify-center" style={{fontWeight: 'bold', fontSize: '1.1em'}}>𝕏</span>
+                    X
                   </a>
                 </Button>
                 <Button asChild variant="outline" size="sm" className="justify-start">
-                  <a href="mailto:mrshravankumarb@gmail.com">
+                  <a href="mailto:mrshravankumarb@gmail.com" className="text-primary no-underline">
                     <Mail className="w-4 h-4 mr-2" />
                     Email
                   </a>
