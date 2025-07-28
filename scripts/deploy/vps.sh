@@ -1,25 +1,29 @@
 #!/bin/bash
 
-# Logging helpers
-info()  { echo "[INFO] $*"; }
-warn()  { echo "[WARN] $*" >&2; }
-debug() { [ "$DEBUG" = "1" ] && echo "[DEBUG] $*"; }
+# Simple logging functions
+info()   { echo "[INFO] $*"; }
+warn()   { echo "[WARN] $*" >&2; }
+debug()  { [ "$DEBUG" = "1" ] && echo "[DEBUG] $*"; }
 
+# Enable debug logs by setting DEBUG=1
 DEBUG=0
+
+# Variables
 APP_DIR="/var/www/ohmyfork"
-FINAL_DIST="$APP_DIR/dist"
+REPO_URL="https://github.com/shravan20/ohmyfork.git"
 DOMAIN="ohmyfork.dev"
 CADDYFILE="/etc/caddy/Caddyfile"
+BUILD_DIR="$APP_DIR/dist"
 
-info "Starting ohmyfork.dev deployment..."
+info "Starting deployment..."
 
-# Must be root
+# Check for root
 if [ "$(id -u)" -ne 0 ]; then
-  warn "Run this script as root."
+  warn "This script must be run as root."
   exit 1
 fi
 
-# Install Caddy if needed
+# Install Caddy if not present
 if ! command -v caddy >/dev/null 2>&1; then
   info "Installing Caddy..."
   apt update && apt install -y debian-keyring debian-archive-keyring apt-transport-https curl gpg
@@ -32,31 +36,32 @@ else
   debug "Caddy is already installed."
 fi
 
-# Clone or update code
+# Clone or update app
 if [ ! -d "$APP_DIR" ]; then
-  info "Cloning ohmyfork repo..."
-  git clone https://github.com/shravan20/ohmyfork.git "$APP_DIR"
+  info "Cloning repository..."
+  git clone "$REPO_URL" "$APP_DIR"
 else
   info "Pulling latest changes..."
   cd "$APP_DIR" && git pull
 fi
 
-# Build
+# Build app
 cd "$APP_DIR"
-info "Installing and building..."
-if ! npm install || ! npm run build:prod; then
-  warn "Build failed!"
+info "Installing dependencies..."
+npm install
+
+info "Building production site..."
+if ! npm run build:prod; then
+  warn "Build failed."
   exit 1
 fi
 
-# Backup Caddyfile
-cp "$CADDYFILE" "$CADDYFILE.bak.$(date +%s)"
-
-# Write Caddyfile
+# Update Caddyfile
 info "Writing Caddyfile..."
 cat > "$CADDYFILE" <<EOF
 $DOMAIN, www.$DOMAIN {
-  root * $FINAL_DIST
+  root * $BUILD_DIR
+  try_files {path} /index.html
   file_server
   encode gzip
   log {
@@ -67,9 +72,9 @@ EOF
 
 # Reload Caddy
 info "Reloading Caddy..."
-caddy reload --config "$CADDYFILE" --adapter caddyfile || {
-  warn "Caddy reload failed!"
+if ! caddy reload --config "$CADDYFILE" --adapter caddyfile; then
+  warn "Caddy reload failed. Check syntax or permissions."
   exit 1
-}
+fi
 
-info "Deployment complete. Visit: https://$DOMAIN"
+info "Deployment complete. Visit https://$DOMAIN"
