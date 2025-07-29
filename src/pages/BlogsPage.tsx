@@ -60,8 +60,8 @@ import type { BlogPost, ContentItem } from "@/types/content";export default func
   return (
     <div className="min-h-screen bg-background">
       <GitHubHeader />
-      <div className="container mx-auto px-4 py-6">
-        <div className="flex items-center gap-4 mb-6">
+      <div className="container mx-auto px-2 sm:px-4 py-6">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-6">
           <Button 
             variant="outline" 
             size="sm" 
@@ -79,7 +79,7 @@ import type { BlogPost, ContentItem } from "@/types/content";export default func
         
         {/* Search Bar */}
         <div className="mb-6">
-          <div className="relative">
+          <div className="relative max-w-full">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
             <Input
               placeholder="Search blogs..."
@@ -91,30 +91,28 @@ import type { BlogPost, ContentItem } from "@/types/content";export default func
         </div>
         
         <div className="border border-border rounded-md bg-background">
-          <div className="bg-muted/30 px-4 py-3 border-b border-border">
-            <div className="flex items-center justify-between">
-              <span className="font-mono text-sm text-foreground">blogs/ directory</span>
-              <span className="text-sm text-muted-foreground">{total} articles</span>
+          <div className="bg-muted/30 px-3 sm:px-4 py-3 border-b border-border">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+              <span className="font-mono text-xs sm:text-sm text-foreground">blogs/ directory</span>
+              <span className="text-xs sm:text-sm text-muted-foreground">{total} articles</span>
             </div>
           </div>
-          
           <div className="divide-y divide-border">
-            {blogPosts.map((post) => (
+            {blogPosts.map((post: any) => (
               <article 
                 key={post.slug} 
-                className="p-6 hover:bg-muted/30 transition-colors cursor-pointer"
+                className="p-4 sm:p-6 hover:bg-muted/30 transition-colors cursor-pointer"
                 onClick={() => navigate(`/blogs/${post.slug}`)}
               >
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex-1">
-                    <h2 className="text-xl font-semibold text-foreground mb-2 hover:text-primary transition-colors">
+                <div className="flex flex-col sm:flex-row items-start justify-between gap-3 sm:gap-4">
+                  <div className="flex-1 min-w-0">
+                    <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-2 hover:text-primary transition-colors truncate">
                       {post.title}
                     </h2>
-                    <p className="text-muted-foreground mb-4 leading-relaxed">
+                    <p className="text-muted-foreground mb-4 leading-relaxed line-clamp-3">
                       {post.excerpt}
                     </p>
-                    
-                    <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-3">
+                    <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs sm:text-sm text-muted-foreground mb-3">
                       <div className="flex items-center gap-1">
                         <User className="w-4 h-4" />
                         {post.author}
@@ -132,9 +130,8 @@ import type { BlogPost, ContentItem } from "@/types/content";export default func
                         {post.readTime}
                       </div>
                     </div>
-                    
                     <div className="flex flex-wrap gap-2">
-                      {post.tags.map((tag) => (
+                      {post.tags.map((tag: string) => (
                         <Badge key={tag} variant="secondary" className="text-xs">
                           {tag}
                         </Badge>

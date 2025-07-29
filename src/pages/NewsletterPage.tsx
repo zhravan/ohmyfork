@@ -278,8 +278,8 @@ export default function NewsletterPage() {
     <div className="min-h-screen bg-background">
       <GitHubHeader />
       
-      <div className="container mx-auto px-4 py-6">
-        <div className="flex items-center gap-4 mb-6">
+      <div className="container mx-auto px-2 sm:px-4 py-6">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-6">
           <Button 
             variant="outline" 
             size="sm" 
@@ -295,15 +295,14 @@ export default function NewsletterPage() {
           </div>
         </div>
         
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
           {/* Newsletter Info & Signup */}
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-1 order-2 lg:order-1 mb-6 lg:mb-0">
             <div className="border border-border rounded-md bg-background">
-              <div className="bg-muted/30 px-4 py-3 border-b border-border">
-                <span className="font-mono text-sm text-foreground">newsletter/subscribe.md</span>
+              <div className="bg-muted/30 px-3 sm:px-4 py-3 border-b border-border">
+                <span className="font-mono text-xs sm:text-sm text-foreground">newsletter/subscribe.md</span>
               </div>
-              
-              <div className="p-6">
+              <div className="p-4 sm:p-6">
                 <div className="mb-6">
                   <h2 className="text-xl font-semibold mb-3">The Developer's Weekly</h2>
                   <p className="text-muted-foreground mb-4">
@@ -311,7 +310,7 @@ export default function NewsletterPage() {
                     that are actually worth your time. No spam, just valuable content.
                   </p>
                   
-                  <div className="grid grid-cols-2 gap-4 mb-6">
+                  <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-6">
                     <div className="text-center p-3 border border-border rounded-md">
                       <div className="flex items-center justify-center mb-2">
                         <Users className="w-5 h-5 text-primary" />
@@ -369,34 +368,31 @@ export default function NewsletterPage() {
           </div>
           
           {/* Recent Issues */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2 order-1 lg:order-2">
             <div className="border border-border rounded-md bg-background">
-              <div className="bg-muted/30 px-4 py-3 border-b border-border">
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-sm text-foreground">newsletter/archive/</span>
-                  <span className="text-sm text-muted-foreground">{recentIssues.length} recent issues</span>
+              <div className="bg-muted/30 px-3 sm:px-4 py-3 border-b border-border">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                  <span className="font-mono text-xs sm:text-sm text-foreground">newsletter/archive/</span>
+                  <span className="text-xs sm:text-sm text-muted-foreground">{recentIssues.length} recent issues</span>
                 </div>
               </div>
-              
               <div className="divide-y divide-border">
                 {recentIssues.map((issue, index) => (
-                  <article key={index} className="p-6 hover:bg-muted/30 transition-colors cursor-pointer" onClick={() => handleIssueClick(issue)}>
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-2">
-                          <h3 className="text-lg font-semibold text-foreground hover:text-primary transition-colors">
+                  <article key={index} className="p-4 sm:p-6 hover:bg-muted/30 transition-colors cursor-pointer" onClick={() => handleIssueClick(issue)}>
+                    <div className="flex flex-col sm:flex-row items-start justify-between gap-3 sm:gap-4">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
+                          <h3 className="text-base sm:text-lg font-semibold text-foreground hover:text-primary transition-colors truncate">
                             {issue.title}
                           </h3>
                           <Badge variant="outline" className="text-xs">
                             {issue.readTime}
                           </Badge>
                         </div>
-                        
-                        <p className="text-muted-foreground mb-4 leading-relaxed">
+                        <p className="text-muted-foreground mb-4 leading-relaxed line-clamp-3">
                           {issue.description}
                         </p>
-                        
-                        <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-3">
+                        <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs sm:text-sm text-muted-foreground mb-3">
                           <div className="flex items-center gap-1">
                             <Calendar className="w-4 h-4" />
                             {new Date(issue.date).toLocaleDateString('en-US', { 

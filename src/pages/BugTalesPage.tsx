@@ -180,7 +180,7 @@ export default function BugTalesPage() {
       <GitHubHeader />
       
       <div className="container mx-auto px-4 py-6">
-        <div className="flex items-center gap-4 mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-6">
           <Button 
             variant="outline" 
             size="sm" 
@@ -199,24 +199,24 @@ export default function BugTalesPage() {
         
         <div className="border border-border rounded-md bg-background">
           <div className="bg-muted/30 px-4 py-3 border-b border-border">
-            <div className="flex items-center justify-between">
-              <span className="font-mono text-sm text-foreground">bug_tales/ directory</span>
-              <span className="text-sm text-muted-foreground">{bugTales.length} debugging stories</span>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+              <span className="font-mono text-xs sm:text-sm text-foreground">bug_tales/ directory</span>
+              <span className="text-xs sm:text-sm text-muted-foreground">{bugTales.length} debugging stories</span>
             </div>
           </div>
           
           <div className="divide-y divide-border">
             {currentTales.map((tale, index) => (
-              <div 
-                key={index} 
-                className="p-6 hover:bg-muted/30 transition-colors cursor-pointer"
+              <div
+                key={index}
+                className="p-3 sm:p-4 hover:bg-muted/30 transition-colors cursor-pointer overflow-hidden"
                 onClick={() => setSelectedBug(tale)}
               >
-                <div className="flex items-start gap-4">
-                  <AlertTriangle className="w-6 h-6 text-destructive mt-1" />
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <h2 className="text-xl font-semibold text-foreground hover:text-primary transition-colors">
+                <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-4 min-w-0">
+                  <AlertTriangle className="w-6 h-6 text-destructive mt-1 shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2 min-w-0">
+                      <h2 className="text-base sm:text-lg md:text-xl font-semibold text-foreground hover:text-primary transition-colors break-words break-all line-clamp-2 min-w-0">
                         {tale.title}
                       </h2>
                       <Badge variant={getSeverityColor(tale.severity)}>
@@ -226,12 +226,10 @@ export default function BugTalesPage() {
                         {tale.status.toUpperCase()}
                       </Badge>
                     </div>
-                    
-                    <p className="text-muted-foreground mb-4 leading-relaxed">
+                    <p className="text-muted-foreground mb-4 leading-relaxed line-clamp-3 break-words text-xs sm:text-sm">
                       {tale.description}
                     </p>
-                    
-                    <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-3">
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-xs sm:text-sm text-muted-foreground mb-3">
                       <div className="flex items-center gap-1">
                         <Clock className="w-4 h-4" />
                         {tale.timeToSolve}
@@ -239,11 +237,10 @@ export default function BugTalesPage() {
                       <div>
                         Reported: {new Date(tale.dateReported).toLocaleDateString()}
                       </div>
-                      <div>
-                        Assignee: {tale.assignee}
+                      <div className="truncate">
+                        Assignee: <span className="break-all">{tale.assignee}</span>
                       </div>
                     </div>
-                    
                     <div className="flex flex-wrap gap-2">
                       {tale.tags.map((tag) => (
                         <Badge key={tag} variant="outline" className="text-xs">

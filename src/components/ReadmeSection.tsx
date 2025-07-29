@@ -67,54 +67,51 @@ function useCountUp(target: number, duration = 1200, start = 0, ref: React.RefOb
 
 export function ReadmeSection() {
   return (
-    <div id="readme" className="mt-8">
-      <div className="border border-border rounded-md bg-background">
-        <div className="flex items-center px-4 py-3 border-b border-border bg-muted/30">
+    <div id="readme" className="mt-8 w-full">
+      <div className="border border-border rounded-md bg-background w-full">
+        <div className="flex items-center px-3 sm:px-4 py-3 border-b border-border bg-muted/30">
           <svg className="w-4 h-4 mr-2 text-muted-foreground" viewBox="0 0 16 16" fill="currentColor">
             <path fillRule="evenodd" d="M14.85 3H1.15C.52 3 0 3.52 0 4.15v7.69C0 12.48.52 13 1.15 13h13.69c.64 0 1.15-.52 1.15-1.15v-7.7C16 3.52 15.48 3 14.85 3zM9 11H7V8L5.5 9.92 4 8v3H2V5h2l1.5 2.92L7 5h2v6zm2.99.5L9.5 8H11V5h2v3h1.5l-2.51 3.5z" />
           </svg>
-          <span className="font-mono text-sm font-medium">README.md</span>
+          <span className="font-mono text-xs sm:text-sm font-medium">README.md</span>
         </div>
-
-        <div className="p-8 prose prose-slate dark:prose-invert max-w-none">
-          <div className="flex items-start justify-between mb-8">
-            <h1 className="flex items-center gap-3 text-2xl font-bold">
+        <div className="p-3 sm:p-8 prose prose-slate dark:prose-invert max-w-none">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-8">
+            <h1 className="flex items-center gap-2 sm:gap-3 text-lg sm:text-2xl font-bold">
               👋‎ ‎ Hi there, I'm <a href="https://github.com/shravan20" target="_blank" rel="noopener noreferrer" className="text-primary">Shravan K B</a>
             </h1>
             {(() => {
               const animatedClass = useAnimatedBadgeColor();
               return (
-                <Badge variant="secondary" className={`px-3 py-1 transition-colors duration-500 ${animatedClass}`}>Available for hire</Badge>
+                <Badge variant="secondary" className={`px-2 py-1 sm:px-3 transition-colors duration-500 ${animatedClass}`}>Available for hire</Badge>
               );
             })()}
           </div>
-
-          <div className="grid md:grid-cols-2 gap-8 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-8">
             <div>
-              <h2 className="text-lg font-semibold mb-4 text-foreground">Quick Stats</h2>
-              <div className="space-y-3">
-                <div className="flex items-center gap-3">
+              <h2 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-foreground">Quick Stats</h2>
+              <div className="space-y-2 sm:space-y-3">
+                <div className="flex items-center gap-2 sm:gap-3">
                   <MapPin className="w-4 h-4 text-muted-foreground flex-shrink-0" />
-                  <span className="text-foreground">Karnataka, India</span>
+                  <span className="text-foreground text-xs sm:text-base">Karnataka, India</span>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 sm:gap-3">
                   <Calendar className="w-4 h-4 text-muted-foreground flex-shrink-0" />
-                  <span className="text-foreground">Professionally tinkering since {new Date().getFullYear() - 2019} years</span>
+                  <span className="text-foreground text-xs sm:text-base">Professionally tinkering since {new Date().getFullYear() - 2019} years</span>
                 </div>
               </div>
             </div>
-
             <div>
-              <h2 className="text-lg font-semibold mb-4 text-foreground">Connect</h2>
-              <div className="grid grid-cols-2 gap-2">
-                <Button asChild variant="outline" size="sm" className="justify-start">
-                  <a href="https://github.com/shravan20" target="_blank" rel="noopener noreferrer" className="text-primary no-underline">
+              <h2 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-foreground">Connect</h2>
+              <div className="grid grid-cols-1 xs:grid-cols-2 gap-2">
+                <Button asChild variant="outline" size="sm" className="justify-start w-full">
+                  <a href="https://github.com/shravan20" target="_blank" rel="noopener noreferrer" className="text-primary no-underline w-full flex items-center">
                     <Github className="w-4 h-4 mr-2" />
                     GitHub
                   </a>
                 </Button>
-                <Button asChild variant="outline" size="sm" className="justify-start">
-                  <a href="https://www.linkedin.com/in/zhravan/" target="_blank" rel="noopener noreferrer" className="text-primary no-underline">
+                <Button asChild variant="outline" size="sm" className="justify-start w-full">
+                  <a href="https://www.linkedin.com/in/zhravan/" target="_blank" rel="noopener noreferrer" className="text-primary no-underline w-full flex items-center">
                     <Linkedin className="w-4 h-4 mr-2" />
                     LinkedIn
                   </a>

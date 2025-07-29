@@ -39,44 +39,45 @@ export function FileExplorer() {
   };
 
   return (
-    <div className="repo-file-list bg-background">
-      <div className="bg-muted/30 px-4 py-3 border-b border-border">
-        <div className="flex items-center justify-between">
+    <div className="repo-file-list bg-background w-full overflow-x-auto rounded-md border border-border">
+      <div className="bg-muted/30 px-3 sm:px-4 py-3 border-b border-border">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           <div className="flex items-center space-x-2">
-            <span className="font-mono text-sm text-foreground">main</span>
+            <span className="font-mono text-xs sm:text-sm text-foreground">main</span>
             <span className="text-muted-foreground">•</span>
-            <span className="text-sm text-muted-foreground">{fileStructure.length} files</span>
+            <span className="text-xs sm:text-sm text-muted-foreground">{fileStructure.length} files</span>
           </div>
-          <span className="text-sm text-muted-foreground">Latest commit 1 day ago</span>
+          <span className="text-xs sm:text-sm text-muted-foreground">Latest commit 1 day ago</span>
         </div>
       </div>
-      {fileStructure.map((item, index) => (
-        <div
-          key={index}
-          className="file-row"
-          onClick={() => handleItemClick(item)}
-        >
-          {item.name === 'cv' ? (
-            <FileText className="file-icon text-primary" aria-label="CV icon" />
-          ) : (
-            <FileIcon type={item.type} name={item.name} className="file-icon" />
-          )}
-          <span className="font-mono text-sm text-foreground font-medium min-w-0">
-            {item.name}
-          </span>
-          <span className="commit-message">
-            {item.lastCommit}
-          </span>
-          <span className="commit-time">
-            {item.commitTime}
-          </span>
-        </div>
-      ))}
-
+      <div className="divide-y divide-border">
+        {fileStructure.map((item, index) => (
+          <div
+            key={index}
+            className="file-row flex flex-wrap items-center gap-2 px-3 sm:px-4 py-2 cursor-pointer hover:bg-muted/20 transition-colors"
+            onClick={() => handleItemClick(item)}
+          >
+            {item.name === 'cv' ? (
+              <FileText className="file-icon text-primary w-4 h-4 sm:w-5 sm:h-5" aria-label="CV icon" />
+            ) : (
+              <FileIcon type={item.type} name={item.name} className="file-icon w-4 h-4 sm:w-5 sm:h-5" />
+            )}
+            <span className="font-mono text-xs sm:text-sm text-foreground font-medium min-w-0 truncate flex-1">
+              {item.name}
+            </span>
+            <span className="commit-message text-xs sm:text-sm truncate flex-1 min-w-0 text-muted-foreground">
+              {item.lastCommit}
+            </span>
+            <span className="commit-time text-xs sm:text-sm text-muted-foreground whitespace-nowrap">
+              {item.commitTime}
+            </span>
+          </div>
+        ))}
+      </div>
       {/* CV Modal */}
       {showCVModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-          <div className="bg-background rounded-lg shadow-lg max-w-3xl w-full p-4 relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-2 sm:p-0">
+          <div className="bg-background rounded-lg shadow-lg max-w-full w-full sm:max-w-3xl p-2 sm:p-4 relative">
             <button
               className="absolute top-2 right-2 text-2xl text-muted-foreground hover:text-foreground"
               onClick={() => setShowCVModal(false)}
@@ -85,7 +86,7 @@ export function FileExplorer() {
               &times;
             </button>
             <h2 className="text-lg font-semibold mb-4">CV Preview</h2>
-            <div className="w-full h-[70vh] flex items-center justify-center">
+            <div className="w-full h-[60vh] sm:h-[70vh] flex items-center justify-center">
               <iframe
                 src={`${import.meta.env.BASE_URL}cv.pdf`}
                 title="CV PDF Preview"

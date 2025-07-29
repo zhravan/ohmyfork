@@ -20,8 +20,8 @@ export default function ContactPage() {
     <div className="min-h-screen bg-background">
       <GitHubHeader />
 
-      <div className="container mx-auto px-4 py-6">
-        <div className="flex items-center gap-4 mb-6">
+      <div className="container mx-auto px-2 sm:px-4 py-6">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-6">
           <Button
             variant="outline"
             size="sm"
@@ -37,16 +37,15 @@ export default function ContactPage() {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           {/* Contact Information */}
           <div className="border border-border rounded-md bg-background">
-            <div className="bg-muted/30 px-4 py-3 border-b border-border">
-              <span className="font-mono text-sm text-foreground">
+            <div className="bg-muted/30 px-3 sm:px-4 py-3 border-b border-border">
+              <span className="font-mono text-xs sm:text-sm text-foreground">
                 contact/info.md
               </span>
             </div>
-
-            <div className="p-6">
+            <div className="p-4 sm:p-6">
               <h2 className="text-xl font-semibold mb-6">Get in Touch</h2>
 
               <div className="space-y-6">
@@ -93,7 +92,7 @@ export default function ContactPage() {
 
               <div className="mt-8">
                 <h3 className="text-lg font-semibold mb-4">Social Links</h3>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 xs:grid-cols-2 gap-3">
                   <a
                     href="https://github.com/shravan20"
                     className="flex items-center gap-2 p-3 border border-border rounded-md hover:bg-muted/50 transition-colors text-primary"
@@ -374,17 +373,16 @@ export default function ContactPage() {
 
           {/* Contact Form */}
           <div className="border border-border rounded-md bg-background">
-            <div className="bg-muted/30 px-4 py-3 border-b border-border">
-              <span className="font-mono text-sm text-foreground">
+            <div className="bg-muted/30 px-3 sm:px-4 py-3 border-b border-border">
+              <span className="font-mono text-xs sm:text-sm text-foreground">
                 contact/form.tsx
               </span>
             </div>
-
-            <div className="p-6">
+            <div className="p-4 sm:p-6">
               <h2 className="text-xl font-semibold mb-6">Send a Message</h2>
 
               <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="firstName">First Name</Label>
                     <Input id="firstName" placeholder="John" required />
