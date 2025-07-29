@@ -9,7 +9,7 @@ import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 // Set the base path for GitHub Pages deployment
 // Replace 'ohmyfork' with your repo name if different
 export default defineConfig(({ mode }) => ({
-  base: mode === "development" ? "/" : "/ohmyfork/",
+  base: "/",
   server: {
     host: "::",
     port: 8080
@@ -18,7 +18,7 @@ export default defineConfig(({ mode }) => ({
     mdx({
       remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
       rehypePlugins: [],
-      development: process.env.NODE_ENV === "development"
+      development: mode === "development"
     }),
     react()
   ],
