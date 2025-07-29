@@ -1,4 +1,4 @@
-import { ArrowLeft, Calendar, ExternalLink, MapPin } from 'lucide-react';
+import { ArrowLeft, Calendar, ExternalLink, Mail, MapPin } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 import { GitHubHeader } from '@/components/GitHubHeader';
@@ -50,16 +50,14 @@ export default function ContactPage() {
 
               <div className="space-y-6">
                 <div className="flex items-center gap-3">
-                  <img
-                    src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Mail_%28iOS%29.svg"
-                    alt="Email"
-                    className="w-5 h-5 text-muted-foreground"
-                  />
+                  <Mail className="w-4 h-4 mr-2" />
                   <div>
                     <p className="font-medium">Email</p>
                     <a
-                      href="mailto:mrshravankumarb@gmail.com"
+                      href="https://mail.google.com/mail/?view=cm&fs=1&to=mrshravankumarb@gmail.com"
                       className="text-primary hover:underline"
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
                       mrshravankumarb@gmail.com
                     </a>

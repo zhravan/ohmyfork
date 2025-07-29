@@ -78,8 +78,17 @@ export function ReadmeSection() {
         <div className="p-3 sm:p-8 prose prose-slate dark:prose-invert max-w-none">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-8">
             <h1 className="flex items-center gap-2 sm:gap-3 text-lg sm:text-2xl font-bold">
-              👋‎ ‎ Hi there, I'm <a href="https://github.com/shravan20" target="_blank" rel="noopener noreferrer" className="text-primary">Shravan K B</a>
+              👋 ‎ ‎ Hi there, I'm{" "}
+              <a
+                href="https://github.com/shravan20"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary no-underline"
+              >
+                Shravan K B
+              </a>
             </h1>
+
             {(() => {
               const animatedClass = useAnimatedBadgeColor();
               return (
@@ -89,7 +98,7 @@ export function ReadmeSection() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-8">
             <div>
-              <h2 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-foreground">Quick Stats</h2>
+              <h2 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-foreground">📍 In a Nutshell</h2>
               <div className="space-y-2 sm:space-y-3">
                 <div className="flex items-center gap-2 sm:gap-3">
                   <MapPin className="w-4 h-4 text-muted-foreground flex-shrink-0" />
@@ -132,7 +141,7 @@ export function ReadmeSection() {
             </div>
           </div>
 
-          <h2 className="text-xl font-semibold mb-4 text-foreground">About Me</h2>
+          <h2 className="text-xl font-semibold mb-4 text-foreground"> 🧘‍♂️ About Me</h2>
           <p className="text-foreground leading-relaxed mb-6">
             I am a Computer Science Engineer and Data Science aficionado who's been building, breaking, and innovating professionally since 2019. At heart, I'm a curious tinkerer and FOSS enthusiast.
           </p>
