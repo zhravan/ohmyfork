@@ -46,15 +46,15 @@ export function BugReportModal({ bug, isOpen, onClose }: BugReportModalProps) {
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+    <Dialog open={isOpen} onOpenChange={onClose} modal={false}>
+      <DialogContent className="max-w-full sm:max-w-2xl md:max-w-3xl max-h-[90vh] overflow-y-auto p-2 sm:p-6">
         <DialogHeader className="space-y-4">
-          <div className="flex items-start justify-between">
-            <div className="flex items-center gap-3">
-              <AlertCircle className="w-6 h-6 text-destructive" />
-              <div>
-                <DialogTitle className="text-xl font-mono">{bug.title}</DialogTitle>
-                <div className="flex items-center gap-2 mt-2">
+          <div className="flex flex-col sm:flex-row items-start justify-between gap-2 sm:gap-4">
+            <div className="flex items-center gap-2 sm:gap-3 w-full min-w-0">
+              <AlertCircle className="w-6 h-6 text-destructive shrink-0" />
+              <div className="min-w-0">
+                <DialogTitle className="text-base sm:text-xl font-mono break-words break-all line-clamp-3">{bug.title}</DialogTitle>
+                <div className="flex flex-wrap items-center gap-2 mt-2">
                   <Badge variant={getSeverityColor(bug.severity)}>
                     {bug.severity.toUpperCase()}
                   </Badge>
@@ -64,66 +64,60 @@ export function BugReportModal({ bug, isOpen, onClose }: BugReportModalProps) {
                 </div>
               </div>
             </div>
-
           </div>
         </DialogHeader>
-        
         <div className="space-y-6">
           {/* Bug Details */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 bg-muted/30 rounded-lg">
-            <div className="flex items-center gap-2">
-              <User className="w-4 h-4 text-muted-foreground" />
-              <span className="text-sm">
-                <strong>Assignee:</strong> {bug.assignee}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 p-3 sm:p-4 bg-muted/30 rounded-lg">
+            <div className="flex items-center gap-2 min-w-0">
+              <User className="w-4 h-4 text-muted-foreground shrink-0" />
+              <span className="text-xs sm:text-sm truncate">
+                <strong>Assignee:</strong> <span className="break-all">{bug.assignee}</span>
               </span>
             </div>
-            <div className="flex items-center gap-2">
-              <Clock className="w-4 h-4 text-muted-foreground" />
-              <span className="text-sm">
-                <strong>Time to Solve:</strong> {bug.timeToSolve}
+            <div className="flex items-center gap-2 min-w-0">
+              <Clock className="w-4 h-4 text-muted-foreground shrink-0" />
+              <span className="text-xs sm:text-sm truncate">
+                <strong>Time to Solve:</strong> <span className="break-all">{bug.timeToSolve}</span>
               </span>
             </div>
-            <div className="flex items-center gap-2">
-              <GitCommit className="w-4 h-4 text-muted-foreground" />
-              <span className="text-sm">
-                <strong>Reported:</strong> {bug.dateReported}
+            <div className="flex items-center gap-2 min-w-0">
+              <GitCommit className="w-4 h-4 text-muted-foreground shrink-0" />
+              <span className="text-xs sm:text-sm truncate">
+                <strong>Reported:</strong> <span className="break-all">{bug.dateReported}</span>
               </span>
             </div>
           </div>
-
           {/* Description */}
           <div>
-            <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
+            <h3 className="text-base sm:text-lg font-semibold mb-3 flex items-center gap-2">
               <Tag className="w-5 h-5" />
               Description
             </h3>
-            <div className="bg-background border border-border rounded-lg p-4">
-              <p className="whitespace-pre-wrap">{bug.description}</p>
+            <div className="bg-background border border-border rounded-lg p-3 sm:p-4">
+              <p className="whitespace-pre-wrap break-words text-xs sm:text-base">{bug.description}</p>
             </div>
           </div>
-
           {/* Steps to Reproduce */}
           <div>
-            <h3 className="text-lg font-semibold mb-3">🔄 Steps to Reproduce</h3>
-            <div className="bg-background border border-border rounded-lg p-4">
-              <pre className="whitespace-pre-wrap font-mono text-sm">{bug.reproduction}</pre>
+            <h3 className="text-base sm:text-lg font-semibold mb-3">🔄 Steps to Reproduce</h3>
+            <div className="bg-background border border-border rounded-lg p-3 sm:p-4">
+              <pre className="whitespace-pre-wrap font-mono text-xs sm:text-sm break-words">{bug.reproduction}</pre>
             </div>
           </div>
-
           {/* Solution */}
           <div>
-            <h3 className="text-lg font-semibold mb-3">✅ Solution</h3>
-            <div className="bg-background border border-border rounded-lg p-4">
-              <p className="whitespace-pre-wrap">{bug.solution}</p>
+            <h3 className="text-base sm:text-lg font-semibold mb-3">✅ Solution</h3>
+            <div className="bg-background border border-border rounded-lg p-3 sm:p-4">
+              <p className="whitespace-pre-wrap break-words text-xs sm:text-base">{bug.solution}</p>
             </div>
           </div>
-
           {/* Tags */}
           <div>
-            <h3 className="text-lg font-semibold mb-3">🏷️ Tags</h3>
+            <h3 className="text-base sm:text-lg font-semibold mb-3">🏷️ Tags</h3>
             <div className="flex flex-wrap gap-2">
               {bug.tags.map((tag) => (
-                <Badge key={tag} variant="outline" className="font-mono">
+                <Badge key={tag} variant="outline" className="font-mono text-xs sm:text-sm">
                   {tag}
                 </Badge>
               ))}
