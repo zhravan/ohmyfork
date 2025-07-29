@@ -2,6 +2,7 @@ import {
   Calendar, Coffee, Github, Linkedin, ListTodo, Mail, MapPin, PanelsTopLeft, Twitter
 } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
+import { ContributionsGrid } from './ContributionsGrid';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -75,6 +76,7 @@ export function ReadmeSection() {
           </svg>
           <span className="font-mono text-xs sm:text-sm font-medium">README.md</span>
         </div>
+        {/* ...existing code... */}
         <div className="p-3 sm:p-8 prose prose-slate dark:prose-invert max-w-none">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-8">
             <h1 className="flex items-center gap-2 sm:gap-3 text-lg sm:text-2xl font-bold">

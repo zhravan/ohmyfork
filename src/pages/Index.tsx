@@ -1,6 +1,7 @@
 import { FileExplorer } from '@/components/FileExplorer';
 import { GitHubHeader } from '@/components/GitHubHeader';
 import { ReadmeSection } from '@/components/ReadmeSection';
+import { ContributionsGrid } from '@/components/ContributionsGrid';
 
 const Index = () => {
   return (
@@ -64,6 +65,10 @@ const Index = () => {
         {/* README Section */}
         <div className="mt-8">
           <ReadmeSection />
+        </div>
+        {/* Contributions Section */}
+        <div className="mt-8 flex justify-center">
+          <ContributionsGrid />
         </div>
       </div>
     </div>
