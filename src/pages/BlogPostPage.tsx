@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { ContentPreview } from '@/components/ContentPreview';
+import { GiscusComments } from '@/components/GiscusComments';
 import { GitHubHeader } from '@/components/GitHubHeader';
 import { useContentItem } from '@/hooks/use-content';
 
@@ -43,6 +44,21 @@ export default function BlogPostPage() {
         content={blogPost} 
         onBack={() => navigate('/blogs')} 
       />
+      {/* Giscus comments section for blog posts */}
+      <div className="container mx-auto px-4">
+        <GiscusComments
+          repo="shravan20/ohmyfork"
+          repoId="R_kgDOPQRINQ"
+          category="General"
+          categoryId="DIC_kwDOPQRINc4CtijM"
+          mapping="pathname"
+          reactionsEnabled="1"
+          emitMetadata="0"
+          inputPosition="top"
+          theme="preferred_color_scheme"
+          lang="en"
+        />
+      </div>
     </>
   );
 }
