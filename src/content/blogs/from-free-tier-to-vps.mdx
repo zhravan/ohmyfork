@@ -1,0 +1,181 @@
+---
+title: "From Free Tier to VPS: My Journey and Setup"
+excerpt: "Reflection on moving from free-tier hosting to a VPS, covering DNS, Nginx, SSL, ports, and lessons learned."
+date: "2025-08-10"
+readTime: "7 min read"
+tags: ["DevOps", "VPS", "Nginx", "SSL", "DNS"]
+author: "Shravan K B"
+---
+
+# From Free Tier to VPS: My Journey and Setup
+
+This article is my reflection on the journey of how I relied on free tier clouds and platform specific hosting until I discovered VPS. 
+
+![my journey from using cloud setup to VPS](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/9h9rvhdq7040pvgrt9mk.png)
+
+> Shipping Code while Sipping Coffee
+
+Back then, I was still trying to figure out and understand how all this worked. Starting from which command did what, which service refused to start, and why things that worked on my local; didn’t work when deployed (Thank God for Docker)
+
+I still recall one of my earliest deployment. It was [github-readme-quotes](https://github.com/shravan20/github-readme-quotes) app on Heroku. A simple git push to deploy felt magical. I didn’t really have to care how it worked. I just knew that if I followed the documentation devoutly, it was assured to work; if not, StackOverflow always had my back.
+
+This was the same with Firebase, Render, or Netlify for static stuff. All of them taught me how to ship quickly. 
+
+
+But then came the real world; need to host private apps, things that need ports, memory tuning, background workers, cron jobs, etc. Soon, those magical platforms started speaking back and complaining to me:
+
+- _"You can’t bind that port"_
+
+- _"You’re out of free dynos"_
+
+- _"Exceed dynos quota for the month"_
+
+I found myself stuck on an architectural impasse till the day when one of the engineers I know suggested saying these lines, “Just spin up a VPS“. That advice removed the roadblock.
+
+To those who are not aware of what is **_VPS_**? How is it different from Server? Let me try to explain it with an analogy:
+
+
+> Imagine you’ve built a website and now you want to make it public, so you need to host it. Basically put it out on a computer that is always online. This is called hosting.
+
+
+![How to Hosting your site](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/2j7ke33delch7jw8wo9x.png)
+
+Before hosting a website, there are 3 types of hosting, each of which balances cost, control, and performance in its own way. Let us take an analogy of hosting with where we live:
+
+- **_Shared Hosting_** is like renting a room in PG, which is extremely affordable, but you share your resources with others and have very little control
+
+- **_Virtual Private Server_** (aka VPS) is like having your own apartment, you get private space, you are secure, decorate and customize as you want, and truly call your own.
+
+- **_Dedicated Server_** is like leasing an entire bungalow; you alone enjoy all its resources and full autonomy at a very high price.
+
+![understanding VPS](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/78id0zjgbqfldv4sejxw.png)
+
+**Dedicated Servers** are either some crazy big computers in freezing cold data centers or virtual computers carved out of bigger machines using virtualization.
+
+So, yep, VPS was that sweet middle ground; cost of a simple 1 BHK flat with freedom to knock down a wall (just kidding). So that balance I needed came in the form of VPS.
+
+So I picked a VPS provider, bought a VPS server for 7€ (~₹697). I got an IP address, username(root), and SSH details. 
+
+Till then, I had learnt what VPS was and lil about behind the scenes from the few Google searches  I had done. I understood that a VPS is a virtual machine running on a larger physical server with its own dedicated RAM, disk space, and CPU. And fortunately, since I was already comfortable with Linux commands, so felt navigating this environment shouldn’t be a problem.
+
+Since I had previously tinkered quite a lot with Raspberry Pi, by hooking it to the local network and SSH’ing into it from my laptop, I already knew that the only way to connect to my VPS was using SSH.
+
+
+![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/3pc43sa7g5oxh8ghng7y.png)
+
+
+
+To those who do not know what SSH means, let us again explore it with an analogy:
+
+**_SSH is like a passport to access your VPS_**. With SSH, you can remotely step inside your VPS like teleporting into a distant terminal. It was like I’d opened the door to another computer without leaving mine. There is no UI, browser, but a simple terminal access for your VPS and raw power.
+
+
+![just linux haha](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/cd849rottalq04z538aw.png)
+
+Every server I touched so far ran Linux, so I already had a clear cut understanding. So for everything looked good.
+
+I started slowly moving my apps to the VPS, and running the scripts to have it run on the VPS. I ran into another hurdle; I was only able to access the deployed applications or services using their IP address, like `http://123.45.67.89`. Unlike Heroku or Netlify, which provided me ready made subdomain for a project like [`github-readme-quotes.herokuapp.com`], my move to a VPS setup left me staring at a bare IP address.
+
+
+I knew I needed a proper name and URL, `some-project.com`, and that’s where DNS comes in. 
+
+To those who do not know what **DNS** is, consider it as a **Internet’s Yellow Page (Phonebook)**; basically translates domain names to IP addresses. 
+
+
+![yellow-page](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/h16osgkfsihc61kau7nj.png)
+
+A lot of them still find tying a domain to a VPS surprisingly tricky. Hence, I keep a simple recipe:
+
+1) You buy a domain from Domain Registrar
+2) Point it to your VPS IP using A records in your registrar’s control panel
+```
+Type: A  
+Host: @  
+Value: 123.45.67.89
+```
+3) Set up Nginx
+4) Configure SSL
+
+
+![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/39wnt05pkg4pq4veabaw.png)
+
+
+You might be wondering, what are these Nginx and SSL? Let us understand this better, diving a little deeper into the concepts.
+
+Every service on your server or computer communicates over a specific port; some of them are already predefined, say:
+
+- `SSH` on port `22` for remote access
+- `HTTP` on port `80` for unencrypted web traffic
+- `HTTPS` on port `443` for encrypter web traffic via SSL/TLS
+
+
+By now, you must have understood that SSL/TLS is what turns ordinary HTTP into secure HTTPS, making sure that the data between user and server stays private and secure.
+
+Nginx is the traffic police on my VPS which is mainly responsible for forwarding user requests to respective applications, handling SSL encryption, and serving the static contents.
+
+You must be wondering, **_"Voila, Great, now that everything is in place, and the hard part is over, life must be easier"_**.
+
+
+
+Hahaha!! Well, thats exactly when the real problems began. Over time, deployments process became a familiar and routine; rather painful routing I would say.
+
+
+
+This routing masked a lot of headaches: broken configs, panicky Nginx configuration tweaks, dread thought of “Did I actually run the right script?“ and manual responsibility of deploying all of these without any automations and verifying the releases.
+
+
+
+Eventually, I scripted it all, but I can never forget those initial days of manual, shaky deployments. They taught me the cost of carelessness, where I had spent a day to find one config misplaced. It wasn’t about skill, but rather about mental tax caused due to this.
+
+
+By then, I had realised managing multiple applications on a single VPS only made things worse, where I had to juggle and handle process monitoring, checking the logs, and mainly running update scripts.
+
+
+![VPS monitoring](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/dj6vony210gqg82f3sey.png)
+
+
+> With power comes great responsibility
+
+
+![on a lighter note](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/m7hqma5tahj5zzo2eigy.png)
+
+With experience comes great clarity; I started seeing patterns in the process I followed. I’ve been doing this for a while now, everytime I spun up a VPS or deploy new project on a VPS, I found myself re-Googling the same 20 commands. I observed that across some major pain points:
+
+- Copy-pasting Identical configurations
+- Deployment failures
+- DNS setups
+- Setting up Firewall rules
+- Forgetting about SSL renewals
+
+It was the same story day in and day out. That is when I asked myself, is this problem not actually solved and standardized yet? Do we not have a tool that streamlines and simplifies the VPS management?
+
+My search led me to Nixopus, an indie tool built by a community led by Raghav to tackle these exact frustrations. As we talked, it became clear that Nixopus wasn’t born from ambition rather from fatigue, the kind that drives you to refactor your life. It promised everything I had been hunting for.
+
+![VPS Management SOlution](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/ois17ln8re3q31a9gekb.png)
+
+
+Though in Alpha stage, I’ve started using it for managing my VPS and even actively contributing to improvements whenever I can. I am convinced that this project has a bright future. You check it out on [GitHub](https://github.com/raghavyuva/nixopus) and see for yourself.
+
+If you would like to get involved or have questions, join our Discord community for real-time support and feedback. You can self-host Nixopus today, subscribe for updates, and stay tuned as we roll out new features and stability enhancements.
+
+
+We have recently collaborated with HostUp, a reliable VPS provider based in Sweden, to bring you an exclusive deal of 10% off recurring on any VPS plan. Whether you choose to self-host Nixopus or deploy containerized apps, this is the perfect opportunity to secure rock-solid infrastructure at a [Discord Community](https://discord.com/invite/skdcq39Wpv).
+
+
+[![partnership](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/itnnybtsdrgzmv5dj0lz.png)](https://hostup.se/en/vps/)
+
+
+You can claim your VPS coupon and start building with Nixopus today.
+
+Join our [Discord](https://discord.com/invite/skdcq39Wpv) community, you’re always welcome to hop in for community support!
+
+Summing it up, my journey from building on free-tier clouds and shared hosting to fully embracing VPS has taught me one thing is that having control doesn't have to mean endless repetitive manual work and management. Nixopus bridges that gap, so that from now on you can focus on what really matters.
+
+Stay tuned for more freshly brewed content. 
+
+That’s all for now. Thank you for reading.
+
+
+Signing off until next time.
+
+Happy Learning!!

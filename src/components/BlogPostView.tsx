@@ -1,5 +1,6 @@
 import { ArrowLeft, Calendar, Clock, GitFork, Star, User } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
+import { CodeBlock } from '@/components/mdx/CodeBlock';
 import rehypeHighlight from 'rehype-highlight';
 import remarkGfm from 'remark-gfm';
 
@@ -102,24 +103,15 @@ export function BlogPostView({ post, onBack }: BlogPostViewProps) {
                     img: ({node, ...props}) => (
                       <img 
                         {...props} 
-                        className="rounded-lg border border-border shadow-sm max-w-full h-auto" 
+                        className="mx-auto block rounded-lg border border-border shadow-sm max-w-full h-auto" 
                         loading="lazy"
                       />
                     ),
-                    code: ({node, className, children, ...props}: any) => {
-                      const isInline = !className || !className.includes('language-');
-                      return !isInline ? (
-                        <pre className="bg-muted p-4 rounded-lg overflow-x-auto border border-border">
-                          <code className={className} {...props}>
-                            {children}
-                          </code>
-                        </pre>
-                      ) : (
-                        <code className="bg-muted px-2 py-1 rounded text-sm font-mono" {...props}>
-                          {children}
-                        </code>
-                      );
-                    },
+                    code: ({node, className, children, ...props}: any) => (
+                      <CodeBlock className={className} {...props}>
+                        {children}
+                      </CodeBlock>
+                    ),
                     blockquote: ({children}) => (
                       <blockquote className="border-l-4 border-primary pl-4 italic bg-muted/30 p-4 rounded-r-lg">
                         {children}
