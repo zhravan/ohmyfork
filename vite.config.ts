@@ -8,7 +8,9 @@ import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 // https://vitejs.dev/config/
 // Set the base path for GitHub Pages deployment
 // Replace 'ohmyfork' with your repo name if different
-export default defineConfig(({ mode }) => ({
+// Use `command` to determine dev vs build, so a production build with
+// `--mode development` does NOT emit dev-only JSX (jsxDEV) from MDX.
+export default defineConfig(({ command, mode }) => ({
   base: "/",
   server: {
     host: "::",
@@ -18,7 +20,7 @@ export default defineConfig(({ mode }) => ({
     mdx({
       remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
       rehypePlugins: [],
-      development: mode === "development"
+      development: command === "serve"
     }),
     react()
   ],
