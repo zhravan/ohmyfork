@@ -6,6 +6,19 @@
 /* GitHub-inspired design system. All colors MUST be HSL. */
 
 @layer base {
+  /* shiki / rehype-pretty-code base */
+  pre code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace !important;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  pre {
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    border-radius: 0.5rem;
+    border: 1px solid hsl(var(--border));
+    overflow-x: auto;
+  }
   /* Use a Monaco-like monospace stack and let the hljs theme color tokens */
   .hljs {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace !important;

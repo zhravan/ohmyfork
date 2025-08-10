@@ -1,4 +1,5 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useMemo, useState } from "react";
+import "highlight.js/styles/vs2015.css";
 import { Copy, Check } from "lucide-react";
 import hljs from "highlight.js/lib/core";
 import javascript from "highlight.js/lib/languages/javascript";
@@ -24,8 +25,9 @@ type CodeBlockProps = {
  * - Block code: bordered, rounded, scrollable container with spacing
  */
 export function CodeBlock({ children, className, inline, ...props }: CodeBlockProps) {
+  // Only treat as inline when explicitly requested. Otherwise render block.
   const languageMatch = className && /language-(\w+)/.exec(className);
-  const isInline = inline ?? !languageMatch;
+  const isInline = inline === true;
   if (isInline) {
     return (
       <InlineCode className={className} {...props}>{children}</InlineCode>
@@ -53,16 +55,28 @@ function InlineCode({ children, className, ...props }: React.HTMLAttributes<HTML
 }
 
 function BlockCode({ children, className, languageMatch, ...props }: React.HTMLAttributes<HTMLElement> & { children: React.ReactNode; className?: string; languageMatch: RegExpExecArray | null; }) {
-  const codeRef = useRef<HTMLElement>(null);
   const [copied, setCopied] = useState(false);
-  const languageLabel = useMemo(() => languageMatch?.[1]?.toUpperCase() ?? "CODE", [languageMatch]);
+  const language = (languageMatch?.[1] || "").toLowerCase();
+  const languageLabel = (language || "code").toUpperCase();
 
-  useEffect(() => {
-    const el = codeRef.current;
-    if (el) {
-      hljs.highlightElement(el);
+  const highlightedHtml = useMemo(() => {
+    const raw = String(children).replace(/\n$/, "");
+    const escapeHtml = (s: string) =>
+      s
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    try {
+      if (language && hljs.getLanguage(language)) {
+        return hljs.highlight(raw, { language }).value;
+      }
+      return hljs.highlightAuto(raw).value;
+    } catch {
+      return escapeHtml(raw);
     }
-  }, [children, className]);
+  }, [children, language]);
 
   const copy = async () => {
     try {
@@ -90,23 +104,18 @@ function BlockCode({ children, className, languageMatch, ...props }: React.HTMLA
           {copied ? "Copied" : "Copy"}
         </button>
       </div>
-      <pre
-        className="m-0 p-3 sm:p-4 overflow-x-auto"
-        style={{ backgroundColor: '#1e1e1e', color: '#d4d4d4' }}
-      >
+      <pre className="m-0 p-3 sm:p-4 overflow-x-auto" style={{ backgroundColor: '#1e1e1e', color: '#d4d4d4' }}>
         <code
-          ref={codeRef}
-          className={(className || '').concat(' hljs') as string}
+          className={(className || 'language-plaintext').concat(' hljs') as string}
           style={{
             fontFamily:
               'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace',
             fontSize: '0.9rem',
             lineHeight: 1.6
           }}
+          dangerouslySetInnerHTML={{ __html: highlightedHtml }}
           {...props}
-        >
-          {children}
-        </code>
+        />
       </pre>
     </div>
   );

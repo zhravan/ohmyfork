@@ -50,26 +50,13 @@ const mdxComponents = {
       {children}
     </li>
   ),
-  // Inline code
+  // Let rehype-pretty-code output render directly without interception
   code: ({ children, className, ...props }: any) => (
-    <CodeBlock inline className={className} {...props}>
-      {children}
-    </CodeBlock>
+    <code className={className} {...props}>{children}</code>
   ),
-  // Fenced code blocks come as <pre><code class="language-...">...</code></pre>
-  // We intercept <pre> and render our CodeBlock using its child <code> props
-  pre: ({ children }: any) => {
-    // children should be a single <code> element
-    const codeChild = Array.isArray(children) ? children[0] : children;
-    const codeProps = codeChild?.props || {};
-    const className = codeProps.className || "";
-    const codeContent = codeProps.children;
-    return (
-      <CodeBlock className={className}>
-        {codeContent}
-      </CodeBlock>
-    );
-  },
+  pre: ({ children, ...props }: any) => (
+    <pre {...props}>{children}</pre>
+  ),
   blockquote: ({ children, ...props }: any) => (
     <blockquote 
       className="border-l-4 border-primary pl-6 py-2 my-6 italic text-muted-foreground bg-muted/30 rounded-r-md" 
