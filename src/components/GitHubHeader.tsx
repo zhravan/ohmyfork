@@ -96,12 +96,7 @@ export function GitHubHeader() {
             </Button>
           </div>
         </div>
-        
-        <div className="mt-4">
-          <p className="text-muted-foreground">
-            Personal developer ohmyfork showcasing projects, blogs, and debugging adventures
-          </p>
-        </div>
+        {/* Secondary nav removed for a minimal top bar */}
       </div>
     </div>
   );

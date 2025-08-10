@@ -69,4 +69,10 @@ export interface ContentResult<T> {
   hasPrev: boolean;
 }
 
-export type ContentType = 'blogs' | 'bug-tales' | 'newsletters' | 'projects';
+export type ContentType = 'blogs' | 'bug-tales' | 'newsletters' | 'projects' | 'wiki';
+
+export interface WikiNote extends BaseContent {
+  title: string;
+  section?: string;
+  description?: string;
+}
