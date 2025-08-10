@@ -1,6 +1,7 @@
 
 import { Calendar, Clock, Mail, User } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
+import { CodeBlock } from '@/components/mdx/CodeBlock';
 import rehypeHighlight from 'rehype-highlight';
 import remarkGfm from 'remark-gfm';
 
@@ -87,30 +88,15 @@ export function NewsletterPreviewModal({ isOpen, onClose, issue }: NewsletterPre
                         src={src} 
                         alt={alt} 
                         {...props}
-                        className="max-w-full h-auto rounded-lg border shadow-sm"
+                        className="mx-auto block max-w-full h-auto rounded-lg border shadow-sm"
                       />
                     </div>
                   ),
-                  code: ({ children, className, ...props }) => {
-                    const match = /language-(\w+)/.exec(className || '');
-                    const isInline = !match;
-                    if (isInline) {
-                      return (
-                        <code className="bg-muted px-1.5 py-0.5 rounded text-xs sm:text-sm font-mono border" {...props}>
-                          {children}
-                        </code>
-                      );
-                    }
-                    return (
-                      <div className="my-4 sm:my-6">
-                        <pre className="bg-muted border rounded-lg p-2 sm:p-4 overflow-x-auto">
-                          <code className={className} {...props}>
-                            {children}
-                          </code>
-                        </pre>
-                      </div>
-                    );
-                  },
+                  code: ({ children, className, ...props }) => (
+                    <CodeBlock className={className} {...props}>
+                      {children}
+                    </CodeBlock>
+                  ),
                   pre: ({ children, ...props }) => (
                     <div className="my-4 sm:my-6">
                       <pre className="bg-muted border rounded-lg p-2 sm:p-4 overflow-x-auto" {...props}>

@@ -1,0 +1,161 @@
+---
+title: "Inside Nixopus: Database Migrations"
+excerpt: "How we designed and automated domain-driven, transactional, bidirectional database migrations for Nixopus."
+date: "2025-08-10"
+readTime: "7 min read"
+tags: ["Databases", "Migrations", "Architecture", "Nixopus"]
+author: "Shravan K B"
+---
+
+# Inside Nixopus: Database Migrations
+
+This article mainly focuses on laying out our foundational approach to setting up the [database migration system for Nixopus](https://github.com/raghavyuva/nixopus/).
+
+**_Database migrations_** are often the unsung heroes of software application development. They work silently in the background, ensuring that your database schema evolves safely alongside your application code. Yet for many teams, this is a major source of stress and uncertainty. In this blog, we will explore how we have set up the migration framework for Nixopus. This has become a pivotal step in our developmental and self-host workflow.
+
+To start with, let us first explore and understand what we mean by **_database migration_**. As we always do, let us take an analogy.
+
+
+We often use different database systems like MySQL, PostgreSQL, MongoDB, etc, for data persistence. These data are stored in the form of Tables having columns and rows.
+
+As the application grows, the number of tables grows, and the data defined at each table might vary and change; hence, it is very important to keep track of these changes.
+
+Tables are at the database system level, whereas at the programmatic level, we maintain them with something called **_schemas_**. Like a house blueprint that dictates where rooms, doors, and wiring go, a schema simply defines how the data is organized and connected.
+
+![schema-vs-tables](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/humm2q3dkpxw5zv5180m.png)
+
+Now, let's imagine that you decide to change the blueprint mid-build, to add a new room or window, you need to carefully make changes to the existing blueprint such that you don’t end up collapsing the walls down.
+
+This problem is addressed at the schema level to ensure the changes in the existing tables, which may be in the form of adding new columns, altering the type of existing columns, or adding new tables, are handled through what we call **_Database Migrations_**
+
+![data-migration-meme](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/x9pm6demw0q72mcmykqc.png)
+
+When we started building Nixopus, we quickly realized that database schema management would be critical to our success in self-hosting and local development setups. We planned with an expectation set that eventually we would see multiple developers working on different features, frequent deployments, and the need to support both development and production environments, which would require a very streamlined process to handle database migration.
+
+We had aligned on the following factors that our migration system would have to adhere to:
+
+- **_Reliability_**: Migrations must execute consistently across all envs
+- **Automatic**: No manual intervention should be required during deployments
+- **Forward & Backward Compatible**: Ensure easy rollback scenarios
+- **Separations of Concerns**: Organization of migrations by domain or feature
+
+Many existing tools either lacked the flexibility we needed or came with unnecessary complexity, be it in terms of testability or adding rollbacks in case of errors, etc.
+
+Hence, we decided to build our migration system tailored to our needs and requirements using a tool called [Bun ORM](https://bun.uptrace.dev/guide/migrations.html).
+
+![sql-vs-orm](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/icreopncr72qkqyyq2se.png)
+
+To those who are not aware of the terminology ORM, let me give a glimpse of it; ORM, otherwise called as **_Object Relational Mapper_**, is like a waiter at a restaurant, to who you tell what you want, he/she goes to kitchen(I mean database), then brings back your order(data) as perfectly plated objects in ready to use form.
+
+
+![who-orm-who-orm-bun-orm](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/605ksjoeg5exjzcot4vv.png)
+
+Without ORM, you would have been presented with raw vegetables and ingredients straight from the kitchen (of course, by that I mean the database), and you would have to do all the cooking yourself, which means writing and managing every query and data transformation.
+
+Coming back, we have built our migration system around a simple yet **powerful concept**, where a pair of SQL files represents every database change:
+
+1) **Applying the change (up migrations)**
+2) **Rolling it back (down migrations)**
+
+
+![migration-code-structure-flow](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/nu808jb4jnzs8vl5c5ko.png)
+
+This approach has helped our system to easily take care of schema evolution and database versioning.
+
+The migration system follows a defined life cycle:
+
+1) **Discovery**: The system scans the `api/migrations` directory
+
+2) **Parsing**: Migration files are parsed and paired (up/down migrations)
+
+3) **Ordering**: Migrations are sorted by their numeric IDs
+
+4) **State Check**: The system compares file system migrations with applied migrations in the database
+
+5) **Execution**: Pending migrations are executed in transactions
+
+6) **Recordings**: Successfully applied migrations are recorded in the migration table
+
+
+![migration-system-lifecycle](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/ej1w31t3m718xo63qfyo.png)
+
+Now that you know an overview of our setup and how it works, you might wonder what actually sets our approach apart? Fair enough!!!!
+
+
+![migration-differentiator](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/wnoxp32ng9v8t7ajwhip.png)
+
+
+1) **_Domain Driven Structure_**: Instead of throwing all migrations into a single directory, we have organized them by domain:
+
+```text
+api/migrations/
+├── applications/   # App deployment features
+├── audit/          # Audit logging and compliance
+├── auth/           # Authentication & authorization
+├── containers/     # Container management
+├── domains/        # Domain and DNS management
+├── feature-flags/  # Feature toggle system
+├── integrations/   # Third-party integrations
+├── notifications/  # Notification system
+├── organizations/  # Multi-tenancy & organizations
+├── rbac/           # Role-based access control
+└── users/          # User management and profiles
+```
+
+This structure makes it easy for us to find and create migrations related to specific work or flow, helping us avoid confusion or conflicts.
+
+
+2) **Automatic migration execution on application startup**: One of the key design decisions was to make migrations completely automatic. When the application starts, the migration system runs before any other initialization. This approach eliminated the need for separate deployment and ensures that the database schema is always up to date when the application starts.
+
+3) **Atomic, Transactional Migrations**: Every migration runs inside a database transaction, ensuring atomicity. If any part of a migration fails, the entire migration is rolled back, ensuring that the schema remains fully consistent.
+
+
+4) **_Bidirectional Migrations_**: Every migrations have 2 files:
+ - `seqno_entity_up.sql` (applies the change)
+ - `seqno_entity_down.sql` (rolls back the change)
+
+This ensures that we can always roll back changes if something goes wrong.
+
+
+As we are close to concluding the deep dive into the first of many articles of the **_Inside Nixopus_** series, I would like to highlight some of the major learnings and key takeaways:
+
+1) **Keep each migration small and focused**for easier review or rollback.
+2) Ensure to keep a _**down migration** for every **up migration**_, ensuring roll backs are easy.
+
+
+![key-learning-takeaways-nixopus](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/cz9ijjmrruycdzpx65cn.png)
+
+The key insight is that sometimes the best tool is the one you build yourself. By understanding our specific needs and constraints, we were able to set up our migration system that fits perfectly into our development workflow and easy self-hosting.
+
+![nixopus](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/66k8t8vncrm2g0vzpkym.png)
+
+The project, as we publish this article, is in the Alpha stage. 
+
+You can check it out on [GitHub](https://github.com/raghavyuva/nixopus) and see for yourself.
+
+To sum it up, the approach helped us change schema changes from a headache to a reliable process.
+
+If you would like to get involved or have questions, join our Discord community for real-time support and feedback. You can self-host Nixopus today, subscribe for updates, and stay tuned as we roll out new features and stability enhancements.
+
+<p align="center">
+        <a href="https://discord.gg/skdcq39Wpv" target="_blank">
+          <img src="https://user-images.githubusercontent.com/31022056/158916278-4504b838-7ecb-4ab9-a900-7dc002aade78.png" alt="Join our Discord Community" width="200" style="border-radius: 12px; box-shadow: 0px 4px 12px rgba(0,0,0,0.15);" />
+        </a>
+</p>
+
+We have recently collaborated with **_HostUp_**, a reliable VPS provider based in Sweden, to bring you an exclusive deal of **_10% off_** recurring on any VPS plan. Whether you choose to self-host Nixopus or deploy containerized apps, this is the perfect opportunity to secure rock-solid infrastructure at a [Discord Community](https://discord.com/invite/skdcq39Wpv).
+
+[![partnership](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/itnnybtsdrgzmv5dj0lz.png)](https://hostup.se/en/vps/)
+
+Stay tuned for more freshly brewed content.
+
+That's all for now. Thank you for reading.
+
+Signing off until next time.
+
+Thank you.
+
+---
+
+
+

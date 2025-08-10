@@ -1,4 +1,4 @@
-@import 'highlight.js/styles/github-dark.css';
+@import 'highlight.js/styles/vs2015.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,6 +6,25 @@
 /* GitHub-inspired design system. All colors MUST be HSL. */
 
 @layer base {
+  /* shiki / rehype-pretty-code base */
+  pre code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace !important;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  pre {
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    border-radius: 0.5rem;
+    border: 1px solid hsl(var(--border));
+    overflow-x: auto;
+  }
+  /* Use a Monaco-like monospace stack and let the hljs theme color tokens */
+  .hljs {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace !important;
+    font-size: 0.9rem !important;
+    line-height: 1.6 !important;
+  }
   :root {
     /* GitHub Light Theme */
     --background: 0 0% 100%;
@@ -133,6 +152,29 @@
 
 @layer components {
   /* GitHub-specific component styles */
+  /* Blog-specific code font override with maximum specificity */
+  .blog-content pre > code.hljs,
+  .blog-content .hljs,
+  .blog-content code.hljs {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace !important;
+    font-size: 0.9rem !important;
+    line-height: 1.6 !important;
+  }
+
+  /* Force Monaco-like palette (Dark+) regardless of prose defaults */
+  .blog-content pre,
+  .blog-content pre code,
+  .blog-content pre code.hljs {
+    background-color: #1e1e1e !important;
+    color: #d4d4d4 !important;
+  }
+  /* Force Monaco-like font inside prose blocks */
+  .prose pre > code.hljs,
+  pre > code.hljs {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace !important;
+    font-size: 0.9rem !important;
+    line-height: 1.6 !important;
+  }
   .repo-file-list {
     @apply border border-border rounded-md overflow-hidden;
   }
@@ -183,6 +225,15 @@
 }
 
 @layer base {
+  /* Center images inside prose/markdown content by default */
+  .prose img,
+  .prose-md img,
+  .prose-lg img,
+  .prose-xl img,
+  .prose-2xl img {
+    @apply mx-auto block;
+  }
+
   * {
     @apply border-border;
   }

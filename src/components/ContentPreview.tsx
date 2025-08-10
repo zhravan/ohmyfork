@@ -4,6 +4,7 @@ import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { MDXProvider } from '@mdx-js/react';
+import { CodeBlock } from '@/components/mdx/CodeBlock';
 
 import type { ContentItem, BaseContent } from '@/types/content';
 
@@ -49,37 +50,12 @@ const mdxComponents = {
       {children}
     </li>
   ),
-  code: ({ children, className, ...props }: any) => {
-    // Check if this is a code block (has language class) or inline code
-    const isCodeBlock = className?.includes('language-');
-    
-    if (isCodeBlock) {
-      return (
-        <code 
-          className={`${className} block text-sm font-mono leading-6`}
-          {...props}
-        >
-          {children}
-        </code>
-      );
-    }
-    
-    return (
-      <code 
-        className="bg-muted px-2 py-1 rounded text-sm font-mono text-primary border" 
-        {...props}
-      >
-        {children}
-      </code>
-    );
-  },
+  // Let rehype-pretty-code output render directly without interception
+  code: ({ children, className, ...props }: any) => (
+    <code className={className} {...props}>{children}</code>
+  ),
   pre: ({ children, ...props }: any) => (
-    <pre 
-      className="bg-slate-900 text-slate-100 p-6 rounded-lg overflow-x-auto mb-8 border border-border font-mono text-sm leading-6 shadow-lg" 
-      {...props}
-    >
-      {children}
-    </pre>
+    <pre {...props}>{children}</pre>
   ),
   blockquote: ({ children, ...props }: any) => (
     <blockquote 
@@ -93,7 +69,7 @@ const mdxComponents = {
     <img 
       src={src} 
       alt={alt} 
-      className="rounded-lg mb-6 max-w-full h-auto shadow-md border border-border" 
+      className="mx-auto block rounded-lg mb-6 max-w-full h-auto shadow-md border border-border" 
       {...props} 
     />
   ),
@@ -218,9 +194,11 @@ export function ContentPreview<T extends BaseContent>({
 
         <article className="max-w-4xl mx-auto">
           <div className="bg-card border border-border rounded-lg shadow-sm">
-            <div className="px-8 py-12 prose prose-lg prose-slate dark:prose-invert max-w-none prose-headings:font-bold prose-h1:text-4xl prose-h2:text-3xl prose-h2:border-b prose-h2:border-border prose-h2:pb-3 prose-h3:text-2xl prose-p:text-base prose-p:leading-7 prose-li:text-base prose-code:text-sm prose-code:bg-muted prose-code:px-2 prose-code:py-1 prose-code:rounded prose-pre:bg-slate-900 prose-pre:text-slate-100">
+            <div className="blog-content px-8 py-12 prose prose-lg prose-slate dark:prose-invert max-w-none prose-headings:font-bold prose-h1:text-4xl prose-h2:text-3xl prose-h2:border-b prose-h2:border-border prose-h2:pb-3 prose-h3:text-2xl prose-p:text-base prose-p:leading-7 prose-li:text-base">
               <MDXProvider components={mdxComponents}>
-                <content.Component />
+                <div className="blog-content">
+                  <content.Component />
+                </div>
               </MDXProvider>
             </div>
           </div>
