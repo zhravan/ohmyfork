@@ -21,7 +21,7 @@ export function GitHubHeader() {
     setIsStarred(newStarred);
     setStarCount(prev => newStarred ? prev + 1 : prev - 1);
     localStorage.setItem('ohmyfork-starred', newStarred.toString());
-    
+
     if (newStarred) {
       confetti({
         particleCount: 100,
@@ -66,16 +66,16 @@ export function GitHubHeader() {
               Public
             </span>
           </div>
-          
+
           <div className="flex items-center space-x-2">
             <Button variant="outline" size="sm" className="text-sm" onClick={handleWatch}>
               <Eye className="w-4 h-4 mr-1" />
               Watch
               <span className="ml-1 bg-muted rounded-full px-1.5 py-0.5 text-xs">12</span>
             </Button>
-            <Button 
-              variant={isStarred ? "default" : "outline"} 
-              size="sm" 
+            <Button
+              variant={isStarred ? "default" : "outline"}
+              size="sm"
               className={`text-sm transition-all duration-200 ${isStarred ? 'animate-pulse' : ''}`}
               onClick={handleStar}
             >
@@ -83,10 +83,10 @@ export function GitHubHeader() {
               {isStarred ? 'Starred' : 'Star'}
               <span className="ml-1 bg-muted rounded-full px-1.5 py-0.5 text-xs">{starCount}</span>
             </Button>
-            <Button 
-              variant="outline" 
-              size="sm" 
-              className="text-sm" 
+            <Button
+              variant="outline"
+              size="sm"
+              className="text-sm"
               onClick={handleFork}
               disabled={isForking}
             >
@@ -96,7 +96,6 @@ export function GitHubHeader() {
             </Button>
           </div>
         </div>
-        {/* Secondary nav removed for a minimal top bar */}
       </div>
     </div>
   );

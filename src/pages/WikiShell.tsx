@@ -176,15 +176,25 @@ export default function WikiShell() {
           </main>
           <aside className="hidden xl:block xl:col-span-2">
             <div className="sticky top-24 max-h-[calc(100vh-9rem)] overflow-y-auto pr-2">
-              <div className="mb-2 text-[11px] font-semibold tracking-wide text-muted-foreground">On this page</div>
-              <ul className="space-y-1 text-sm">
-                {toc.length === 0 && <li className="text-muted-foreground">No headings</li>}
-                {toc.map((h) => (
-                  <li key={h.id} className={h.level >= 3 ? 'pl-4' : ''}>
-                    <a className="hover:underline" href={`#${h.id}`}>{h.text}</a>
-                  </li>
-                ))}
-              </ul>
+              <div className="border-l border-border pl-3">
+                <div className="mb-1 text-[11px] font-semibold tracking-wide text-muted-foreground">On this page</div>
+                <ul className="space-y-0.5 text-xs leading-snug">
+                  {toc.length === 0 && <li className="text-muted-foreground">No headings</li>}
+                  {toc.map((h) => {
+                    const indent = h.level >= 4 ? 'pl-6' : h.level >= 3 ? 'pl-3' : '';
+                    return (
+                      <li key={h.id} className={`truncate ${indent}`}>
+                        <a
+                          className="block max-w-full truncate text-muted-foreground hover:text-foreground transition-colors"
+                          href={`#${h.id}`}
+                        >
+                          {h.text}
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
             </div>
           </aside>
         </div>
