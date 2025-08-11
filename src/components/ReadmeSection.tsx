@@ -76,7 +76,6 @@ export function ReadmeSection() {
           </svg>
           <span className="font-mono text-xs sm:text-sm font-medium">README.md</span>
         </div>
-        {/* ...existing code... */}
         <div className="p-3 sm:p-8 prose prose-slate dark:prose-invert max-w-none">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-8">
             <h1 className="flex items-center gap-2 sm:gap-3 text-lg sm:text-2xl font-bold">
@@ -168,11 +167,11 @@ export function ReadmeSection() {
             <div className="text-center p-6 border border-border rounded-lg bg-muted/20 flex flex-col items-center">
               <Coffee className="w-8 h-8 text-primary mb-2" />
               <div className="text-3xl font-bold text-foreground mb-1">
-                {(() => {
+                ≅{(() => {
                   const ref = useRef<HTMLSpanElement>(null);
-                  const count = useCountUp(2400, 1200, 0, ref);
+                  const count = useCountUp(112, 1200, 0, ref);
                   return <span ref={ref}>{count.toLocaleString()}</span>;
-                })()}/week
+                })()} cups / week
               </div>
               <div className="text-sm text-muted-foreground">Coffee Consumption</div>
             </div>
@@ -200,7 +199,7 @@ export function ReadmeSection() {
             </div>
           </div>
 
-          <h3 className="text-lg font-semibold mb-4 text-foreground">🚀 Featured Projects</h3>
+          {/* <h3 className="text-lg font-semibold mb-4 text-foreground">🚀 Featured Projects</h3>
           <div className="space-y-3 mb-8">
             <div className="border-l-4 border-primary pl-4">
               <div className="font-semibold text-foreground">E-commerce Platform</div>
@@ -227,7 +226,7 @@ export function ReadmeSection() {
             <div className="border-l-4 border-accent pl-4">
               <a href="#" className="text-primary hover:underline font-medium">Docker Best Practices for Node.js Apps</a>
             </div>
-          </div>
+          </div> */}
 
           <blockquote className="border-l-4 border-primary pl-6 py-4 bg-muted/30 rounded-r-lg">
             <p className="italic text-muted-foreground text-lg leading-relaxed">
