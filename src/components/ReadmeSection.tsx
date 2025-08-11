@@ -60,13 +60,22 @@ function useCountUp(target: number, duration = 1200, start = 0, ref: React.RefOb
       }
     };
     requestAnimationFrame(step);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hasAnimated, target, duration, start]);
 
   return count;
 }
 
 export function ReadmeSection() {
+  const animatedClass = useAnimatedBadgeColor();
+  // Stats hooks moved out of JSX callbacks
+  const coffeeRef = useRef<HTMLSpanElement>(null);
+  const coffeeCount = useCountUp(112, 1200, 0, coffeeRef);
+
+  const todosRef = useRef<HTMLSpanElement>(null);
+  const todosCount = useCountUp(3773, 1200, 0, todosRef);
+
+  const tabsRef = useRef<HTMLSpanElement>(null);
+  const tabsCount = useCountUp(73, 1200, 0, tabsRef);
   return (
     <div id="readme" className="mt-8 w-full">
       <div className="border border-border rounded-md bg-background w-full">
@@ -76,7 +85,6 @@ export function ReadmeSection() {
           </svg>
           <span className="font-mono text-xs sm:text-sm font-medium">README.md</span>
         </div>
-        {/* ...existing code... */}
         <div className="p-3 sm:p-8 prose prose-slate dark:prose-invert max-w-none">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-8">
             <h1 className="flex items-center gap-2 sm:gap-3 text-lg sm:text-2xl font-bold">
@@ -91,12 +99,9 @@ export function ReadmeSection() {
               </a>
             </h1>
 
-            {(() => {
-              const animatedClass = useAnimatedBadgeColor();
-              return (
-                <Badge variant="secondary" className={`px-2 py-1 sm:px-3 transition-colors duration-500 ${animatedClass}`}>Available for hire</Badge>
-              );
-            })()}
+            <Badge variant="secondary" className={`px-2 py-1 sm:px-3 transition-colors duration-500 ${animatedClass}`}>
+              Available for hire
+            </Badge>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-8">
             <div>
@@ -168,39 +173,27 @@ export function ReadmeSection() {
             <div className="text-center p-6 border border-border rounded-lg bg-muted/20 flex flex-col items-center">
               <Coffee className="w-8 h-8 text-primary mb-2" />
               <div className="text-3xl font-bold text-foreground mb-1">
-                {(() => {
-                  const ref = useRef<HTMLSpanElement>(null);
-                  const count = useCountUp(2400, 1200, 0, ref);
-                  return <span ref={ref}>{count.toLocaleString()}</span>;
-                })()}/week
+                ≅<span ref={coffeeRef}>{coffeeCount.toLocaleString()}</span> cups / week
               </div>
               <div className="text-sm text-muted-foreground">Coffee Consumption</div>
             </div>
             <div className="text-center p-6 border border-border rounded-lg bg-muted/20 flex flex-col items-center">
               <ListTodo className="w-8 h-8 text-primary mb-2" />
               <div className="text-3xl font-bold text-foreground mb-1">
-                {(() => {
-                  const ref = useRef<HTMLSpanElement>(null);
-                  const count = useCountUp(3773, 1200, 0, ref);
-                  return <span ref={ref}>{count.toLocaleString()}</span>;
-                })()}
+                <span ref={todosRef}>{todosCount.toLocaleString()}</span>
               </div>
               <div className="text-sm text-muted-foreground">TODOs left to fate</div>
             </div>
             <div className="text-center p-6 border border-border rounded-lg bg-muted/20 flex flex-col items-center">
               <PanelsTopLeft className="w-8 h-8 text-primary mb-2" />
               <div className="text-3xl font-bold text-foreground mb-1">
-                {(() => {
-                  const ref = useRef<HTMLSpanElement>(null);
-                  const count = useCountUp(73, 1200, 0, ref);
-                  return <span ref={ref}>{count}</span>;
-                })()}
+                <span ref={tabsRef}>{tabsCount}</span>
               </div>
               <div className="text-sm text-muted-foreground">Tabs opened to fix one bug</div>
             </div>
           </div>
 
-          <h3 className="text-lg font-semibold mb-4 text-foreground">🚀 Featured Projects</h3>
+          {/* <h3 className="text-lg font-semibold mb-4 text-foreground">🚀 Featured Projects</h3>
           <div className="space-y-3 mb-8">
             <div className="border-l-4 border-primary pl-4">
               <div className="font-semibold text-foreground">E-commerce Platform</div>
@@ -227,7 +220,7 @@ export function ReadmeSection() {
             <div className="border-l-4 border-accent pl-4">
               <a href="#" className="text-primary hover:underline font-medium">Docker Best Practices for Node.js Apps</a>
             </div>
-          </div>
+          </div> */}
 
           <blockquote className="border-l-4 border-primary pl-6 py-4 bg-muted/30 rounded-r-lg">
             <p className="italic text-muted-foreground text-lg leading-relaxed">

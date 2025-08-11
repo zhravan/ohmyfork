@@ -15,6 +15,7 @@ import NewsletterPage from './pages/NewsletterPage';
 import NotFound from './pages/NotFound';
 import ProjectPage from './pages/ProjectPage';
 import ProjectsPage from './pages/ProjectsPage';
+import WikiShell from './pages/WikiShell';
 
 const queryClient = new QueryClient();
 
@@ -34,6 +35,9 @@ const App = () => (
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/bug-tales" element={<BugTalesPage />} />
             <Route path="/newsletter" element={<NewsletterPage />} />
+            {/* Digital Garden routes removed in favor of new Wiki */}
+            <Route path="/wiki" element={<WikiShell />} />
+            <Route path="/wiki/:slug" element={<WikiShell />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

@@ -42,7 +42,12 @@ export interface Project extends BaseContent {
 
 // Generic content item with MDX component
 export interface ContentItem<T = any> extends T {
+  // MDX default export rendered as a React component
   Component: React.ComponentType;
+  // Frontmatter fields are merged into T by loader; ensure common fields exist
+  title?: string;
+  section?: string;
+  description?: string;
 }
 
 // Search and pagination types
@@ -69,4 +74,10 @@ export interface ContentResult<T> {
   hasPrev: boolean;
 }
 
-export type ContentType = 'blogs' | 'bug-tales' | 'newsletters' | 'projects';
+export type ContentType = 'blogs' | 'bug-tales' | 'newsletters' | 'projects' | 'wiki';
+
+export interface WikiNote extends BaseContent {
+  title: string;
+  section?: string;
+  description?: string;
+}
