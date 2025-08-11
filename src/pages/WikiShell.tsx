@@ -7,7 +7,7 @@ import { Separator } from '@/components/ui/separator';
 import { GitHubHeader } from '@/components/GitHubHeader';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
-import { getContentBySlug, getContentTags, loadContent } from '@/lib/content-loader';
+import { loadContent } from '@/lib/content-loader';
 import type { WikiNote, ContentItem } from '@/types/content';
 import {
   Command,
@@ -20,10 +20,20 @@ import {
 } from '@/components/ui/command';
 
 
+type WikiDoc = {
+  slug: string;
+  date?: string;
+  tags?: string[];
+  title?: string;
+  section?: string;
+  description?: string;
+  Component?: React.ComponentType;
+};
+
 export default function WikiShell() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
-  const [items, setItems] = useState<ContentItem<WikiNote>[]>([]);
+  const [items, setItems] = useState<WikiDoc[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [query, setQuery] = useState('');
@@ -38,10 +48,11 @@ export default function WikiShell() {
         setLoading(true);
         const res = await loadContent<WikiNote>('wiki', {}, { page: 1, limit: 1000 });
         if (!active) return;
-        setItems(res.items);
-      } catch (e: any) {
+        setItems(res.items as unknown as WikiDoc[]);
+      } catch (e: unknown) {
         if (!active) return;
-        setError(e?.message || 'Failed to load wiki');
+        const msg = e && typeof e === 'object' && 'message' in e ? String((e as any).message) : 'Failed to load wiki';
+        setError(msg);
       } finally {
         if (active) setLoading(false);
       }
@@ -62,16 +73,37 @@ export default function WikiShell() {
     const q = query.toLowerCase().trim();
     const list = tag ? docs.filter((d) => (d.tags || []).includes(tag)) : docs;
     if (!q) return list;
-    return list.filter((d) => [d.title, (d as any).section, (d as any).description].filter(Boolean).join(' ').toLowerCase().includes(q));
+    return list.filter((d) => [d.title, d.section, d.description].filter(Boolean).join(' ').toLowerCase().includes(q));
   }, [docs, query, tag]);
 
   const bySection = useMemo(() => {
-    return filtered.reduce<Record<string, WikiItem[]>>((acc, it) => {
-      const key = (it as any).section || 'General';
+    return filtered.reduce<Record<string, WikiDoc[]>>((acc, it) => {
+      const key = it.section || 'General';
       (acc[key] ||= []).push(it);
       return acc;
     }, {});
   }, [filtered]);
+
+  const escapeRegExp = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const highlightText = (text: string, q: string) => {
+    const clean = (text || '').replace(/`/g, '');
+    const queryStr = q.trim();
+    if (!queryStr) return clean;
+    try {
+      const parts = clean.split(new RegExp(`(${escapeRegExp(queryStr)})`, 'ig'));
+      return parts.map((part, idx) =>
+        part.toLowerCase() === queryStr.toLowerCase() ? (
+          <mark key={idx} className="bg-yellow-500/20 text-foreground rounded px-0.5">{part}</mark>
+        ) : (
+          <span key={idx}>{part}</span>
+        )
+      );
+    } catch {
+      return clean;
+    }
+  };
+
+  const stripTicks = (s?: string) => (s || '').replace(/`/g, '');
 
   const current = useMemo(() => {
     const match = docs.find((d) => (d.slug || '').toLowerCase() === (slug || '').toLowerCase());
@@ -79,7 +111,7 @@ export default function WikiShell() {
   }, [docs, slug]);
 
   useEffect(() => {
-    if (!slug && docs.length > 0) navigate(`/wiki/${docs[0].slug || ''}`, { replace: true });
+    if (!slug && docs.length > 0) navigate(`/wiki/${docs[0].slug}`, { replace: true });
   }, [slug, docs, navigate]);
 
   useEffect(() => {
@@ -110,7 +142,7 @@ export default function WikiShell() {
       setToc(out);
     }, 0);
     return () => window.clearTimeout(id);
-  }, [current?.slug, current?.content_html]);
+  }, [current?.slug]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -138,9 +170,9 @@ export default function WikiShell() {
                           <li key={n.slug}>
                             <button
                               className={`w-full text-left px-2 py-1.5 rounded hover:bg-muted/30 text-sm ${n.slug === current?.slug ? 'bg-muted/30' : ''}`}
-                              onClick={() => navigate(`/wiki/${n.slug || ''}`)}
-                            >
-                              {n.title || n.url}
+                              onClick={() => navigate(`/wiki/${n.slug}`)}
+                          >
+                              {highlightText(n.title || n.slug || '', query)}
                             </button>
                           </li>
                         ))}
@@ -164,7 +196,7 @@ export default function WikiShell() {
             {error && <div className="text-sm text-red-500">{error}</div>}
             {current && (
               <article className="border border-border rounded-md p-4">
-                <h1 className="text-2xl font-semibold tracking-tight mb-1">{current.title || current.url}</h1>
+                <h1 className="text-2xl font-semibold tracking-tight mb-1">{stripTicks(current.title || current.slug)}</h1>
                 {current.section && <div className="text-xs text-muted-foreground mb-3">{current.section}</div>}
                 <Separator className="my-4" />
                 <div id="wiki-article" className="prose prose-invert max-w-none">
@@ -209,13 +241,13 @@ export default function WikiShell() {
                 {notes.map((n) => (
                   <CommandItem
                     key={n.slug}
-                    value={`${n.title || n.url} ${section}`}
+                    value={`${stripTicks(n.title || n.slug)} ${section}`}
                     onSelect={() => {
-                      navigate(`/wiki/${n.slug || ''}`);
+                      navigate(`/wiki/${n.slug}`);
                       setIsPaletteOpen(false);
                     }}
                   >
-                    {n.title || n.url}
+                    {stripTicks(n.title || n.slug)}
                   </CommandItem>
                 ))}
               </CommandGroup>
