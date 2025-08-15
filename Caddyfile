@@ -1,0 +1,9 @@
+:80 {
+  root * /srv
+  encode zstd gzip
+  # Serve the requested file if it exists, otherwise fall back to index.html (SPA routing)
+  try_files {path} /index.html
+  file_server
+}
+
+
