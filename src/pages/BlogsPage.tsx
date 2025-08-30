@@ -1,4 +1,4 @@
-import { ArrowLeft, Calendar, Clock, Search, User } from 'lucide-react';
+import { Calendar, Clock, Search, User } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -62,15 +62,6 @@ import type { BlogPost, ContentItem } from "@/types/content";export default func
       <GitHubHeader />
       <div className="container mx-auto px-2 sm:px-4 py-6">
         <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-6">
-          <Button 
-            variant="outline" 
-            size="sm" 
-            onClick={() => navigate('/')}
-            className="flex items-center gap-2"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to ohmyfork
-          </Button>
           <div className="flex items-center gap-2">
             <span className="text-2xl">📝</span>
             <h1 className="text-2xl font-bold">Developer Blog</h1>
@@ -78,11 +69,15 @@ import type { BlogPost, ContentItem } from "@/types/content";export default func
         </div>
         
         {/* Search Bar */}
-        <div className="mb-6">
-          <div className="relative max-w-full">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+        <div className="mb-6" role="search">
+          <div className="relative max-w-full sm:max-w-md">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" aria-hidden="true" />
             <Input
               placeholder="Search blogs..."
+              aria-label="Search blogs"
+              autoComplete="off"
+              inputMode="search"
+              name="blog-search"
               value={searchQuery}
               onChange={(e) => handleSearch(e.target.value)}
               className="pl-10"
@@ -101,8 +96,12 @@ import type { BlogPost, ContentItem } from "@/types/content";export default func
             {blogPosts.map((post: any) => (
               <article 
                 key={post.slug} 
-                className="p-4 sm:p-6 hover:bg-muted/30 transition-colors cursor-pointer"
+                className="p-4 sm:p-6 hover:bg-muted/30 transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-md"
+                role="link"
+                tabIndex={0}
+                aria-label={`Open blog post ${post.title}`}
                 onClick={() => navigate(`/blogs/${post.slug}`)}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); navigate(`/blogs/${post.slug}`); } }}
               >
                 <div className="flex flex-col sm:flex-row items-start justify-between gap-3 sm:gap-4">
                   <div className="flex-1 min-w-0">

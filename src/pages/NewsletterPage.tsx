@@ -1,4 +1,4 @@
-import { ArrowLeft, Calendar, Mail, TrendingUp, Users } from 'lucide-react';
+import { Calendar, Mail, TrendingUp, Users } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -260,13 +260,19 @@ export default function NewsletterPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
+  const [message, setMessage] = useState<string | null>(null);
   const [selectedIssue, setSelectedIssue] = useState<NewsletterIssue | null>(null);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
     setSubscribed(true);
-    setTimeout(() => setSubscribed(false), 3000);
+    setMessage('Subscribed! Check your inbox to confirm.');
+    setTimeout(() => {
+      setSubscribed(false);
+      setMessage(null);
+      setEmail('');
+    }, 3000);
   };
 
   const handleIssueClick = (issue: NewsletterIssue) => {
@@ -280,15 +286,6 @@ export default function NewsletterPage() {
       
       <div className="container mx-auto px-2 sm:px-4 py-6">
         <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-6">
-          <Button 
-            variant="outline" 
-            size="sm" 
-            onClick={() => navigate('/')}
-            className="flex items-center gap-2"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to ohmyfork
-          </Button>
           <div className="flex items-center gap-2">
             <span className="text-2xl">📧</span>
             <h1 className="text-2xl font-bold">Developer Newsletter</h1>
@@ -328,13 +325,16 @@ export default function NewsletterPage() {
                   </div>
                 </div>
                 
-                <form onSubmit={handleSubscribe} className="space-y-4">
+                <form onSubmit={handleSubscribe} className="space-y-4" aria-describedby="newsletter-desc">
                   <div className="space-y-2">
                     <Label htmlFor="email">Email Address</Label>
                     <Input 
                       id="email" 
                       type="email" 
                       placeholder="developer@example.com" 
+                      aria-label="Email address"
+                      autoComplete="email"
+                      inputMode="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required 
@@ -345,9 +345,11 @@ export default function NewsletterPage() {
                     type="submit" 
                     className="github-button-primary w-full"
                     disabled={subscribed}
+                    aria-busy={subscribed}
                   >
                     {subscribed ? "Subscribed! 🎉" : "Subscribe"}
                   </Button>
+                  <div aria-live="polite" className="sr-only">{message}</div>
                 </form>
                 
                 <div className="mt-6 p-4 bg-muted/30 rounded-md">
