@@ -67,7 +67,6 @@ function useCountUp(target: number, duration = 1200, start = 0, ref: React.RefOb
 
 export function ReadmeSection() {
   const animatedClass = useAnimatedBadgeColor();
-  // Stats hooks moved out of JSX callbacks
   const coffeeRef = useRef<HTMLSpanElement>(null);
   const coffeeCount = useCountUp(112, 1200, 0, coffeeRef);
 
@@ -193,34 +192,7 @@ export function ReadmeSection() {
             </div>
           </div>
 
-          {/* <h3 className="text-lg font-semibold mb-4 text-foreground">🚀 Featured Projects</h3>
-          <div className="space-y-3 mb-8">
-            <div className="border-l-4 border-primary pl-4">
-              <div className="font-semibold text-foreground">E-commerce Platform</div>
-              <div className="text-muted-foreground text-sm">Full-stack React/Node.js application with payment integration</div>
-            </div>
-            <div className="border-l-4 border-primary pl-4">
-              <div className="font-semibold text-foreground">Real-time Chat App</div>
-              <div className="text-muted-foreground text-sm">WebSocket-based messaging platform with React and Socket.io</div>
-            </div>
-            <div className="border-l-4 border-primary pl-4">
-              <div className="font-semibold text-foreground">API Gateway</div>
-              <div className="text-muted-foreground text-sm">Microservices architecture with Docker and Kubernetes</div>
-            </div>
-          </div>
-
-          <h3 className="text-lg font-semibold mb-4 text-foreground">📝 Latest Blog Posts</h3>
-          <div className="space-y-2 mb-8">
-            <div className="border-l-4 border-accent pl-4">
-              <a href="#" className="text-primary hover:underline font-medium">Building Scalable React Applications with TypeScript</a>
-            </div>
-            <div className="border-l-4 border-accent pl-4">
-              <a href="#" className="text-primary hover:underline font-medium">Mastering Async/Await in JavaScript</a>
-            </div>
-            <div className="border-l-4 border-accent pl-4">
-              <a href="#" className="text-primary hover:underline font-medium">Docker Best Practices for Node.js Apps</a>
-            </div>
-          </div> */}
+          
 
           <blockquote className="border-l-4 border-primary pl-6 py-4 bg-muted/30 rounded-r-lg">
             <p className="italic text-muted-foreground text-lg leading-relaxed">

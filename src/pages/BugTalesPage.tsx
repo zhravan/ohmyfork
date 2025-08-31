@@ -8,150 +8,28 @@ import {
   Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext,
   PaginationPrevious
 } from '@/components/ui/pagination';
+import { useContent } from '@/hooks/use-content';
 
 interface BugTale {
   title: string;
   severity: 'critical' | 'high' | 'medium' | 'low';
   status: 'solved' | 'investigating' | 'wontfix';
   description: string;
-  reproduction: string;
-  solution: string;
+  reproduction?: string;
+  solution?: string;
   tags: string[];
   timeToSolve: string;
   assignee: string;
   dateReported: string;
 }
 
-const bugTales: BugTale[] = [
-  {
-    title: "The Vanishing CSS: A Tale of Disappearing Styles",
-    severity: 'high',
-    status: 'solved',
-    description: "Users reported that the entire navigation bar would randomly disappear, but only on Tuesdays, and only for users with names starting with 'M'.",
-    reproduction: `1. Log in as a user with name starting with 'M'
-2. Wait for Tuesday
-3. Navigate to any page
-4. Observe disappearing navigation bar
-5. Refresh page - navigation returns
-6. Wait 5 minutes - navigation disappears again`,
-    solution: `The issue was caused by a CSS animation that was triggered by a specific combination of:
-    - CSS class naming collision with a third-party library
-    - Browser timezone calculations for Tuesday detection
-    - Username-based cache keys that conflicted with CSS selectors
-    
-Fixed by:
-- Renaming CSS classes with proper BEM methodology
-- Removing date-based conditional styling
-- Implementing proper CSS scoping`,
-    tags: ['CSS', 'Frontend', 'Browser Bug'],
-    timeToSolve: '3 days',
-    assignee: 'Sarah Chen',
-    dateReported: '2024-01-10'
-  },
-  {
-    title: "The Infinite Loop of API Calls",
-    severity: 'critical',
-    status: 'solved',
-    description: "A simple data fetch turned into a DDoS attack on our own servers when useEffect decided to party like it's 1999.",
-    reproduction: `1. Open the user dashboard
-2. useEffect triggers API call
-3. API response updates state
-4. State update triggers useEffect again
-5. Infinite loop of API calls begins
-6. Server performance degrades rapidly`,
-    solution: `The useEffect was missing a proper dependency array:
-
-// Before (WRONG):
-useEffect(() => {
-  fetchUserData(user.id);
-}); // No dependency array = runs on every render
-
-// After (CORRECT):
-useEffect(() => {
-  fetchUserData(user.id);
-}, [user.id]); // Only runs when user.id changes
-
-Also implemented:
-- Request debouncing
-- Circuit breaker pattern
-- Request cancellation with AbortController`,
-    tags: ['React', 'API', 'Performance'],
-    timeToSolve: '6 hours',
-    assignee: 'Mike Johnson',
-    dateReported: '2024-01-08'
-  },
-  {
-    title: "The Case of the Missing Database Connection",
-    severity: 'critical',
-    status: 'solved',
-    description: "Production database connections were mysteriously dropping every hour. Turned out the janitor was unplugging the server to charge his phone.",
-    reproduction: `1. Deploy application to production
-2. Wait approximately 1 hour
-3. Observe database connection timeout errors
-4. Check server room at exactly 2:00 PM
-5. Find janitor unplugging ethernet cable
-6. Connection restored automatically after 5 minutes`,
-    solution: `This was a physical infrastructure issue:
-
-Root cause:
-- Janitor unplugged ethernet cable daily at 2 PM
-- Cable was near a power outlet used for phone charging
-- No proper cable management in server room
-
-Solutions implemented:
-- Proper cable management and labeling
-- Restricted access to server room
-- Added redundant network connections
-- Implemented connection pooling with retry logic
-- Added monitoring alerts for connection drops`,
-    tags: ['Database', 'Infrastructure', 'Human Error'],
-    timeToSolve: '2 weeks',
-    assignee: 'Alex Rodriguez',
-    dateReported: '2023-12-15'
-  },
-  {
-    title: "The Ghost in the Machine: Phantom Form Submissions",
-    severity: 'medium',
-    status: 'investigating',
-    description: "Forms were submitting themselves at 3:33 AM every night. Spoiler alert: it wasn't ghosts, but it was equally terrifying.",
-    reproduction: `1. Deploy contact form to production
-2. Wait until 3:33 AM (any timezone)
-3. Check form submission logs
-4. Find entries with no user interaction
-5. Forms contain preset data: name="Test", email="test@example.com"
-6. No IP address or user agent in logs`,
-    solution: `Investigation ongoing. Current findings:
-
-Suspected causes:
-- Automated testing scripts running in production
-- Bot submissions with spoofed timestamps
-- Scheduled task misconfiguration
-- Possible XSS vulnerability
-
-Steps taken:
-- Added CAPTCHA verification
-- Implemented rate limiting
-- Added request origin validation
-- Deployed honeypot fields
-- Enhanced logging and monitoring
-
-Still investigating the exact trigger mechanism.`,
-    tags: ['Forms', 'JavaScript', 'Mystery'],
-    timeToSolve: 'ongoing',
-    assignee: 'Emma Davis',
-    dateReported: '2024-01-05'
-  }
-];
-
 const TALES_PER_PAGE = 6;
 
 export default function BugTalesPage() {
   const [selectedBug, setSelectedBug] = useState<BugTale | null>(null);
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const totalPages = Math.ceil(bugTales.length / TALES_PER_PAGE);
-  const startIndex = (currentPage - 1) * TALES_PER_PAGE;
-  const currentTales = bugTales.slice(startIndex, startIndex + TALES_PER_PAGE);
+  const { content: tales, total, page, totalPages, hasNext, hasPrev, goToPage, nextPage, prevPage } =
+    useContent<BugTale>('bug-tales', {}, { page: 1, limit: TALES_PER_PAGE });
+  const currentTales = tales as BugTale[];
 
   const getSeverityColor = (severity: string) => {
     switch (severity) {
@@ -189,7 +67,7 @@ export default function BugTalesPage() {
           <div className="bg-muted/30 px-4 py-3 border-b border-border">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
               <span className="font-mono text-xs sm:text-sm text-foreground">bug_tales/ directory</span>
-              <span className="text-xs sm:text-sm text-muted-foreground">{bugTales.length} debugging stories</span>
+              <span className="text-xs sm:text-sm text-muted-foreground">{total} debugging stories</span>
             </div>
           </div>
 
@@ -252,23 +130,23 @@ export default function BugTalesPage() {
                     href="#"
                     onClick={(e) => {
                       e.preventDefault();
-                      if (currentPage > 1) setCurrentPage(currentPage - 1);
+                      if (hasPrev) prevPage();
                     }}
-                    className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
+                    className={!hasPrev ? "pointer-events-none opacity-50" : ""}
                   />
                 </PaginationItem>
 
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                  <PaginationItem key={page}>
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+                  <PaginationItem key={p}>
                     <PaginationLink
                       href="#"
                       onClick={(e) => {
                         e.preventDefault();
-                        setCurrentPage(page);
+                        goToPage(p);
                       }}
-                      isActive={currentPage === page}
+                      isActive={page === p}
                     >
-                      {page}
+                      {p}
                     </PaginationLink>
                   </PaginationItem>
                 ))}
@@ -278,9 +156,9 @@ export default function BugTalesPage() {
                     href="#"
                     onClick={(e) => {
                       e.preventDefault();
-                      if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+                      if (hasNext) nextPage();
                     }}
-                    className={currentPage === totalPages ? "pointer-events-none opacity-50" : ""}
+                    className={!hasNext ? "pointer-events-none opacity-50" : ""}
                   />
                 </PaginationItem>
               </PaginationContent>
