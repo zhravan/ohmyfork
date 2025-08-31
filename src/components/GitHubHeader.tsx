@@ -3,7 +3,6 @@ import { Eye, GitFork, Star, Home as HomeIcon, FileText, Boxes, BookOpen, Mail a
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
-import { Button } from '@/components/ui/button';
 import { useMessageHandler } from '@/hooks/message-handler';
 
 export function GitHubHeader() {

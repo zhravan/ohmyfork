@@ -23,11 +23,11 @@ After months of experimenting with React Server Components in production, I can 
 // Old way - Client component with useEffect
 const UserProfile = ({ userId }) => {
   const [user, setUser] = useState(null);
-  
+
   useEffect(() => {
     fetchUser(userId).then(setUser);
   }, [userId]);
-  
+
   return user ? <div>{user.name}</div> : <Loading />;
 };
 
@@ -44,7 +44,7 @@ const UserProfile = async ({ userId }) => {
 
 Picture this: Production server mysteriously crashing every 3 days. No error logs, no warnings, just... dead. After a week of debugging, I discovered a single line of code that was creating DOM nodes without cleaning them up.
 
-*Lesson learned*: Always profile your memory usage, especially in long-running applications.
+_Lesson learned_: Always profile your memory usage, especially in long-running applications.
 
 ## TypeScript 5.3: What's Got Me Excited
 
@@ -75,4 +75,4 @@ Shoutout to @sarah_codes for her amazing article on "Microinteractions in React"
 That's a wrap for this week! As always, hit reply and let me know what you thought. Your feedback shapes future issues.
 
 Stay curious,  
-Alex
+Shravan K B

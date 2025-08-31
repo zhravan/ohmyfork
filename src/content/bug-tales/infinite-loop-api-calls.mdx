@@ -1,0 +1,31 @@
+---
+title: "The Infinite Loop of API Calls"
+date: "2024-01-08"
+tags: ["React", "API", "Performance"]
+severity: "critical"
+status: "solved"
+description: "useEffect without a dependency array caused uncontrolled refetching."
+timeToSolve: "6 hours"
+assignee: "Mike Johnson"
+dateReported: "2024-01-08"
+reproduction: |
+  1. Open the user dashboard
+  2. `useEffect` triggers API call
+  3. Response updates state
+  4. State change retriggers `useEffect`
+  5. Repeat → flood of requests
+solution: |
+  ```tsx
+  // Before
+  useEffect(() => {
+    fetchUserData(user.id)
+  })
+
+  // After
+  useEffect(() => {
+    fetchUserData(user.id)
+  }, [user.id])
+  ```
+  Additional fixes: request debouncing, circuit breaker, and `AbortController` cancellation.
+---
+Content lives in frontmatter fields for modal rendering.

@@ -1,22 +1,26 @@
-import { ExternalLink, Github, Search, Star } from 'lucide-react';
-import { useState } from 'react';
+import { Boxes, ExternalLink, Github, Search, Star } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { useContent, useContentTags } from '@/hooks/use-content';
 import { useNavigate } from 'react-router-dom';
 
 import { GitHubHeader } from '@/components/GitHubHeader';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { TagMultiSelect, SortSelect } from '@/components/filters/FilterControls';
 import {
-    Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext,
-    PaginationPrevious
+  Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext,
+  PaginationPrevious
 } from '@/components/ui/pagination';
-import { useContent } from '@/hooks/use-content';
 
-import type { Project, ContentItem } from "@/types/content";
+import type { Project } from "@/types/content";
 
 export default function ProjectsPage() {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [sort, setSort] = useState<'date-desc' | 'date-asc' | 'title-asc' | 'title-desc'>('date-desc');
+  const { tags } = useContentTags('projects');
   
   const {
     content: projects,
@@ -33,10 +37,13 @@ export default function ProjectsPage() {
     prevPage
   } = useContent<Project>('projects', {}, { page: 1, limit: 6 });
       
-  const handleSearch = (query: string) => {
-    setSearchQuery(query);
-    search({ query });
+  const toggleTag = (t: string) => {
+    setSelectedTags((prev) => prev.includes(t) ? prev.filter(x => x !== t) : [...prev, t]);
   };
+  const handleSearch = (query: string) => setSearchQuery(query);
+  useEffect(() => {
+    search({ query: searchQuery, tags: selectedTags, sort });
+  }, [searchQuery, selectedTags, sort, search]);
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -76,12 +83,12 @@ export default function ProjectsPage() {
       <div className="container mx-auto px-2 sm:px-4 py-6">
         <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-6">
           <div className="flex items-center gap-2">
-            <span className="text-2xl">🚀</span>
+            <Boxes className="w-5 h-5 text-muted-foreground" />
             <h1 className="text-2xl font-bold">Projects</h1>
           </div>
         </div>
         
-        <div className="mb-6" role="search">
+        <div className="mb-6 space-y-3" role="search">
           <div className="relative max-w-full sm:max-w-md">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" aria-hidden="true" />
             <Input
@@ -94,6 +101,11 @@ export default function ProjectsPage() {
               onChange={(e) => handleSearch(e.target.value)}
               className="pl-10"
             />
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            <TagMultiSelect options={tags} value={selectedTags} onChange={setSelectedTags} />
+            <span className="ml-auto text-xs text-muted-foreground">Sort:</span>
+            <SortSelect value={sort} onChange={setSort} />
           </div>
         </div>
         

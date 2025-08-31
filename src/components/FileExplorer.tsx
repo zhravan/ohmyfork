@@ -86,7 +86,7 @@ export function FileExplorer() {
             path: `/wiki/${n.slug}`,
           })),
       }));
-    return { name: 'wiki', type: 'directory', path: '/wiki', lastCommit: `Wiki: ${wikiItems.length} notes`, commitTime: `2 days ago` || latestStr, children: sectionNodes }; // TODO: update this logic later
+    return { name: 'wiki', type: 'directory', path: '/wiki', lastCommit: `Wiki: ${wikiItems.length} notes`, commitTime: `2 days ago` || latestStr, children: sectionNodes };
   }, [wikiItems]);
 
   const fileStructure: FileNode[] = useMemo(() => {

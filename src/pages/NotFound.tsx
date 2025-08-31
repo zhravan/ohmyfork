@@ -28,7 +28,6 @@ const NotFound = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 flex items-center justify-center p-4">
       <div className="max-w-2xl w-full text-center space-y-8">
-        {/* Animated 404 */}
         <div className={`transition-all duration-1000 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <div className="relative">
             <h1 className="text-8xl md:text-9xl font-bold text-primary/20 select-none">
@@ -42,7 +41,6 @@ const NotFound = () => {
           </div>
         </div>
 
-        {/* Error message */}
         <div className={`transition-all duration-1000 delay-300 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <Card className="border-dashed border-2 border-muted-foreground/30">
             <CardContent className="p-6">
@@ -60,7 +58,6 @@ const NotFound = () => {
           </Card>
         </div>
 
-        {/* Quick navigation */}
         <div className={`transition-all duration-1000 delay-500 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <h3 className="text-lg font-semibold mb-4">Where would you like to go?</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -93,7 +90,6 @@ const NotFound = () => {
           </div>
         </div>
 
-        {/* Action buttons */}
         <div className={`transition-all duration-1000 delay-700 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'} flex flex-col sm:flex-row gap-4 justify-center`}>
           <Button asChild size="lg" className="group">
             <Link to="/">
@@ -109,9 +105,8 @@ const NotFound = () => {
           </Button>
         </div>
 
-        {/* Fun fact */}
         <div className={`transition-all duration-1000 delay-900 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'} text-sm text-muted-foreground`}>
-          <p>💡 Fun fact: HTTP 404 errors were named after room 404 at CERN where the web was invented!</p>
+          <p>💡 Fun fact: HTTP 404 gets its name from CERN’s room 404.</p>
         </div>
       </div>
     </div>

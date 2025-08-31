@@ -1,12 +1,13 @@
-import { Calendar, Mail, TrendingUp, Users } from 'lucide-react';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Calendar, Mail, TrendingUp, Users, Search } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { useContent, useContentTags } from '@/hooks/use-content';
 
 import { GitHubHeader } from '@/components/GitHubHeader';
 import { NewsletterPreviewModal } from '@/components/NewsletterPreviewModal';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { TagMultiSelect, SortSelect } from '@/components/filters/FilterControls';
 import { Label } from '@/components/ui/label';
 
 interface NewsletterIssue {
@@ -15,7 +16,7 @@ interface NewsletterIssue {
   date: string;
   topics: string[];
   readTime: string;
-  content: string;
+  Component?: React.ComponentType;
 }
 
 const recentIssues: NewsletterIssue[] = [
@@ -257,12 +258,17 @@ Alex`
 ];
 
 export default function NewsletterPage() {
-  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [selectedIssue, setSelectedIssue] = useState<NewsletterIssue | null>(null);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+  const [q, setQ] = useState('');
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [sort, setSort] = useState<'date-desc'|'date-asc'|'title-asc'|'title-desc'>('date-desc');
+  const { tags } = useContentTags('newsletters');
+  const { content: issues, search } = useContent<NewsletterIssue>('newsletters', {}, { page: 1, limit: 100 });
+  useEffect(() => { search({ query: q, tags: selectedTags, sort }); }, [q, selectedTags, sort, search]);
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -287,7 +293,7 @@ export default function NewsletterPage() {
       <div className="container mx-auto px-2 sm:px-4 py-6">
         <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-6">
           <div className="flex items-center gap-2">
-            <span className="text-2xl">📧</span>
+            <Mail className="w-5 h-5 text-muted-foreground" />
             <h1 className="text-2xl font-bold">Developer Newsletter</h1>
           </div>
         </div>
@@ -369,17 +375,28 @@ export default function NewsletterPage() {
             </div>
           </div>
           
-          {/* Recent Issues */}
+          {/* Issues + Filters */}
           <div className="lg:col-span-2 order-1 lg:order-2">
+            <div className="mb-4 space-y-3">
+              <div className="relative max-w-full">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                <Input value={q} onChange={(e)=>setQ(e.target.value)} placeholder="Search issues..." className="pl-10" />
+              </div>
+              <div className="flex flex-wrap items-center gap-2">
+                <TagMultiSelect options={tags} value={selectedTags} onChange={setSelectedTags} />
+                <span className="ml-auto text-xs text-muted-foreground">Sort:</span>
+                <SortSelect value={sort} onChange={setSort} />
+              </div>
+            </div>
             <div className="border border-border rounded-md bg-background">
               <div className="bg-muted/30 px-3 sm:px-4 py-3 border-b border-border">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                  <span className="font-mono text-xs sm:text-sm text-foreground">newsletter/archive/</span>
-                  <span className="text-xs sm:text-sm text-muted-foreground">{recentIssues.length} recent issues</span>
+                  <span className="font-mono text-xs sm:text-sm text-foreground">newsletter/</span>
+                  <span className="text-xs sm:text-sm text-muted-foreground">{(issues as any[]).length || recentIssues.length} issues</span>
                 </div>
               </div>
               <div className="divide-y divide-border">
-                {recentIssues.map((issue, index) => (
+                {(((issues as any[]).length ? (issues as any[]) : (recentIssues as any[]))).map((issue: any, index: number) => (
                   <article key={index} className="p-4 sm:p-6 hover:bg-muted/30 transition-colors cursor-pointer" onClick={() => handleIssueClick(issue)}>
                     <div className="flex flex-col sm:flex-row items-start justify-between gap-3 sm:gap-4">
                       <div className="flex-1 min-w-0">
@@ -417,15 +434,6 @@ export default function NewsletterPage() {
                   </article>
                 ))}
               </div>
-            </div>
-            
-            <div className="mt-6 text-center">
-              <p className="text-muted-foreground mb-4">
-                Want to see all previous issues?
-              </p>
-              <Button variant="outline">
-                Browse Full Archive
-              </Button>
             </div>
           </div>
         </div>
