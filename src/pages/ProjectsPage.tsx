@@ -8,12 +8,11 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
-    Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext,
-    PaginationPrevious
+  Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext,
+  PaginationPrevious
 } from '@/components/ui/pagination';
-import { useContent } from '@/hooks/use-content';
 
-import type { Project, ContentItem } from "@/types/content";
+import type { Project } from "@/types/content";
 
 export default function ProjectsPage() {
   const navigate = useNavigate();
