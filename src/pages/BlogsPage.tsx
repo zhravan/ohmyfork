@@ -1,6 +1,6 @@
 import { Calendar, Clock, FileText, Search, User } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { useContent, useContentTags } from '@/hooks/use-content';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { GitHubHeader } from '@/components/GitHubHeader';
@@ -11,7 +11,6 @@ import {
     Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext,
     PaginationPrevious
 } from '@/components/ui/pagination';
-import { useContent } from '@/hooks/use-content';
 
 import type { BlogPost, ContentItem } from "@/types/content";export default function BlogsPage() {
   const navigate = useNavigate();
@@ -33,11 +32,14 @@ import type { BlogPost, ContentItem } from "@/types/content";export default func
     goToPage,
     nextPage,
     prevPage
-  } = useContent<BlogPost>('blogs', { sort, tags: selectedTags, query: searchQuery }, { page: 1, limit: 6 });
+  } = useContent<BlogPost>('blogs', {}, { page: 1, limit: 6 });
       
   const toggleTag = (t: string) => {
     setSelectedTags((prev) => prev.includes(t) ? prev.filter(x => x !== t) : [...prev, t]);
   };
+  useEffect(() => {
+    search({ query: searchQuery, tags: selectedTags, sort });
+  }, [searchQuery, selectedTags, sort, search]);
   const handleSearch = (query: string) => setSearchQuery(query);
   if (loading) {
     return (

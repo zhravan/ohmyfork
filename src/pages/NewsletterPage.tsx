@@ -1,6 +1,6 @@
-import { Calendar, Mail, TrendingUp, Users } from 'lucide-react';
-import { useState } from 'react';
-import { useContent } from '@/hooks/use-content';
+import { Calendar, Mail, TrendingUp, Users, Search } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { useContent, useContentTags } from '@/hooks/use-content';
 
 import { GitHubHeader } from '@/components/GitHubHeader';
 import { NewsletterPreviewModal } from '@/components/NewsletterPreviewModal';
@@ -262,7 +262,12 @@ export default function NewsletterPage() {
   const [message, setMessage] = useState<string | null>(null);
   const [selectedIssue, setSelectedIssue] = useState<NewsletterIssue | null>(null);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
-  const { content: issues } = useContent<NewsletterIssue>('newsletters', {}, { page: 1, limit: 100 });
+  const [q, setQ] = useState('');
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [sort, setSort] = useState<'date-desc'|'date-asc'|'title-asc'|'title-desc'>('date-desc');
+  const { tags } = useContentTags('newsletters');
+  const { content: issues, search } = useContent<NewsletterIssue>('newsletters', {}, { page: 1, limit: 100 });
+  useEffect(() => { search({ query: q, tags: selectedTags, sort }); }, [q, selectedTags, sort, search]);
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -369,6 +374,29 @@ export default function NewsletterPage() {
             </div>
           </div>
           
+          {/* Search + Filters */}
+          <div className="lg:col-span-2 order-1 lg:order-2">
+            <div className="mb-4 space-y-3">
+              <div className="relative max-w-full">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                <Input value={q} onChange={(e)=>setQ(e.target.value)} placeholder="Search issues..." className="pl-10" />
+              </div>
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="text-xs text-muted-foreground">Tags:</span>
+                {tags.map((t)=>(
+                  <button key={t} onClick={()=>setSelectedTags(prev=>prev.includes(t)?prev.filter(x=>x!==t):[...prev,t])} className={`text-xs px-2 py-0.5 rounded border ${selectedTags.includes(t)?'bg-primary/20 border-primary':'border-border'}`}>{t}</button>
+                ))}
+                <span className="ml-auto text-xs text-muted-foreground">Sort:</span>
+                <select value={sort} onChange={(e)=>setSort(e.target.value as any)} className="text-xs border border-border rounded px-2 py-1 bg-background">
+                  <option value="date-desc">Newest</option>
+                  <option value="date-asc">Oldest</option>
+                  <option value="title-asc">Title A–Z</option>
+                  <option value="title-desc">Title Z–A</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
           {/* Recent Issues */}
           <div className="lg:col-span-2 order-1 lg:order-2">
             <div className="border border-border rounded-md bg-background">

@@ -1,6 +1,6 @@
 import { Boxes, ExternalLink, Github, Search, Star } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { useContent, useContentTags } from '@/hooks/use-content';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { GitHubHeader } from '@/components/GitHubHeader';
@@ -35,12 +35,15 @@ export default function ProjectsPage() {
     goToPage,
     nextPage,
     prevPage
-  } = useContent<Project>('projects', { sort, tags: selectedTags, query: searchQuery }, { page: 1, limit: 6 });
+  } = useContent<Project>('projects', {}, { page: 1, limit: 6 });
       
   const toggleTag = (t: string) => {
     setSelectedTags((prev) => prev.includes(t) ? prev.filter(x => x !== t) : [...prev, t]);
   };
   const handleSearch = (query: string) => setSearchQuery(query);
+  useEffect(() => {
+    search({ query: searchQuery, tags: selectedTags, sort });
+  }, [searchQuery, selectedTags, sort, search]);
 
   const getStatusColor = (status: string) => {
     switch (status) {

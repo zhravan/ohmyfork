@@ -1,5 +1,5 @@
 import { AlertTriangle, Bug, Clock, Search } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { BugReportModal } from '@/components/BugReportModal';
 import { GitHubHeader } from '@/components/GitHubHeader';
@@ -32,9 +32,12 @@ export default function BugTalesPage() {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [sort, setSort] = useState<'date-desc'|'date-asc'|'title-asc'|'title-desc'>('date-desc');
   const { tags } = useContentTags('bug-tales');
-  const { content: tales, total, page, totalPages, hasNext, hasPrev, goToPage, nextPage, prevPage } =
-    useContent<BugTale>('bug-tales', { query: q, tags: selectedTags, sort }, { page: 1, limit: TALES_PER_PAGE });
+  const { content: tales, total, page, totalPages, hasNext, hasPrev, goToPage, nextPage, prevPage, search } =
+    useContent<BugTale>('bug-tales', {}, { page: 1, limit: TALES_PER_PAGE });
   const currentTales = tales as BugTale[];
+  useEffect(() => {
+    search({ query: q, tags: selectedTags, sort });
+  }, [q, selectedTags, sort]);
 
   const getSeverityColor = (severity: string) => {
     switch (severity) {
