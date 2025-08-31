@@ -1,4 +1,4 @@
-import { AlertTriangle, ArrowLeft, Bug, Clock } from 'lucide-react';
+import { AlertTriangle, Clock } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -181,15 +181,6 @@ export default function BugTalesPage() {
       
       <div className="container mx-auto px-4 py-6">
         <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-6">
-          <Button 
-            variant="outline" 
-            size="sm" 
-            onClick={() => navigate('/')}
-            className="flex items-center gap-2"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to ohmyfork
-          </Button>
           <div className="flex items-center gap-2">
             <span className="text-2xl">🐛</span>
             <h1 className="text-2xl font-bold">Bug Tales</h1>

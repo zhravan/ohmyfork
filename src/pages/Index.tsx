@@ -67,7 +67,7 @@ const Index = () => {
           <ReadmeSection />
         </div>
         {/* Contributions Section */}
-        <div className="mt-8 flex justify-center">
+        <div className="mt-8">
           <ContributionsGrid />
         </div>
       </div>

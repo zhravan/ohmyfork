@@ -1,5 +1,6 @@
-import { ArrowLeft, Calendar, ExternalLink, Mail, MapPin } from 'lucide-react';
+import { Calendar, ExternalLink, Mail, MapPin } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import * as React from 'react';
 
 import { GitHubHeader } from '@/components/GitHubHeader';
 import { Button } from '@/components/ui/button';
@@ -9,11 +10,15 @@ import { Textarea } from '@/components/ui/textarea';
 
 export default function ContactPage() {
   const navigate = useNavigate();
+  const [status, setStatus] = React.useState<'idle'|'submitting'|'success'>('idle');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    console.log("Form submitted");
+    setStatus('submitting');
+    setTimeout(() => {
+      setStatus('success');
+      setTimeout(() => setStatus('idle'), 2000);
+    }, 800);
   };
 
   return (
@@ -22,15 +27,6 @@ export default function ContactPage() {
 
       <div className="container mx-auto px-2 sm:px-4 py-6">
         <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-6">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => navigate("/")}
-            className="flex items-center gap-2"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to ohmyfork
-          </Button>
           <div className="flex items-center gap-2">
             <span className="text-2xl">📞</span>
             <h1 className="text-2xl font-bold">Contact & Social</h1>
@@ -90,281 +86,78 @@ export default function ContactPage() {
 
               <div className="mt-8">
                 <h3 className="text-lg font-semibold mb-4">Social Links</h3>
-                <div className="grid grid-cols-1 xs:grid-cols-2 gap-3">
-                  <a
-                    href="https://github.com/shravan20"
-                    className="flex items-center gap-2 p-3 border border-border rounded-md hover:bg-muted/50 transition-colors text-primary"
-                  >
-                    <img
-                      src="https://cdn-icons-png.flaticon.com/256/25/25231.png"
-                      alt="GitHub"
-                      className="w-5 h-5 rounded bg-white object-contain"
-                    />
-                    <span>GitHub</span>
-                    <ExternalLink className="w-4 h-4 ml-auto" />
-                  </a>
-                  <a
-                    href="https://gitlab.com/zhravan"
-                    className="flex items-center gap-2 p-3 border border-border rounded-md hover:bg-muted/50 transition-colors text-primary"
-                  >
-                    <img
-                      src="https://about.gitlab.com/images/press/logo/png/gitlab-icon-rgb.png"
-                      alt="GitLab"
-                      className="w-5 h-5"
-                    />
-                    <span>GitLab (zhravan)</span>
-                    <ExternalLink className="w-4 h-4 ml-auto" />
-                  </a>
-                  <a
-                    href="https://gitlab.com/shravan_20"
-                    className="flex items-center gap-2 p-3 border border-border rounded-md hover:bg-muted/50 transition-colors text-primary"
-                  >
-                    <img
-                      src="https://about.gitlab.com/images/press/logo/png/gitlab-icon-rgb.png"
-                      alt="GitLab"
-                      className="w-5 h-5"
-                    />
-                    <span>GitLab (shravan_20)</span>
-                    <ExternalLink className="w-4 h-4 ml-auto" />
-                  </a>
-                  <a
-                    href="https://linkedin.com/in/zhravan"
-                    className="flex items-center gap-2 p-3 border border-border rounded-md hover:bg-muted/50 transition-colors text-primary"
-                  >
-                    <img
-                      src="https://cdn-icons-png.flaticon.com/512/174/174857.png"
-                      alt="LinkedIn"
-                      className="w-5 h-5 rounded"
-                    />
-                    <span>LinkedIn</span>
-                    <ExternalLink className="w-4 h-4 ml-auto" />
-                  </a>
-                  <a
-                    href="https://x.com/zhravan"
-                    className="flex items-center gap-2 p-3 border border-border rounded-md hover:bg-muted/50 transition-colors text-primary"
-                  >
-                    <img
-                      src="https://images.freeimages.com/image/large-previews/f35/x-twitter-logo-on-black-circle-5694247.png"
-                      alt="X"
-                      className="w-6 h-6 rounded bg-white border border-gray-300 object-contain"
-                      style={{ padding: "2px" }}
-                    />
-                    <span>X</span>
-                    <ExternalLink className="w-4 h-4 ml-auto" />
-                  </a>
-                  <a
-                    href="mailto:mrshravankumarb@gmail.com"
-                    className="flex items-center gap-2 p-3 border border-border rounded-md hover:bg-muted/50 transition-colors text-primary"
-                  >
-                    <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Mail_%28iOS%29.svg"
-                      alt="Email"
-                      className="w-5 h-5 rounded"
-                    />
-                    <span>Email</span>
-                    <ExternalLink className="w-4 h-4 ml-auto" />
-                  </a>
-                  <a
-                    href="https://wiki.ohmyscript.com/"
-                    className="flex items-center gap-2 p-3 border border-border rounded-md hover:bg-muted/50 transition-colors text-primary"
-                  >
-                    <img
-                      src="https://cdn.dribbble.com/userupload/27096444/file/original-5e944f1c560b81ee84745815c0f16bb5.jpg?resize=400x0"
-                      alt="Digital Garden"
-                      className="w-7 h-5 rounded bg-white border border-gray-300 object-contain"
-                      style={{ padding: "2px" }}
-                    />
-                    <span>Digital Garden</span>
-                    <ExternalLink className="w-4 h-4 ml-auto" />
-                  </a>
-                  <a
-                    href="https://stackoverflow.com/users/11899809/zhravan"
-                    className="flex items-center gap-2 p-3 border border-border rounded-md hover:bg-muted/50 transition-colors text-primary"
-                  >
-                    <img
-                      src="https://cdn.sstatic.net/Sites/stackoverflow/Img/favicon.ico"
-                      alt="Stack Overflow"
-                      className="w-5 h-5 rounded"
-                    />
-                    <span>Stack Overflow</span>
-                    <ExternalLink className="w-4 h-4 ml-auto" />
-                  </a>
-                  <a
-                    href="https://leetcode.com/u/zhravan/"
-                    className="flex items-center gap-2 p-3 border border-border rounded-md hover:bg-muted/50 transition-colors text-primary"
-                  >
-                    <img
-                      src="https://leetcode.com/static/images/LeetCode_logo_rvs.png"
-                      alt="LeetCode"
-                      className="w-5 h-5"
-                    />
-                    <span>LeetCode</span>
-                    <ExternalLink className="w-4 h-4 ml-auto" />
-                  </a>
-                  <a
-                    href="https://www.hackerearth.com/@zhravan/"
-                    className="flex items-center gap-2 p-3 border border-border rounded-md hover:bg-muted/50 transition-colors text-primary"
-                  >
-                    <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/e/e8/HackerEarth_logo.png"
-                      alt="HackerEarth"
-                      className="w-7 h-5 rounded bg-white border border-gray-300 object-contain"
-                      style={{ padding: "2px" }}
-                    />
-                    <span>HackerEarth</span>
-                    <ExternalLink className="w-4 h-4 ml-auto" />
-                  </a>
-                  {/* Duplicate removed: Only one Hackerearth link with SVG logo retained for clarity */}
-                  <a
-                    href="https://www.hackerrank.com/profile/imshravan"
-                    className="flex items-center gap-2 p-3 border border-border rounded-md hover:bg-muted/50 transition-colors text-primary"
-                  >
-                    <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/6/65/HackerRank_logo.png"
-                      alt="HackerRank"
-                      className="w-5 h-5"
-                    />
-                    <span>HackerRank</span>
-                    <ExternalLink className="w-4 h-4 ml-auto" />
-                  </a>
-                  <a
-                    href="https://bsky.app/profile/zhravan.bsky.social"
-                    className="flex items-center gap-2 p-3 border border-border rounded-md hover:bg-muted/50 transition-colors text-primary"
-                  >
-                    <img
-                      src="https://bsky.app/static/apple-touch-icon.png"
-                      alt="Bluesky"
-                      className="w-5 h-5 rounded"
-                    />
-                    <span>Bluesky</span>
-                    <ExternalLink className="w-4 h-4 ml-auto" />
-                  </a>
-                  <a
-                    href="https://www.reddit.com/user/im_skb/"
-                    className="flex items-center gap-2 p-3 border border-border rounded-md hover:bg-muted/50 transition-colors text-primary"
-                  >
-                    <img
-                      src="https://www.redditstatic.com/desktop2x/img/favicon/apple-icon-180x180.png"
-                      alt="Reddit"
-                      className="w-5 h-5 rounded"
-                    />
-                    <span>Reddit</span>
-                    <ExternalLink className="w-4 h-4 ml-auto" />
-                  </a>
-                  <a
-                    href="https://www.youtube.com/@ohmycuriosity"
-                    className="flex items-center gap-2 p-3 border border-border rounded-md hover:bg-muted/50 transition-colors text-primary"
-                  >
-                    <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg"
-                      alt="YouTube"
-                      className="w-8 h-5 rounded bg-white object-contain"
-                    />
-                    <span>YouTube</span>
-                    <ExternalLink className="w-4 h-4 ml-auto" />
-                  </a>
-                  <a
-                    href="http://medium.com/@zhravan"
-                    className="flex items-center gap-2 p-3 border border-border rounded-md hover:bg-muted/50 transition-colors text-primary"
-                  >
-                    <img
-                      src="https://cdn.freebiesupply.com/images/thumbs/2x/medium-icon-white-on-black.png"
-                      alt="Medium"
-                      className="w-7 h-5 rounded bg-white border border-gray-300 object-contain"
-                      style={{ padding: "2px" }}
-                    />
-                    <span>Medium</span>
-                    <ExternalLink className="w-4 h-4 ml-auto" />
-                  </a>
-                  <a
-                    href="https://dev.to/zhravan"
-                    className="flex items-center gap-2 p-3 border border-border rounded-md hover:bg-muted/50 transition-colors text-primary"
-                  >
-                    <img
-                      src="https://media2.dev.to/dynamic/image/quality=100/https://dev-to-uploads.s3.amazonaws.com/uploads/logos/resized_logo_UQww2soKuUsjaOGNB38o.png"
-                      alt="dev.to"
-                      className="w-7 h-5 rounded bg-white border border-gray-300 object-contain"
-                      style={{ padding: "2px" }}
-                    />
-                    <span>dev.to</span>
-                    <ExternalLink className="w-4 h-4 ml-auto" />
-                  </a>
-                  <a
-                    href="https://replit.com/@zhravan"
-                    className="flex items-center gap-2 p-3 border border-border rounded-md hover:bg-muted/50 transition-colors text-primary"
-                  >
-                    <img
-                      src="https://replit.com/public/icons/favicon-prompt-192.png"
-                      alt="Replit"
-                      className="w-5 h-5 rounded"
-                    />
-                    <span>Replit</span>
-                    <ExternalLink className="w-4 h-4 ml-auto" />
-                  </a>
-                  <a
-                    href="https://codepen.io/zhravan"
-                    className="flex items-center gap-2 p-3 border border-border rounded-md hover:bg-muted/50 transition-colors text-primary"
-                  >
-                    <img
-                      src="https://blog.codepen.io/wp-content/uploads/2012/06/Button-Fill-Black-Large.png"
-                      alt="CodePen"
-                      className="w-5 h-5 rounded bg-white border border-gray-300 object-contain"
-                      style={{ padding: "2px" }}
-                    />
-                    <span>CodePen</span>
-                    <ExternalLink className="w-4 h-4 ml-auto" />
-                  </a>
-                  <a
-                    href="https://codesandbox.io/u/zhravan"
-                    className="flex items-center gap-2 p-3 border border-border rounded-md hover:bg-muted/50 transition-colors text-primary"
-                  >
-                    <img
-                      src="https://images.seeklogo.com/logo-png/34/1/code-sandbox-logo-png_seeklogo-349463.png"
-                      alt="CodeSandbox"
-                      className="w-7 h-5 rounded bg-white border border-gray-300 object-contain"
-                      style={{ padding: "2px" }}
-                    />
-                    <span>CodeSandbox</span>
-                    <ExternalLink className="w-4 h-4 ml-auto" />
-                  </a>
-                  <a
-                    href="https://discord.com/users/shravan20_"
-                    className="flex items-center gap-2 p-3 border border-border rounded-md hover:bg-muted/50 transition-colors text-primary"
-                  >
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/edent/SuperTinyIcons/images/svg/discord.svg"
-                      alt="Discord"
-                      className="w-5 h-5 rounded"
-                    />
-                    <span>Discord</span>
-                    <ExternalLink className="w-4 h-4 ml-auto" />
-                  </a>
-                  <a
-                    href="https://www.twitch.tv/zhravan"
-                    className="flex items-center gap-2 p-3 border border-border rounded-md hover:bg-muted/50 transition-colors text-primary"
-                  >
-                    <img
-                      src="https://static.twitchcdn.net/assets/favicon-32-e29e246c157142c94346.png"
-                      alt="Twitch"
-                      className="w-5 h-5 rounded"
-                    />
-                    <span>Twitch</span>
-                    <ExternalLink className="w-4 h-4 ml-auto" />
-                  </a>
-                  <a
-                    href="https://mastodon.social/@zhravan"
-                    className="flex items-center gap-2 p-3 border border-border rounded-md hover:bg-muted/50 transition-colors text-primary"
-                  >
-                    <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/4/48/Mastodon_Logotype_%28Simple%29.svg"
-                      alt="Mastodon"
-                      className="w-7 h-5 rounded bg-white border border-gray-300 object-contain"
-                      style={{ padding: "2px" }}
-                    />
-                    <span>Mastodon</span>
-                    <ExternalLink className="w-4 h-4 ml-auto" />
-                  </a>
-                </div>
+                {/* Unified card renderer for consistent spacing & sizing */}
+                {(() => {
+                  type SocialLink = { name: string; href: string; icon: string };
+                  const wrapCls = "w-6 h-6 rounded bg-white border border-border object-contain p-0.5";
+                  const Card = ({ item }: { item: SocialLink }) => (
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={item.name}
+                      className="flex items-center gap-3 p-3 border border-border rounded-md hover:bg-muted/50 transition-colors"
+                    >
+                      <img src={item.icon} alt="" className={wrapCls} />
+                      <span className="text-foreground text-xs flex-1 min-w-0 whitespace-normal break-words">{item.name}</span>
+                      <ExternalLink className="w-4 h-4 ml-auto text-muted-foreground" aria-hidden="true" />
+                    </a>
+                  );
+
+                  const developer: SocialLink[] = [
+                    { name: 'GitHub', href: 'https://github.com/shravan20', icon: 'https://cdn-icons-png.flaticon.com/256/25/25231.png' },
+                    { name: 'GitLab (zhravan)', href: 'https://gitlab.com/zhravan', icon: 'https://about.gitlab.com/images/press/logo/png/gitlab-icon-rgb.png' },
+                    { name: 'GitLab (shravan_20)', href: 'https://gitlab.com/shravan_20', icon: 'https://about.gitlab.com/images/press/logo/png/gitlab-icon-rgb.png' },
+                    { name: 'Stack Overflow', href: 'https://stackoverflow.com/users/11899809/zhravan', icon: 'https://cdn.sstatic.net/Sites/stackoverflow/Img/favicon.ico' },
+                    { name: 'LeetCode', href: 'https://leetcode.com/u/zhravan/', icon: 'https://leetcode.com/static/images/LeetCode_logo_rvs.png' },
+                    { name: 'HackerEarth', href: 'https://www.hackerearth.com/@zhravan/', icon: 'https://upload.wikimedia.org/wikipedia/commons/e/e8/HackerEarth_logo.png' },
+                    { name: 'HackerRank', href: 'https://www.hackerrank.com/profile/imshravan', icon: 'https://upload.wikimedia.org/wikipedia/commons/6/65/HackerRank_logo.png' },
+                    { name: 'Replit', href: 'https://replit.com/@zhravan', icon: 'https://replit.com/public/icons/favicon-prompt-192.png' },
+                    { name: 'CodePen', href: 'https://codepen.io/zhravan', icon: 'https://blog.codepen.io/wp-content/uploads/2012/06/Button-Fill-Black-Large.png' },
+                    { name: 'CodeSandbox', href: 'https://codesandbox.io/u/zhravan', icon: 'https://images.seeklogo.com/logo-png/34/1/code-sandbox-logo-png_seeklogo-349463.png' },
+                  ];
+
+                  const social: SocialLink[] = [
+                    { name: 'LinkedIn', href: 'https://linkedin.com/in/zhravan', icon: 'https://cdn-icons-png.flaticon.com/512/174/174857.png' },
+                    { name: 'X', href: 'https://x.com/zhravan', icon: 'https://images.freeimages.com/image/large-previews/f35/x-twitter-logo-on-black-circle-5694247.png' },
+                    { name: 'Bluesky', href: 'https://bsky.app/profile/zhravan.bsky.social', icon: 'https://bsky.app/static/apple-touch-icon.png' },
+                    { name: 'Reddit', href: 'https://www.reddit.com/user/im_skb/', icon: 'https://www.redditstatic.com/desktop2x/img/favicon/apple-icon-180x180.png' },
+                    { name: 'Discord', href: 'https://discord.com/users/shravan20_', icon: 'https://cdn.jsdelivr.net/gh/edent/SuperTinyIcons/images/svg/discord.svg' },
+                    { name: 'Twitch', href: 'https://www.twitch.tv/zhravan', icon: 'https://static.twitchcdn.net/assets/favicon-32-e29e246c157142c94346.png' },
+                    { name: 'Mastodon', href: 'https://mastodon.social/@zhravan', icon: 'https://upload.wikimedia.org/wikipedia/commons/4/48/Mastodon_Logotype_%28Simple%29.svg' },
+                    { name: 'YouTube', href: 'https://www.youtube.com/@ohmycuriosity', icon: 'https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg' },
+                    { name: 'Email', href: 'mailto:mrshravankumarb@gmail.com', icon: 'https://upload.wikimedia.org/wikipedia/commons/4/4e/Mail_%28iOS%29.svg' },
+                  ];
+
+                  const content: SocialLink[] = [
+                    { name: 'Digital Garden', href: 'https://wiki.ohmyscript.com/', icon: 'https://cdn.dribbble.com/userupload/27096444/file/original-5e944f1c560b81ee84745815c0f16bb5.jpg?resize=400x0' },
+                    { name: 'Medium', href: 'http://medium.com/@zhravan', icon: 'https://cdn.freebiesupply.com/images/thumbs/2x/medium-icon-white-on-black.png' },
+                    { name: 'dev.to', href: 'https://dev.to/zhravan', icon: 'https://media2.dev.to/dynamic/image/quality=100/https://dev-to-uploads.s3.amazonaws.com/uploads/logos/resized_logo_UQww2soKuUsjaOGNB38o.png' },
+                  ];
+
+                  return (
+                    <div className="space-y-6">
+                      <div>
+                        <div className="text-sm font-medium mb-2 text-muted-foreground">Developer</div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                          {developer.map((item) => <Card key={item.href} item={item} />)}
+                        </div>
+                      </div>
+                      <div>
+                        <div className="text-sm font-medium mb-2 text-muted-foreground">Social</div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                          {social.map((item) => <Card key={item.href} item={item} />)}
+                        </div>
+                      </div>
+                      <div>
+                        <div className="text-sm font-medium mb-2 text-muted-foreground">Content</div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                          {content.map((item) => <Card key={item.href} item={item} />)}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })()}
               </div>
             </div>
           </div>
@@ -379,15 +172,15 @@ export default function ContactPage() {
             <div className="p-4 sm:p-6">
               <h2 className="text-xl font-semibold mb-6">Send a Message</h2>
 
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-4" aria-live="polite">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="firstName">First Name</Label>
-                    <Input id="firstName" placeholder="John" required />
+                    <Input id="firstName" placeholder="John" autoComplete="given-name" required />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="lastName">Last Name</Label>
-                    <Input id="lastName" placeholder="Doe" required />
+                    <Input id="lastName" placeholder="Doe" autoComplete="family-name" required />
                   </div>
                 </div>
 
@@ -397,6 +190,8 @@ export default function ContactPage() {
                     id="email"
                     type="email"
                     placeholder="john@example.com"
+                    autoComplete="email"
+                    inputMode="email"
                     required
                   />
                 </div>
@@ -420,8 +215,8 @@ export default function ContactPage() {
                   />
                 </div>
 
-                <Button type="submit" className="github-button-primary w-full">
-                  Send Message
+                <Button type="submit" className="github-button-primary w-full" disabled={status !== 'idle'} aria-busy={status === 'submitting'}>
+                  {status === 'submitting' ? 'Sending…' : status === 'success' ? 'Sent! ✅' : 'Send Message'}
                 </Button>
               </form>
 

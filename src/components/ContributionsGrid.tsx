@@ -19,15 +19,15 @@ export function ContributionsGrid() {
   const monthLabelPositions = Array(12).fill(0).map((_, i) => Math.round(i * weekCount / 12));
 
   return (
-    <div className="mt-12">
-      <h3 className="text-lg font-semibold mb-4 text-foreground flex items-center gap-2">
+    <div className="mt-8 sm:mt-12">
+      <h3 className="text-base sm:text-lg font-semibold mb-2 sm:mb-4 text-foreground flex items-center gap-2">
         <svg className="w-5 h-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><rect width="24" height="24" rx="4" fill="#161b22"/><path d="M7 12h10M12 7v10" stroke="#22c55e" strokeWidth="2" strokeLinecap="round"/></svg>
         Contributions in the last year
       </h3>
-      <div className="overflow-x-auto">
-        <div className="flex flex-col gap-1">
-          {/* Month labels, spread across grid */}
-          <div className="flex gap-0.5 ml-10 text-xs text-muted-foreground relative" style={{minWidth: weekCount * 14}}>
+      <div className="overflow-x-auto -mx-2 sm:mx-0">
+        <div className="flex flex-col gap-1 px-2">
+          {/* Month labels, spread across grid (hidden on mobile for clarity) */}
+          <div className="hidden sm:flex gap-0.5 ml-10 text-xs text-muted-foreground relative" style={{minWidth: weekCount * 14}}>
             {Array.from({length: weekCount}).map((_, weekIdx) => {
               const monthIdx = monthLabelPositions.indexOf(weekIdx);
               return (
@@ -39,7 +39,7 @@ export function ContributionsGrid() {
           </div>
           {/* Days and grid */}
           <div className="flex gap-1">
-            <div className="flex flex-col justify-between mr-1 text-xs text-muted-foreground h-24">
+            <div className="hidden sm:flex flex-col justify-between mr-1 text-xs text-muted-foreground h-24">
               <span>Mon</span>
               <span>Wed</span>
               <span>Fri</span>
@@ -58,24 +58,25 @@ export function ContributionsGrid() {
                     else if (weekIdx > 24) level = Math.floor(Math.random()*3)+1;
                     else if (weekIdx > 12) level = Math.floor(Math.random()*2)+1;
                     else level = Math.floor(Math.random()*2);
-                    return <div key={dayIdx} className={`w-3 h-3 rounded-sm ${levels[level]}`}></div>;
+                    return <div key={dayIdx} className={`w-2 h-2 sm:w-3 sm:h-3 rounded-[3px] ${levels[level]}`}></div>;
                   })}
                 </div>
               ))}
             </div>
           </div>
-          <div className="flex items-center gap-2 mt-2 text-xs text-muted-foreground">
+          <div className="flex items-center gap-2 mt-2 text-[11px] sm:text-xs text-muted-foreground">
             <span>Less</span>
             <div className="flex gap-1">
-              <span className="w-3 h-3 rounded-sm bg-[#161b22] border border-border"></span>
-              <span className="w-3 h-3 rounded-sm bg-green-900"></span>
-              <span className="w-3 h-3 rounded-sm bg-green-700"></span>
-              <span className="w-3 h-3 rounded-sm bg-green-500"></span>
-              <span className="w-3 h-3 rounded-sm bg-green-400"></span>
-              <span className="w-3 h-3 rounded-sm bg-green-300"></span>
+              <span className="w-2 h-2 sm:w-3 sm:h-3 rounded-[3px] bg-[#161b22] border border-border"></span>
+              <span className="w-2 h-2 sm:w-3 sm:h-3 rounded-[3px] bg-green-900"></span>
+              <span className="w-2 h-2 sm:w-3 sm:h-3 rounded-[3px] bg-green-700"></span>
+              <span className="w-2 h-2 sm:w-3 sm:h-3 rounded-[3px] bg-green-500"></span>
+              <span className="w-2 h-2 sm:w-3 sm:h-3 rounded-[3px] bg-green-400"></span>
+              <span className="w-2 h-2 sm:w-3 sm:h-3 rounded-[3px] bg-green-300"></span>
             </div>
             <span>More</span>
           </div>
+          <div className="sm:hidden text-[11px] text-muted-foreground mt-1">Scroll horizontally to view all weeks</div>
         </div>
       </div>
     </div>
