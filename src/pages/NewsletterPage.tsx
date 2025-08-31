@@ -375,7 +375,7 @@ export default function NewsletterPage() {
             </div>
           </div>
           
-          {/* Search + Filters */}
+          {/* Issues + Filters */}
           <div className="lg:col-span-2 order-1 lg:order-2">
             <div className="mb-4 space-y-3">
               <div className="relative max-w-full">
@@ -388,10 +388,6 @@ export default function NewsletterPage() {
                 <SortSelect value={sort} onChange={setSort} />
               </div>
             </div>
-          </div>
-
-          {/* Recent Issues */}
-          <div className="lg:col-span-2 order-1 lg:order-2">
             <div className="border border-border rounded-md bg-background">
               <div className="bg-muted/30 px-3 sm:px-4 py-3 border-b border-border">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
@@ -438,15 +434,6 @@ export default function NewsletterPage() {
                   </article>
                 ))}
               </div>
-            </div>
-            
-            <div className="mt-6 text-center">
-              <p className="text-muted-foreground mb-4">
-                Want to see all previous issues?
-              </p>
-              <Button variant="outline">
-                Browse Full Archive
-              </Button>
             </div>
           </div>
         </div>
