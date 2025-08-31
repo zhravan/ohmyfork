@@ -77,9 +77,14 @@ export default function BugTalesPage() {
           </div>
           <div className="flex flex-wrap items-center gap-2">
             <span className="text-xs text-muted-foreground">Tags:</span>
-            {tags.map((t) => (
-              <button key={t} onClick={()=>setSelectedTags(prev=>prev.includes(t)?prev.filter(x=>x!==t):[...prev,t])} className={`text-xs px-2 py-0.5 rounded border ${selectedTags.includes(t)?'bg-primary/20 border-primary':'border-border'}`}>{t}</button>
-            ))}
+            <select
+              multiple
+              value={selectedTags}
+              onChange={(e)=>setSelectedTags(Array.from(e.currentTarget.selectedOptions).map(o=>o.value))}
+              className="text-xs border border-border rounded px-2 py-1 bg-background min-w-[12rem] h-20"
+            >
+              {tags.map((t)=>(<option key={t} value={t}>{t}</option>))}
+            </select>
             <span className="ml-auto text-xs text-muted-foreground">Sort:</span>
             <select value={sort} onChange={(e)=>setSort(e.target.value as any)} className="text-xs border border-border rounded px-2 py-1 bg-background">
               <option value="date-desc">Newest</option>
