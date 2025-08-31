@@ -7,6 +7,7 @@ import { GitHubHeader } from '@/components/GitHubHeader';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { TagMultiSelect, SortSelect } from '@/components/filters/FilterControls';
 import {
     Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext,
     PaginationPrevious
@@ -90,24 +91,9 @@ import type { BlogPost, ContentItem } from "@/types/content";export default func
             />
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs text-muted-foreground">Tags:</span>
-            <select
-              multiple
-              value={selectedTags}
-              onChange={(e) => setSelectedTags(Array.from(e.currentTarget.selectedOptions).map(o=>o.value))}
-              className="text-xs border border-border rounded px-2 py-1 bg-background min-w-[12rem] h-20"
-            >
-              {tags.map((t) => (
-                <option key={t} value={t}>{t}</option>
-              ))}
-            </select>
+            <TagMultiSelect options={tags} value={selectedTags} onChange={setSelectedTags} />
             <span className="ml-auto text-xs text-muted-foreground">Sort:</span>
-            <select value={sort} onChange={(e) => setSort(e.target.value as any)} className="text-xs border border-border rounded px-2 py-1 bg-background">
-              <option value="date-desc">Newest</option>
-              <option value="date-asc">Oldest</option>
-              <option value="title-asc">Title A–Z</option>
-              <option value="title-desc">Title Z–A</option>
-            </select>
+            <SortSelect value={sort} onChange={setSort} />
           </div>
         </div>
         

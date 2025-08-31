@@ -7,6 +7,7 @@ import { NewsletterPreviewModal } from '@/components/NewsletterPreviewModal';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { TagMultiSelect, SortSelect } from '@/components/filters/FilterControls';
 import { Label } from '@/components/ui/label';
 
 interface NewsletterIssue {
@@ -382,22 +383,9 @@ export default function NewsletterPage() {
                 <Input value={q} onChange={(e)=>setQ(e.target.value)} placeholder="Search issues..." className="pl-10" />
               </div>
               <div className="flex flex-wrap items-center gap-2">
-                <span className="text-xs text-muted-foreground">Tags:</span>
-                <select
-                  multiple
-                  value={selectedTags}
-                  onChange={(e)=>setSelectedTags(Array.from(e.currentTarget.selectedOptions).map(o=>o.value))}
-                  className="text-xs border border-border rounded px-2 py-1 bg-background min-w-[12rem] h-20"
-                >
-                  {tags.map((t)=>(<option key={t} value={t}>{t}</option>))}
-                </select>
+                <TagMultiSelect options={tags} value={selectedTags} onChange={setSelectedTags} />
                 <span className="ml-auto text-xs text-muted-foreground">Sort:</span>
-                <select value={sort} onChange={(e)=>setSort(e.target.value as any)} className="text-xs border border-border rounded px-2 py-1 bg-background">
-                  <option value="date-desc">Newest</option>
-                  <option value="date-asc">Oldest</option>
-                  <option value="title-asc">Title A–Z</option>
-                  <option value="title-desc">Title Z–A</option>
-                </select>
+                <SortSelect value={sort} onChange={setSort} />
               </div>
             </div>
           </div>
@@ -407,7 +395,7 @@ export default function NewsletterPage() {
             <div className="border border-border rounded-md bg-background">
               <div className="bg-muted/30 px-3 sm:px-4 py-3 border-b border-border">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                  <span className="font-mono text-xs sm:text-sm text-foreground">newsletter/archive/</span>
+                  <span className="font-mono text-xs sm:text-sm text-foreground">newsletter/</span>
                   <span className="text-xs sm:text-sm text-muted-foreground">{(issues as any[]).length || recentIssues.length} issues</span>
                 </div>
               </div>
