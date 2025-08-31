@@ -1,4 +1,5 @@
 import { Calendar, Clock, FileText, Search, User } from 'lucide-react';
+import { useContent, useContentTags } from '@/hooks/use-content';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,6 +16,9 @@ import { useContent } from '@/hooks/use-content';
 import type { BlogPost, ContentItem } from "@/types/content";export default function BlogsPage() {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [sort, setSort] = useState<'date-desc' | 'date-asc' | 'title-asc' | 'title-desc'>('date-desc');
+  const { tags } = useContentTags('blogs');
   
   const {
     content: blogPosts,
@@ -29,12 +33,12 @@ import type { BlogPost, ContentItem } from "@/types/content";export default func
     goToPage,
     nextPage,
     prevPage
-  } = useContent<BlogPost>('blogs', {}, { page: 1, limit: 6 });
+  } = useContent<BlogPost>('blogs', { sort, tags: selectedTags, query: searchQuery }, { page: 1, limit: 6 });
       
-  const handleSearch = (query: string) => {
-    setSearchQuery(query);
-    search({ query });
+  const toggleTag = (t: string) => {
+    setSelectedTags((prev) => prev.includes(t) ? prev.filter(x => x !== t) : [...prev, t]);
   };
+  const handleSearch = (query: string) => setSearchQuery(query);
   if (loading) {
     return (
       <div className="min-h-screen bg-background">
@@ -68,8 +72,8 @@ import type { BlogPost, ContentItem } from "@/types/content";export default func
           </div>
         </div>
         
-        {/* Search Bar */}
-        <div className="mb-6" role="search">
+        {/* Search + Filters */}
+        <div className="mb-6 space-y-3" role="search">
           <div className="relative max-w-full sm:max-w-md">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" aria-hidden="true" />
             <Input
@@ -82,6 +86,19 @@ import type { BlogPost, ContentItem } from "@/types/content";export default func
               onChange={(e) => handleSearch(e.target.value)}
               className="pl-10"
             />
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-xs text-muted-foreground">Tags:</span>
+            {tags.map((t) => (
+              <button key={t} onClick={() => toggleTag(t)} className={`text-xs px-2 py-0.5 rounded border ${selectedTags.includes(t) ? 'bg-primary/20 border-primary' : 'border-border'}`}>{t}</button>
+            ))}
+            <span className="ml-auto text-xs text-muted-foreground">Sort:</span>
+            <select value={sort} onChange={(e) => setSort(e.target.value as any)} className="text-xs border border-border rounded px-2 py-1 bg-background">
+              <option value="date-desc">Newest</option>
+              <option value="date-asc">Oldest</option>
+              <option value="title-asc">Title A–Z</option>
+              <option value="title-desc">Title Z–A</option>
+            </select>
           </div>
         </div>
         

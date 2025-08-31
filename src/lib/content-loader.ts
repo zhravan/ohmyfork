@@ -33,15 +33,8 @@ export async function loadContent<T extends BaseContent>(
     } as ContentItem<T>;
   });
   
-  // Apply search filters
+  // Apply search filters and sorting
   items = applySearchFilters(items, searchOptions);
-  
-  // Sort by date (newest first)
-  items.sort((a, b) => {
-    const dateA = a.date ? new Date(a.date).getTime() : 0;
-    const dateB = b.date ? new Date(b.date).getTime() : 0;
-    return dateB - dateA;
-  });
   
   // Apply pagination
   const total = items.length;
@@ -106,7 +99,21 @@ function applySearchFilters<T extends BaseContent>(
       return true;
     });
   }
-  
+  // Sorting
+  const sort = options.sort || 'date-desc';
+  filtered = [...filtered].sort((a, b) => {
+    if (sort === 'title-asc' || sort === 'title-desc') {
+      const ta = ((a as any).title || (a as any).name || '').toString().toLowerCase();
+      const tb = ((b as any).title || (b as any).name || '').toString().toLowerCase();
+      const cmp = ta.localeCompare(tb);
+      return sort === 'title-asc' ? cmp : -cmp;
+    }
+    // date sort
+    const da = a.date ? new Date(a.date).getTime() : 0;
+    const db = b.date ? new Date(b.date).getTime() : 0;
+    return sort === 'date-asc' ? da - db : db - da;
+  });
+
   return filtered;
 }
 

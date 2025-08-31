@@ -1,6 +1,6 @@
 import { Calendar, Mail, TrendingUp, Users } from 'lucide-react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useContent } from '@/hooks/use-content';
 
 import { GitHubHeader } from '@/components/GitHubHeader';
 import { NewsletterPreviewModal } from '@/components/NewsletterPreviewModal';
@@ -15,7 +15,7 @@ interface NewsletterIssue {
   date: string;
   topics: string[];
   readTime: string;
-  content: string;
+  Component?: React.ComponentType;
 }
 
 const recentIssues: NewsletterIssue[] = [
@@ -257,12 +257,12 @@ Alex`
 ];
 
 export default function NewsletterPage() {
-  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [selectedIssue, setSelectedIssue] = useState<NewsletterIssue | null>(null);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+  const { content: issues } = useContent<NewsletterIssue>('newsletters', {}, { page: 1, limit: 100 });
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -375,11 +375,11 @@ export default function NewsletterPage() {
               <div className="bg-muted/30 px-3 sm:px-4 py-3 border-b border-border">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                   <span className="font-mono text-xs sm:text-sm text-foreground">newsletter/archive/</span>
-                  <span className="text-xs sm:text-sm text-muted-foreground">{recentIssues.length} recent issues</span>
+                  <span className="text-xs sm:text-sm text-muted-foreground">{(issues as any[]).length || recentIssues.length} issues</span>
                 </div>
               </div>
               <div className="divide-y divide-border">
-                {recentIssues.map((issue, index) => (
+                {(issues as any[]).length ? (issues as any[]) : recentIssues.map ? recentIssues : []}.map((issue: any, index: number) => (
                   <article key={index} className="p-4 sm:p-6 hover:bg-muted/30 transition-colors cursor-pointer" onClick={() => handleIssueClick(issue)}>
                     <div className="flex flex-col sm:flex-row items-start justify-between gap-3 sm:gap-4">
                       <div className="flex-1 min-w-0">

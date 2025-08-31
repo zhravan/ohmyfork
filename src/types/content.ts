@@ -58,6 +58,7 @@ export interface SearchOptions {
     start?: string;
     end?: string;
   };
+  sort?: 'date-desc' | 'date-asc' | 'title-asc' | 'title-desc';
 }
 
 export interface PaginationOptions {
