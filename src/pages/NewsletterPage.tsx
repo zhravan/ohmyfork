@@ -287,7 +287,7 @@ export default function NewsletterPage() {
       <div className="container mx-auto px-2 sm:px-4 py-6">
         <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-6">
           <div className="flex items-center gap-2">
-            <span className="text-2xl">📧</span>
+            <Mail className="w-5 h-5 text-muted-foreground" />
             <h1 className="text-2xl font-bold">Developer Newsletter</h1>
           </div>
         </div>

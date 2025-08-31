@@ -1,4 +1,4 @@
-import { Calendar, ExternalLink, Mail, MapPin } from 'lucide-react';
+import { Calendar, ExternalLink, Mail, MapPin, Phone } from 'lucide-react';
 import * as React from 'react';
 
 import { GitHubHeader } from '@/components/GitHubHeader';
@@ -26,7 +26,7 @@ export default function ContactPage() {
       <div className="container mx-auto px-2 sm:px-4 py-6">
         <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-6">
           <div className="flex items-center gap-2">
-            <span className="text-2xl">📞</span>
+            <Phone className="w-5 h-5 text-muted-foreground" />
             <h1 className="text-2xl font-bold">Contact & Social</h1>
           </div>
         </div>

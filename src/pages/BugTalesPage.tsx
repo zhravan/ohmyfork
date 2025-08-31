@@ -1,12 +1,12 @@
-import { AlertTriangle, Clock } from 'lucide-react';
+import { AlertTriangle, Bug, Clock } from 'lucide-react';
 import { useState } from 'react';
 
 import { BugReportModal } from '@/components/BugReportModal';
 import { GitHubHeader } from '@/components/GitHubHeader';
 import { Badge } from '@/components/ui/badge';
 import {
-    Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext,
-    PaginationPrevious
+  Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext,
+  PaginationPrevious
 } from '@/components/ui/pagination';
 
 interface BugTale {
@@ -50,7 +50,7 @@ Fixed by:
   },
   {
     title: "The Infinite Loop of API Calls",
-    severity: 'critical', 
+    severity: 'critical',
     status: 'solved',
     description: "A simple data fetch turned into a DDoS attack on our own servers when useEffect decided to party like it's 1999.",
     reproduction: `1. Open the user dashboard
@@ -83,7 +83,7 @@ Also implemented:
   {
     title: "The Case of the Missing Database Connection",
     severity: 'critical',
-    status: 'solved', 
+    status: 'solved',
     description: "Production database connections were mysteriously dropping every hour. Turned out the janitor was unplugging the server to charge his phone.",
     reproduction: `1. Deploy application to production
 2. Wait approximately 1 hour
@@ -148,7 +148,7 @@ const TALES_PER_PAGE = 6;
 export default function BugTalesPage() {
   const [selectedBug, setSelectedBug] = useState<BugTale | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
-  
+
   const totalPages = Math.ceil(bugTales.length / TALES_PER_PAGE);
   const startIndex = (currentPage - 1) * TALES_PER_PAGE;
   const currentTales = bugTales.slice(startIndex, startIndex + TALES_PER_PAGE);
@@ -175,16 +175,16 @@ export default function BugTalesPage() {
   return (
     <div className="min-h-screen bg-background">
       <GitHubHeader />
-      
+
       <div className="container mx-auto px-4 py-6">
         <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-6">
           <div className="flex items-center gap-2">
-            <span className="text-2xl">🐛</span>
+            <Bug className="w-5 h-5 text-muted-foreground" />
             <h1 className="text-2xl font-bold">Bug Tales</h1>
           </div>
         </div>
-        
-        
+
+
         <div className="border border-border rounded-md bg-background">
           <div className="bg-muted/30 px-4 py-3 border-b border-border">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
@@ -192,7 +192,7 @@ export default function BugTalesPage() {
               <span className="text-xs sm:text-sm text-muted-foreground">{bugTales.length} debugging stories</span>
             </div>
           </div>
-          
+
           <div className="divide-y divide-border">
             {currentTales.map((tale, index) => (
               <div
@@ -242,13 +242,13 @@ export default function BugTalesPage() {
             ))}
           </div>
         </div>
-        
+
         {totalPages > 1 && (
           <div className="mt-8 flex justify-center">
             <Pagination>
               <PaginationContent>
                 <PaginationItem>
-                  <PaginationPrevious 
+                  <PaginationPrevious
                     href="#"
                     onClick={(e) => {
                       e.preventDefault();
@@ -257,7 +257,7 @@ export default function BugTalesPage() {
                     className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
                   />
                 </PaginationItem>
-                
+
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                   <PaginationItem key={page}>
                     <PaginationLink
@@ -272,7 +272,7 @@ export default function BugTalesPage() {
                     </PaginationLink>
                   </PaginationItem>
                 ))}
-                
+
                 <PaginationItem>
                   <PaginationNext
                     href="#"
@@ -287,18 +287,9 @@ export default function BugTalesPage() {
             </Pagination>
           </div>
         )}
-        
-        <div className="mt-8 text-center">
-          <p className="text-muted-foreground mb-4">
-            Got a debugging story to share? We'd love to hear it!
-          </p>
-          <Button className="github-button-primary">
-            Submit Your Bug Tale
-          </Button>
-        </div>
       </div>
-      
-      <BugReportModal 
+
+      <BugReportModal
         bug={selectedBug}
         isOpen={!!selectedBug}
         onClose={() => setSelectedBug(null)}

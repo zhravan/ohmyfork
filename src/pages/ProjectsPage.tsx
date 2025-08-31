@@ -1,4 +1,4 @@
-import { ExternalLink, Github, Search, Star } from 'lucide-react';
+import { Boxes, ExternalLink, Github, Search, Star } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -76,7 +76,7 @@ export default function ProjectsPage() {
       <div className="container mx-auto px-2 sm:px-4 py-6">
         <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-6">
           <div className="flex items-center gap-2">
-            <span className="text-2xl">🚀</span>
+            <Boxes className="w-5 h-5 text-muted-foreground" />
             <h1 className="text-2xl font-bold">Projects</h1>
           </div>
         </div>
