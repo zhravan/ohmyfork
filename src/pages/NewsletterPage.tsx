@@ -407,7 +407,7 @@ export default function NewsletterPage() {
                 </div>
               </div>
               <div className="divide-y divide-border">
-                {(issues as any[]).length ? (issues as any[]) : recentIssues.map ? recentIssues : []}.map((issue: any, index: number) => (
+                {(((issues as any[]).length ? (issues as any[]) : (recentIssues as any[]))).map((issue: any, index: number) => (
                   <article key={index} className="p-4 sm:p-6 hover:bg-muted/30 transition-colors cursor-pointer" onClick={() => handleIssueClick(issue)}>
                     <div className="flex flex-col sm:flex-row items-start justify-between gap-3 sm:gap-4">
                       <div className="flex-1 min-w-0">
