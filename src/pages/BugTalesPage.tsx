@@ -1,11 +1,9 @@
 import { AlertTriangle, Clock } from 'lucide-react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { BugReportModal } from '@/components/BugReportModal';
 import { GitHubHeader } from '@/components/GitHubHeader';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import {
     Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext,
     PaginationPrevious
@@ -148,7 +146,6 @@ Still investigating the exact trigger mechanism.`,
 const TALES_PER_PAGE = 6;
 
 export default function BugTalesPage() {
-  const navigate = useNavigate();
   const [selectedBug, setSelectedBug] = useState<BugTale | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   

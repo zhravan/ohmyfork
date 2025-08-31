@@ -1,5 +1,4 @@
 import { Calendar, ExternalLink, Mail, MapPin } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 import * as React from 'react';
 
 import { GitHubHeader } from '@/components/GitHubHeader';
@@ -9,7 +8,6 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 
 export default function ContactPage() {
-  const navigate = useNavigate();
   const [status, setStatus] = React.useState<'idle'|'submitting'|'success'>('idle');
 
   const handleSubmit = (e: React.FormEvent) => {
