@@ -103,7 +103,7 @@ export default function ContactPage() {
                   );
 
                   const developer: SocialLink[] = [
-                    { name: 'GitHub', href: 'https://github.com/shravan20', icon: 'https://cdn-icons-png.flaticon.com/256/25/25231.png' },
+                    { name: 'GitHub', href: 'https://github.com/zhravan', icon: 'https://cdn-icons-png.flaticon.com/256/25/25231.png' },
                     { name: 'GitLab (zhravan)', href: 'https://gitlab.com/zhravan', icon: 'https://about.gitlab.com/images/press/logo/png/gitlab-icon-rgb.png' },
                     { name: 'GitLab (shravan_20)', href: 'https://gitlab.com/shravan_20', icon: 'https://about.gitlab.com/images/press/logo/png/gitlab-icon-rgb.png' },
                     { name: 'Stack Overflow', href: 'https://stackoverflow.com/users/11899809/zhravan', icon: 'https://cdn.sstatic.net/Sites/stackoverflow/Img/favicon.ico' },
