@@ -25,7 +25,7 @@ export function ContributionsGrid() {
         Contributions in the last year
       </h3>
       <div className="overflow-x-auto -mx-2 sm:mx-0">
-        <div className="flex flex-col gap-1 px-2">
+        <div className="flex flex-col gap-1 px-2 sm:items-center">
           {/* Month labels, spread across grid (hidden on mobile for clarity) */}
           <div className="hidden sm:flex gap-0.5 ml-10 text-xs text-muted-foreground relative" style={{minWidth: weekCount * 14}}>
             {Array.from({length: weekCount}).map((_, weekIdx) => {
