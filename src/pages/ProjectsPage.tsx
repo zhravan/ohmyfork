@@ -230,17 +230,7 @@ export default function ProjectsPage() {
           </div>
         )}
         
-        <div className="mt-8 text-center">
-          <p className="text-muted-foreground mb-4">
-            Interested in collaborating on a project?
-          </p>
-          <Button 
-            className="github-button-primary" 
-            onClick={() => navigate('/contact')}
-          >
-            Get in Touch
-          </Button>
-        </div>
+        {/* Page CTA removed in favor of global footer */}
       </div>
     </div>
   );

@@ -13,6 +13,7 @@ import NotFound from './pages/NotFound';
 import ProjectPage from './pages/ProjectPage';
 import ProjectsPage from './pages/ProjectsPage';
 import WikiShell from './pages/WikiShell';
+import Footer from './components/Footer';
 
 const App = () => (
   <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
@@ -32,6 +33,7 @@ const App = () => (
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   </ThemeProvider>
 );

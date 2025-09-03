@@ -200,14 +200,7 @@ import type { BlogPost, ContentItem } from "@/types/content";export default func
           </div>
         )}
         
-        <div className="mt-8 text-center">
-          <p className="text-muted-foreground mb-4">
-            Want to stay updated with my latest posts?
-          </p>
-          <Button className="github-button-primary">
-            Subscribe to Newsletter
-          </Button>
-        </div>
+        {/* Page CTA removed in favor of global footer */}
       </div>
     </div>
   );
