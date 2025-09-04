@@ -1,0 +1,23 @@
+---
+title: "The Vanishing CSS: A Tale of Disappearing Styless"
+date: "2024-01-10"
+tags: ["CSS", "Frontend", "Browser Bug"]
+severity: "high"
+status: "solved"
+description: "Navigation bar randomly disappeared under specific conditions."
+timeToSolve: "3 days"
+assignee: "Sarah Chen"
+dateReported: "2024-01-10"
+reproduction: |
+  1. Log in as a user with name starting with 'M'
+  2. Wait for Tuesday
+  3. Navigate to any page
+  4. Observe disappearing navigation bar
+  5. Refresh the page (navigation returns)
+  6. Wait 5 minutes (navigation disappears again)
+solution: |
+  - Renamed CSS classes to avoid third‑party collisions (BEM)
+  - Removed date‑based conditional styling
+  - Scoped styles properly to the component
+---
+Content lives in frontmatter fields for modal rendering.
