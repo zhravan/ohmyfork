@@ -1,4 +1,4 @@
-import { AlertTriangle, Bug, Clock, Search } from 'lucide-react';
+import { AlertTriangle, Clock, Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 import { BugReportModal } from '@/components/BugReportModal';
@@ -64,12 +64,7 @@ export default function BugTalesPage() {
       <GitHubHeader />
 
       <div className="container mx-auto px-4 py-6">
-        <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-6">
-          <div className="flex items-center gap-2">
-            <Bug className="w-5 h-5 text-muted-foreground" />
-            <h1 className="text-2xl font-bold">Bug Tales</h1>
-          </div>
-        </div>
+  <h1 className="sr-only">Bug Tales</h1>
         {/* Search + Filters */}
         <div className="mb-4 space-y-3">
           <div className="relative max-w-full sm:max-w-md">

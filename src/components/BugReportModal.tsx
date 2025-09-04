@@ -46,7 +46,7 @@ export function BugReportModal({ bug, isOpen, onClose }: BugReportModalProps) {
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose} modal={false}>
+    <Dialog open={isOpen} onOpenChange={(open) => { if (!open) onClose(); }}>
       <DialogContent className="max-w-full sm:max-w-2xl md:max-w-3xl max-h-[90vh] overflow-y-auto p-2 sm:p-6">
         <DialogHeader className="space-y-4">
           <div className="flex flex-col sm:flex-row items-start justify-between gap-2 sm:gap-4">

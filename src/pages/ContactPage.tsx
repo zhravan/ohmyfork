@@ -1,4 +1,4 @@
-import { Calendar, ExternalLink, Mail, MapPin, Phone } from 'lucide-react';
+import { Calendar, ExternalLink, Mail, MapPin } from 'lucide-react';
 import * as React from 'react';
 
 import { GitHubHeader } from '@/components/GitHubHeader';
@@ -24,12 +24,7 @@ export default function ContactPage() {
       <GitHubHeader />
 
       <div className="container mx-auto px-2 sm:px-4 py-6">
-        <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-6">
-          <div className="flex items-center gap-2">
-            <Phone className="w-5 h-5 text-muted-foreground" />
-            <h1 className="text-2xl font-bold">Contact & Social</h1>
-          </div>
-        </div>
+  <h1 className="sr-only">Contact & Social</h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           {/* Contact Information */}
@@ -103,7 +98,7 @@ export default function ContactPage() {
                   );
 
                   const developer: SocialLink[] = [
-                    { name: 'GitHub', href: 'https://github.com/shravan20', icon: 'https://cdn-icons-png.flaticon.com/256/25/25231.png' },
+                    { name: 'GitHub', href: 'https://github.com/zhravan', icon: 'https://cdn-icons-png.flaticon.com/256/25/25231.png' },
                     { name: 'GitLab (zhravan)', href: 'https://gitlab.com/zhravan', icon: 'https://about.gitlab.com/images/press/logo/png/gitlab-icon-rgb.png' },
                     { name: 'GitLab (shravan_20)', href: 'https://gitlab.com/shravan_20', icon: 'https://about.gitlab.com/images/press/logo/png/gitlab-icon-rgb.png' },
                     { name: 'Stack Overflow', href: 'https://stackoverflow.com/users/11899809/zhravan', icon: 'https://cdn.sstatic.net/Sites/stackoverflow/Img/favicon.ico' },

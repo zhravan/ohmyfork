@@ -1,4 +1,4 @@
-import { Calendar, Clock, FileText, Search, User } from 'lucide-react';
+import { Calendar, Clock, Search, User } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useContent, useContentTags } from '@/hooks/use-content';
 import { useNavigate } from 'react-router-dom';
@@ -9,17 +9,20 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { TagMultiSelect, SortSelect } from '@/components/filters/FilterControls';
 import {
-    Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext,
-    PaginationPrevious
+  Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext,
+  PaginationPrevious
 } from '@/components/ui/pagination';
 
-import type { BlogPost, ContentItem } from "@/types/content";export default function BlogsPage() {
+import type { BlogPost, ContentItem } from "@/types/content";
+
+
+export default function BlogsPage() {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [sort, setSort] = useState<'date-desc' | 'date-asc' | 'title-asc' | 'title-desc'>('date-desc');
   const { tags } = useContentTags('blogs');
-  
+
   const {
     content: blogPosts,
     loading,
@@ -34,7 +37,7 @@ import type { BlogPost, ContentItem } from "@/types/content";export default func
     nextPage,
     prevPage
   } = useContent<BlogPost>('blogs', {}, { page: 1, limit: 6 });
-      
+
   const toggleTag = (t: string) => {
     setSelectedTags((prev) => prev.includes(t) ? prev.filter(x => x !== t) : [...prev, t]);
   };
@@ -68,13 +71,8 @@ import type { BlogPost, ContentItem } from "@/types/content";export default func
     <div className="min-h-screen bg-background">
       <GitHubHeader />
       <div className="container mx-auto px-2 sm:px-4 py-6">
-        <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-6">
-          <div className="flex items-center gap-2">
-            <FileText className="w-5 h-5 text-muted-foreground" />
-            <h1 className="text-2xl font-bold">Developer Blog</h1>
-          </div>
-        </div>
-        
+        <h1 className="sr-only">Blogs</h1>
+
         {/* Search + Filters */}
         <div className="mb-6 space-y-3" role="search">
           <div className="relative max-w-full sm:max-w-md">
@@ -96,7 +94,7 @@ import type { BlogPost, ContentItem } from "@/types/content";export default func
             <SortSelect value={sort} onChange={setSort} />
           </div>
         </div>
-        
+
         <div className="border border-border rounded-md bg-background">
           <div className="bg-muted/30 px-3 sm:px-4 py-3 border-b border-border">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
@@ -106,8 +104,8 @@ import type { BlogPost, ContentItem } from "@/types/content";export default func
           </div>
           <div className="divide-y divide-border">
             {blogPosts.map((post: any) => (
-              <article 
-                key={post.slug} 
+              <article
+                key={post.slug}
                 className="p-4 sm:p-6 hover:bg-muted/30 transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-md"
                 role="link"
                 tabIndex={0}
@@ -130,10 +128,10 @@ import type { BlogPost, ContentItem } from "@/types/content";export default func
                       </div>
                       <div className="flex items-center gap-1">
                         <Calendar className="w-4 h-4" />
-                        {new Date(post.date).toLocaleDateString('en-US', { 
-                          year: 'numeric', 
-                          month: 'long', 
-                          day: 'numeric' 
+                        {new Date(post.date).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric'
                         })}
                       </div>
                       <div className="flex items-center gap-1">
@@ -154,13 +152,13 @@ import type { BlogPost, ContentItem } from "@/types/content";export default func
             ))}
           </div>
         </div>
-        
+
         {totalPages > 1 && (
           <div className="mt-8 flex justify-center">
             <Pagination>
               <PaginationContent>
                 <PaginationItem>
-                  <PaginationPrevious 
+                  <PaginationPrevious
                     href="#"
                     onClick={(e) => {
                       e.preventDefault();
@@ -169,7 +167,7 @@ import type { BlogPost, ContentItem } from "@/types/content";export default func
                     className={!hasPrev ? "pointer-events-none opacity-50" : ""}
                   />
                 </PaginationItem>
-                
+
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
                   <PaginationItem key={pageNum}>
                     <PaginationLink
@@ -184,7 +182,7 @@ import type { BlogPost, ContentItem } from "@/types/content";export default func
                     </PaginationLink>
                   </PaginationItem>
                 ))}
-                
+
                 <PaginationItem>
                   <PaginationNext
                     href="#"
@@ -199,15 +197,8 @@ import type { BlogPost, ContentItem } from "@/types/content";export default func
             </Pagination>
           </div>
         )}
-        
-        <div className="mt-8 text-center">
-          <p className="text-muted-foreground mb-4">
-            Want to stay updated with my latest posts?
-          </p>
-          <Button className="github-button-primary">
-            Subscribe to Newsletter
-          </Button>
-        </div>
+
+        {/* Page CTA removed in favor of global footer */}
       </div>
     </div>
   );

@@ -28,7 +28,7 @@ export function NewsletterPreviewModal({ isOpen, onClose, issue }: NewsletterPre
   if (!issue) return null;
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose} modal={false}>
+    <Dialog open={isOpen} onOpenChange={(open) => { if (!open) onClose(); }}>
       <DialogContent className="max-w-full sm:max-w-2xl md:max-w-4xl h-[90vh] p-0 flex flex-col overflow-hidden">
         <DialogHeader className="px-3 sm:px-8 py-4 sm:py-6 border-b bg-muted/20">
           <div className="space-y-3 sm:space-y-4">

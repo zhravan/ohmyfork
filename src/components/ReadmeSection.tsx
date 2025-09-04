@@ -89,7 +89,7 @@ export function ReadmeSection() {
             <h1 className="flex items-center gap-2 sm:gap-3 text-lg sm:text-2xl font-bold">
               👋 ‎ ‎ Hi there, I'm{" "}
               <a
-                href="https://github.com/shravan20"
+                href="https://github.com/zhravan"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-primary no-underline"
@@ -120,7 +120,7 @@ export function ReadmeSection() {
               <h2 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-foreground">Connect</h2>
               <div className="grid grid-cols-1 xs:grid-cols-2 gap-2">
                 <Button asChild variant="outline" size="sm" className="justify-start w-full">
-                  <a href="https://github.com/shravan20" target="_blank" rel="noopener noreferrer" className="text-primary no-underline w-full flex items-center">
+                  <a href="https://github.com/zhravan" target="_blank" rel="noopener noreferrer" className="text-primary no-underline w-full flex items-center">
                     <Github className="w-4 h-4 mr-2" />
                     GitHub
                   </a>
@@ -151,6 +151,18 @@ export function ReadmeSection() {
           <p className="text-foreground leading-relaxed mb-6">
             I am a Computer Science Engineer and Data Science aficionado who's been building, breaking, and innovating professionally since 2019. At heart, I'm a curious tinkerer and FOSS enthusiast.
           </p>
+
+          <div className="mb-8">
+            {/* <div className="border border-border rounded-md overflow-hidden bg-background"> */}
+            <img
+              className="w-full h-auto object-cover"
+              src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/41a4xhwhc67u9k643a5u.png"
+              alt="zhravan / Shravan K B cover"
+              loading="lazy"
+              decoding="async"
+            />
+            {/* </div> */}
+          </div>
 
           <h3 className="text-lg font-semibold mb-4 text-foreground">🔧 Tech Stack</h3>
           <div className="flex flex-wrap gap-2 mb-8">
@@ -191,8 +203,6 @@ export function ReadmeSection() {
               <div className="text-sm text-muted-foreground">Tabs opened to fix one bug</div>
             </div>
           </div>
-
-          
 
           <blockquote className="border-l-4 border-primary pl-6 py-4 bg-muted/30 rounded-r-lg">
             <p className="italic text-muted-foreground text-lg leading-relaxed">
