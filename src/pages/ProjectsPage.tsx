@@ -21,7 +21,7 @@ export default function ProjectsPage() {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [sort, setSort] = useState<'date-desc' | 'date-asc' | 'title-asc' | 'title-desc'>('date-desc');
   const { tags } = useContentTags('projects');
-  
+
   const {
     content: projects,
     loading,
@@ -36,7 +36,7 @@ export default function ProjectsPage() {
     nextPage,
     prevPage
   } = useContent<Project>('projects', {}, { page: 1, limit: 6 });
-      
+
   const toggleTag = (t: string) => {
     setSelectedTags((prev) => prev.includes(t) ? prev.filter(x => x !== t) : [...prev, t]);
   };
@@ -79,10 +79,10 @@ export default function ProjectsPage() {
   return (
     <div className="min-h-screen bg-background">
       <GitHubHeader />
-      
+
       <div className="container mx-auto px-2 sm:px-4 py-6">
-  <h1 className="sr-only">Projects</h1>
-        
+        <h1 className="sr-only">Projects</h1>
+
         <div className="mb-6 space-y-3" role="search">
           <div className="relative max-w-full sm:max-w-md">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" aria-hidden="true" />
@@ -103,7 +103,7 @@ export default function ProjectsPage() {
             <SortSelect value={sort} onChange={setSort} />
           </div>
         </div>
-        
+
         <div className="border border-border rounded-md bg-background">
           <div className="bg-muted/30 px-3 sm:px-4 py-3 border-b border-border">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
@@ -113,15 +113,15 @@ export default function ProjectsPage() {
           </div>
           <div className="divide-y divide-border">
             {projects.map((project: any, index: number) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className="p-4 sm:p-6 hover:bg-muted/30 transition-colors rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                 role="group"
               >
                 <div className="flex flex-col sm:flex-row items-start justify-between gap-3 sm:gap-4">
                   <div className="flex-1 min-w-0">
                     <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
-                      <h2 
+                      <h2
                         className="text-lg sm:text-xl font-semibold text-primary hover:underline cursor-pointer truncate focus:outline-none"
                         onClick={() => navigate(`/projects/${project.slug}`)}
                         onKeyDown={(e) => { if (e.key === 'Enter') navigate(`/projects/${project.slug}`); }}
@@ -130,8 +130,8 @@ export default function ProjectsPage() {
                       >
                         {project.name}
                       </h2>
-                      <Badge 
-                        variant="outline" 
+                      <Badge
+                        variant="outline"
                         className={`text-xs ${getStatusColor(project.status)}`}
                       >
                         {project.status}
@@ -161,9 +161,9 @@ export default function ProjectsPage() {
                       ))}
                     </div>
                     <div className="flex flex-wrap gap-2">
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
+                      <Button
+                        variant="outline"
+                        size="sm"
                         className="flex items-center gap-2"
                         onClick={() => window.open(project.githubUrl, '_blank', 'noopener')}
                         aria-label={`Open GitHub code for ${project.name}`}
@@ -172,9 +172,9 @@ export default function ProjectsPage() {
                         View Code
                       </Button>
                       {project.demoUrl && (
-                        <Button 
-                          variant="outline" 
-                          size="sm" 
+                        <Button
+                          variant="outline"
+                          size="sm"
                           className="flex items-center gap-2"
                           onClick={() => window.open(project.demoUrl, '_blank', 'noopener')}
                           aria-label={`Open live demo for ${project.name}`}
@@ -190,18 +190,18 @@ export default function ProjectsPage() {
             ))}
           </div>
         </div>
-        
+
         {totalPages > 1 && (
           <div className="mt-8">
             <Pagination>
               <PaginationContent>
                 <PaginationItem>
-                  <PaginationPrevious 
+                  <PaginationPrevious
                     onClick={() => hasPrev && prevPage()}
                     className={!hasPrev ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
                   />
                 </PaginationItem>
-                
+
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
                   <PaginationItem key={pageNum}>
                     <PaginationLink
@@ -213,9 +213,9 @@ export default function ProjectsPage() {
                     </PaginationLink>
                   </PaginationItem>
                 ))}
-                
+
                 <PaginationItem>
-                  <PaginationNext 
+                  <PaginationNext
                     onClick={() => hasNext && nextPage()}
                     className={!hasNext ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
                   />
@@ -224,7 +224,7 @@ export default function ProjectsPage() {
             </Pagination>
           </div>
         )}
-        
+
         {/* Page CTA removed in favor of global footer */}
       </div>
     </div>
