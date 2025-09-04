@@ -4,20 +4,25 @@ date: "2024-01-05"
 tags: ["Forms", "JavaScript", "Mystery"]
 severity: "medium"
 status: "investigating"
-description: "Forms submitted automatically at 3:33 AM with no user activity."
 timeToSolve: "ongoing"
 assignee: "Emma Davis"
 dateReported: "2024-01-05"
-reproduction: |
-  1. Deploy contact form to production
-  2. Wait until 3:33 AM (any timezone)
-  3. Check form submission logs
-  4. Entries appear with missing IP/User‑Agent
-solution: |
-  - Potential automated tests in prod
-  - Bot submissions with spoofed timestamps
-  - Misconfigured cron task
-  - Possible XSS injection
-  Mitigations: CAPTCHA, rate limiting, origin validation, honeypot, and enhanced logging.
 ---
-Content lives in frontmatter fields for modal rendering.
+
+Forms submitted automatically at 3:33 AM with no user activity or reliable client fingerprints.
+
+## Steps to Reproduce
+
+1. Deploy contact form to production
+2. Wait until 3:33 AM (any timezone)
+3. Check form submission logs
+4. Entries appear with missing IP/User‑Agent
+
+## Solution Ideas and Mitigations
+
+- Potential automated tests in prod
+- Bot submissions with spoofed timestamps
+- Misconfigured cron task
+- Possible XSS injection
+
+Mitigations considered and/or applied: CAPTCHA, rate limiting, origin validation, a honeypot field, and enhanced logging.

@@ -48,6 +48,8 @@ export interface ContentItem<T = any> extends T {
   title?: string;
   section?: string;
   description?: string;
+  // Alias for MDX body when consumers expect it inside frontmatter-like shape
+  Content?: React.ComponentType;
 }
 
 // Search and pagination types

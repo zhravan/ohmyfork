@@ -27,9 +27,13 @@ export async function loadContent<T extends BaseContent>(
       .replace('.mdx', '');
     
     return {
+      // Keep all frontmatter fields first
       ...module.frontmatter,
+      // Expose MDX body as both `Component` (existing) and `Content` (frontmatter-style alias)
+      // so consumers that expect `frontmatter.Content` semantics can use it.
+      Content: module.default,
       slug,
-      Component: module.default
+      Component: module.default,
     } as ContentItem<T>;
   });
   
