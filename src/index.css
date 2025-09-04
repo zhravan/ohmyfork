@@ -45,8 +45,8 @@
     line-height: 1.6 !important;
   }
   :root {
-  /* Global horizontal page gutter */
-  --page-x: 0.5rem; /* slight on mobile */
+  /* Global horizontal page gutter (slightly increased) */
+  --page-x: 0.875rem; /* was 0.5rem */
 
     /* GitHub Light Theme */
     --background: 0 0% 100%;
@@ -408,6 +408,6 @@
 
   /* Increase gutter a bit on >= sm screens */
   @media (min-width: 640px) {
-    :root { --page-x: 0.75rem; }
+    :root { --page-x: 1.25rem; } /* was 0.75rem */
   }
 }
