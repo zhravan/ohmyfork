@@ -83,7 +83,7 @@ function applySearchFilters<T extends BaseContent>(
   if (options.tags && options.tags.length > 0) {
     filtered = filtered.filter(item => 
       options.tags!.some(tag => 
-        item.tags?.some(itemTag => 
+        (item as any).tags?.some((itemTag: string) => 
           itemTag.toLowerCase().includes(tag.toLowerCase())
         )
       )
