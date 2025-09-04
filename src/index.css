@@ -13,6 +13,8 @@
   */
   html {
     font-size: 80%; /* ~12.8px base (16px * 0.8) for compact UI similar to 80% zoom */
+    /* Prevent layout shift when modals lock scroll by reserving scrollbar space */
+    scrollbar-gutter: stable;
   }
 
   /* Preserve readability on small screens */
@@ -386,10 +388,17 @@
 
   body {
     @apply bg-background text-foreground;
+  }
+
+  /* Move global horizontal gutter off <body> so scroll-locking libs
+     (react-remove-scroll via Radix Dialog) cannot override it. */
+  #root {
     /* Slight left/right margin site-wide, respecting safe areas */
     padding-left: max(env(safe-area-inset-left), var(--page-x));
     padding-right: max(env(safe-area-inset-right), var(--page-x));
   }
+
+  /* Scroll-lock handled via runtime override; no extra compensation needed here. */
 
   /* Opt-out helper for elements that should ignore the global page gutter */
   .no-page-gutter {
