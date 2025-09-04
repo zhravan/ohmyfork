@@ -291,12 +291,7 @@ export default function NewsletterPage() {
       <GitHubHeader />
       
       <div className="container mx-auto px-2 sm:px-4 py-6">
-        <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-6">
-          <div className="flex items-center gap-2">
-            <Mail className="w-5 h-5 text-muted-foreground" />
-            <h1 className="text-2xl font-bold">Developer Newsletter</h1>
-          </div>
-        </div>
+  <h1 className="sr-only">Newsletter</h1>
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
           {/* Newsletter Info & Signup */}

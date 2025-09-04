@@ -1,4 +1,4 @@
-import { Calendar, Clock, FileText, Search, User } from 'lucide-react';
+import { Calendar, Clock, Search, User } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useContent, useContentTags } from '@/hooks/use-content';
 import { useNavigate } from 'react-router-dom';
@@ -68,12 +68,7 @@ import type { BlogPost, ContentItem } from "@/types/content";export default func
     <div className="min-h-screen bg-background">
       <GitHubHeader />
       <div className="container mx-auto px-2 sm:px-4 py-6">
-        <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-6">
-          <div className="flex items-center gap-2">
-            <FileText className="w-5 h-5 text-muted-foreground" />
-            <h1 className="text-2xl font-bold">Developer Blog</h1>
-          </div>
-        </div>
+  <h1 className="sr-only">Blogs</h1>
         
         {/* Search + Filters */}
         <div className="mb-6 space-y-3" role="search">
