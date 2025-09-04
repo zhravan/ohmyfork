@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { ContentPreview } from '@/components/ContentPreview';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { GiscusComments } from '@/components/GiscusComments';
 import { GitHubHeader } from '@/components/GitHubHeader';
 import { useContentItem } from '@/hooks/use-content';
@@ -40,10 +41,12 @@ export default function BlogPostPage() {
   return (
     <>
       <GitHubHeader />
-      <ContentPreview 
-        content={blogPost} 
-        onBack={() => navigate('/blogs')} 
-      />
+      <ErrorBoundary>
+        <ContentPreview 
+          content={blogPost} 
+          onBack={() => navigate('/blogs')} 
+        />
+      </ErrorBoundary>
       {/* Giscus comments section for blog posts */}
       <div className="container mx-auto px-4">
         <GiscusComments
