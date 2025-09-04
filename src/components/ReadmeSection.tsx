@@ -152,6 +152,18 @@ export function ReadmeSection() {
             I am a Computer Science Engineer and Data Science aficionado who's been building, breaking, and innovating professionally since 2019. At heart, I'm a curious tinkerer and FOSS enthusiast.
           </p>
 
+          <div className="mb-8">
+            {/* <div className="border border-border rounded-md overflow-hidden bg-background"> */}
+            <img
+              className="w-full h-auto object-cover"
+              src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/41a4xhwhc67u9k643a5u.png"
+              alt="zhravan / Shravan K B cover"
+              loading="lazy"
+              decoding="async"
+            />
+            {/* </div> */}
+          </div>
+
           <h3 className="text-lg font-semibold mb-4 text-foreground">🔧 Tech Stack</h3>
           <div className="flex flex-wrap gap-2 mb-8">
             {[
@@ -191,8 +203,6 @@ export function ReadmeSection() {
               <div className="text-sm text-muted-foreground">Tabs opened to fix one bug</div>
             </div>
           </div>
-
-          
 
           <blockquote className="border-l-4 border-primary pl-6 py-4 bg-muted/30 rounded-r-lg">
             <p className="italic text-muted-foreground text-lg leading-relaxed">
