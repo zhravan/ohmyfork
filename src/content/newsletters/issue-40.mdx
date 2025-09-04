@@ -1,0 +1,96 @@
+---
+title: "The Developer's Weekly #40"
+description: "Docker optimization secrets, the psychology of code reviews, and why I switched from Redux to Zustand (and you might too)."
+date: "2024-01-01"
+topics: ["Docker", "Code Reviews", "State Management"]
+readTime: "7 min read"
+tags: ["Newsletter", "Docker", "Reviews", "Zustand", "Redux"]
+---
+
+## Issue #40: New Year, Better Code 🎉
+
+### Docker Optimization: From 2GB to 200MB
+
+Spent last week optimizing our Docker images. The results were shocking:
+
+**Before:**
+- Image size: 2.1GB
+- Build time: 8 minutes
+- Cold start: 45 seconds
+
+**After:**
+- Image size: 185MB
+- Build time: 2 minutes  
+- Cold start: 8 seconds
+
+**The Secret Sauce:**
+
+```dockerfile
+# Use multi-stage builds
+FROM node:18-alpine AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production
+
+FROM node:18-alpine AS production
+WORKDIR /app
+COPY --from=builder /app/node_modules ./node_modules
+COPY . .
+RUN addgroup -g 1001 -S nodejs && adduser -S nextjs -u 1001
+USER nextjs
+```
+
+### The Psychology of Code Reviews
+
+After analyzing 500+ code reviews, I noticed patterns:
+
+**What makes developers defensive:**
+- "This is wrong" (judgment without explanation)
+- "Why didn't you just..." (implies incompetence)
+- Nitpicking formatting when CI should handle it
+
+**What creates learning:**
+- "What do you think about trying X because Y?"
+- "I learned this approach recently: [link]"
+- "This works, and here's an alternative that might be more maintainable"
+
+**Golden Rule**: Review code like you're teaching a friend, not judging an enemy.
+
+### Redux → Zustand: Why I Made the Switch
+
+After 3 years with Redux, I finally tried Zustand. The comparison is brutal:
+
+**Redux Boilerplate (actions, reducers, selectors):**
+```typescript
+// 50+ lines of boilerplate for simple counter
+```
+
+**Zustand:**
+```typescript
+const useStore = create((set) => ({
+  count: 0,
+  increment: () => set((state) => ({ count: state.count + 1 })),
+  decrement: () => set((state) => ({ count: state.count - 1 })),
+}));
+```
+
+That's it. 6 lines. TypeScript support is excellent, DevTools work perfectly, and testing is straightforward.
+
+**When to choose what:**
+- **Redux**: Large teams, complex state, time-travel debugging critical
+- **Zustand**: Everything else
+
+---
+
+## 2024 Predictions 🔮
+
+- AI pair programming becomes mainstream (GitHub Copilot v2 will be incredible)
+- WebAssembly adoption accelerates (especially for compute-heavy tasks)
+- CSS Grid subgrid finally gets universal support
+- We'll see the first production-ready Rust web framework challenge Node.js
+
+What are your predictions? Hit reply and let me know!
+
+Happy New Year,
+Shravan
+

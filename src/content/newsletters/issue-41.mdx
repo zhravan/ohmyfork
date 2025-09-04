@@ -1,0 +1,70 @@
+---
+title: "The Developer's Weekly #41"
+description: "Breaking down the new CSS container queries, a retrospective on my first year freelancing, and the tools that boost my productivity."
+date: "2024-01-08"
+topics: ["CSS", "Freelancing", "Productivity", "Tools"]
+readTime: "6 min read"
+tags: ["Newsletter", "CSS", "Freelancing", "Productivity", "Tools"]
+---
+
+## Issue #41: Container Queries & Freelancing Lessons 📦
+
+### CSS Container Queries: Finally Here!
+
+After years of waiting, container queries are finally stable across all browsers. This changes **everything** about responsive design:
+
+```css
+.sidebar {
+  container-type: inline-size;
+  container-name: sidebar;
+}
+
+@container sidebar (min-width: 300px) {
+  .widget {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+```
+
+No more media queries based on viewport! Components can now respond to their own size.
+
+### One Year Freelancing: The Brutal Truth
+
+Last week marked my first anniversary as a freelance developer. Here's what I wish someone had told me:
+
+**The Good:**
+- 3x salary increase
+- Complete control over tech stack
+- Working with amazing startups
+
+**The Challenging:**
+- Irregular income (some months feast, others famine)
+- Self-discipline is HARD
+- Imposter syndrome hits different when you're on your own
+
+**Key Lesson**: Always have 6 months expenses saved. Always.
+
+### Productivity Stack That Actually Works
+
+After trying hundreds of tools, here's what stuck:
+
+1. **Notion** - All project docs and client communication
+2. **Linear** - Task management (beats Jira by miles)
+3. **CleanShot X** - Screenshots and screen recordings
+4. **Raycast** - App launcher on steroids
+5. **Obsidian** - Personal knowledge management
+
+The secret isn't the tools—it's picking a few and sticking with them.
+
+---
+
+## Quick Tips 💡
+
+- Use `console.time()` and `console.timeEnd()` for quick performance debugging
+- `git commit --amend` saves you from embarrassing typos in commit messages
+- Set up GitHub Actions for automatic dependency updates (Dependabot is your friend)
+
+See you next week,
+Shravan
+
