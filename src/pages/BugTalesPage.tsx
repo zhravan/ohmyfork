@@ -11,31 +11,19 @@ import {
 import { useContent, useContentTags } from '@/hooks/use-content';
 import { Input } from '@/components/ui/input';
 import { TagMultiSelect, SortSelect } from '@/components/filters/FilterControls';
-
-interface BugTale {
-  title: string;
-  severity: 'critical' | 'high' | 'medium' | 'low';
-  status: 'solved' | 'investigating' | 'wontfix';
-  description: string;
-  reproduction?: string;
-  solution?: string;
-  tags: string[];
-  timeToSolve: string;
-  assignee: string;
-  dateReported: string;
-}
+import type { BugTale, ContentItem } from '@/types/content';
 
 const TALES_PER_PAGE = 6;
 
 export default function BugTalesPage() {
-  const [selectedBug, setSelectedBug] = useState<BugTale | null>(null);
+  const [selectedBug, setSelectedBug] = useState<ContentItem<BugTale> | null>(null);
   const [q, setQ] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [sort, setSort] = useState<'date-desc'|'date-asc'|'title-asc'|'title-desc'>('date-desc');
   const { tags } = useContentTags('bug-tales');
   const { content: tales, total, page, totalPages, hasNext, hasPrev, goToPage, nextPage, prevPage, search } =
     useContent<BugTale>('bug-tales', {}, { page: 1, limit: TALES_PER_PAGE });
-  const currentTales = tales as BugTale[];
+  const currentTales = tales as ContentItem<BugTale>[];
   useEffect(() => {
     search({ query: q, tags: selectedTags, sort });
   }, [q, selectedTags, sort]);
@@ -108,9 +96,11 @@ export default function BugTalesPage() {
                         {tale.status.toUpperCase()}
                       </Badge>
                     </div>
-                    <p className="text-muted-foreground mb-4 leading-relaxed line-clamp-3 break-words text-xs sm:text-sm">
-                      {tale.description}
-                    </p>
+                    {(tale as any).description && (
+                      <p className="text-muted-foreground mb-4 leading-relaxed line-clamp-3 break-words text-xs sm:text-sm">
+                        {(tale as any).description}
+                      </p>
+                    )}
                     <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-xs sm:text-sm text-muted-foreground mb-3">
                       <div className="flex items-center gap-1">
                         <Clock className="w-4 h-4" />

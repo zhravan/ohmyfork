@@ -1,24 +1,12 @@
-import { AlertCircle, Clock, GitCommit, Tag, User, X } from 'lucide-react';
+import { AlertCircle, Clock, GitCommit, Tag, User } from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-
-interface BugTale {
-  title: string;
-  severity: 'critical' | 'high' | 'medium' | 'low';
-  status: 'solved' | 'investigating' | 'wontfix';
-  description: string;
-  reproduction: string;
-  solution: string;
-  tags: string[];
-  timeToSolve: string;
-  assignee: string;
-  dateReported: string;
-}
+import type { BugTale, ContentItem } from '@/types/content';
+import { MDXProvider } from '@mdx-js/react';
 
 interface BugReportModalProps {
-  bug: BugTale | null;
+  bug: ContentItem<BugTale> | null;
   isOpen: boolean;
   onClose: () => void;
 }
@@ -88,28 +76,19 @@ export function BugReportModal({ bug, isOpen, onClose }: BugReportModalProps) {
               </span>
             </div>
           </div>
-          {/* Description */}
+          {/* Full Content (MDX) */}
           <div>
             <h3 className="text-base sm:text-lg font-semibold mb-3 flex items-center gap-2">
               <Tag className="w-5 h-5" />
-              Description
+              Details
             </h3>
             <div className="bg-background border border-border rounded-lg p-3 sm:p-4">
-              <p className="whitespace-pre-wrap break-words text-xs sm:text-base">{bug.description}</p>
-            </div>
-          </div>
-          {/* Steps to Reproduce */}
-          <div>
-            <h3 className="text-base sm:text-lg font-semibold mb-3">🔄 Steps to Reproduce</h3>
-            <div className="bg-background border border-border rounded-lg p-3 sm:p-4">
-              <pre className="whitespace-pre-wrap font-mono text-xs sm:text-sm break-words">{bug.reproduction}</pre>
-            </div>
-          </div>
-          {/* Solution */}
-          <div>
-            <h3 className="text-base sm:text-lg font-semibold mb-3">✅ Solution</h3>
-            <div className="bg-background border border-border rounded-lg p-3 sm:p-4">
-              <p className="whitespace-pre-wrap break-words text-xs sm:text-base">{bug.solution}</p>
+              {/* Prefer Content alias if present; fallback to Component */}
+              <MDXProvider>
+                <div className="prose prose-sm sm:prose lg:prose-lg max-w-none dark:prose-invert">
+                  {bug.Content ? <bug.Content /> : (bug.Component ? <bug.Component /> : null)}
+                </div>
+              </MDXProvider>
             </div>
           </div>
           {/* Tags */}
