@@ -7,7 +7,7 @@ import { GitHubHeader } from '@/components/GitHubHeader';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { TagMultiSelect, SortSelect } from '@/components/filters/FilterControls';
+import { TagMultiSelect, SortSelect, PageSizeSelect } from '@/components/filters/FilterControls';
 import {
   Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext,
   PaginationPrevious
@@ -34,8 +34,10 @@ export default function ProjectsPage() {
     search,
     goToPage,
     nextPage,
-    prevPage
-  } = useContent<Project>('projects', {}, { page: 1, limit: 6 });
+    prevPage,
+    setPageSize,
+    paginationOptions
+  } = useContent<Project>('projects', {}, { page: 1, limit: 5 });
 
   const toggleTag = (t: string) => {
     setSelectedTags((prev) => prev.includes(t) ? prev.filter(x => x !== t) : [...prev, t]);
@@ -101,6 +103,8 @@ export default function ProjectsPage() {
             <TagMultiSelect options={tags} value={selectedTags} onChange={setSelectedTags} />
             <span className="ml-auto text-xs text-muted-foreground">Sort:</span>
             <SortSelect value={sort} onChange={setSort} />
+            <span className="ml-2 text-xs text-muted-foreground">Per page:</span>
+            <PageSizeSelect value={paginationOptions.limit} onChange={setPageSize} options={[5, 10, 20, 50]} />
           </div>
         </div>
 
