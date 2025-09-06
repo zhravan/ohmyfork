@@ -1,46 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <title>ohmyfork</title>
-    
-    <link rel="icon" type="image/png" href="https://ohmyscript.com/wp-content/uploads/2020/07/cropped-circle-cropped-2.png" />
-    <meta name="description" content="shravan, an open-source developer, indie builder, and curious tinkerer. discover projects, dev experiments, a lot more in FOSS and engineering." />
-    <meta name="author" content="Shravan Kumar B" />
-    <meta name="keywords" content="developer portfolio, open-source portfolio, indie dev showcase, project gallery, digital garden, minimal portfolio, developer blog, engineering notes, tech articles, coding guides, source workflows, backend architecture, DevOps practices, FOSS tools, CLI tools, self-hosting, indie dev showcase, project gallery" />
-    <link rel="canonical" href="https://ohmyfork.dev" />
 
-    <!-- Open Graph -->
-    <meta property="og:title" content="ohmyfork" />
-    <meta property="og:description" content="shravan, an open-source developer, indie builder, and curious tinkerer. discover projects, dev experiments, a lot more in FOSS and engineering." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://ohmyfork.dev" />
-    <meta property="og:image" content="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/9pphhianf3zo5jvpzpi3.png" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="ohmyfork" />
-    <meta name="twitter:description" content="shravan, an open-source developer, indie builder, and curious tinkerer. discover projects, dev experiments, a lot more in FOSS and engineering." />
-    <meta name="twitter:image" content="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/9pphhianf3zo5jvpzpi3.png" />
-    
+  <title>ohmyfork</title>
+  <link rel="icon" href="https://ohmyscript.com/wp-content/uploads/2020/07/cropped-circle-cropped-2.png"
+    type="image/png" />
+  <meta name="color-scheme" content="dark light" />
+  <meta name="theme-color" content="#0b0b0f" />
+  <meta name="robots" content="index,follow" />
+
+  <link rel="icon" type="image/png"
+    href="https://ohmyscript.com/wp-content/uploads/2020/07/cropped-circle-cropped-2.png" />
+  <meta name="description"
+    content="shravan, an open-source developer, indie builder, and curious tinkerer. discover projects, dev experiments, a lot more in FOSS and engineering." />
+  <meta name="author" content="Shravan Kumar B" />
+  <meta name="keywords"
+    content="developer portfolio, open-source portfolio, indie dev showcase, project gallery, digital garden, minimal portfolio, developer blog, engineering notes, tech articles, coding guides, source workflows, backend architecture, DevOps practices, FOSS tools, CLI tools, self-hosting, indie dev showcase, project gallery" />
+  <link rel="canonical" href="https://ohmyfork.dev" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="ohmyfork" />
+  <meta property="og:description"
+    content="shravan, an open-source developer, indie builder, and curious tinkerer. discover projects, dev experiments, a lot more in FOSS and engineering." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ohmyfork.dev" />
+  <meta property="og:image"
+    content="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/9pphhianf3zo5jvpzpi3.png" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ohmyfork" />
+  <meta name="twitter:description"
+    content="shravan, an open-source developer, indie builder, and curious tinkerer. discover projects, dev experiments, a lot more in FOSS and engineering." />
+  <meta name="twitter:image"
+    content="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/9pphhianf3zo5jvpzpi3.png" />
+
   <!-- RSS autodiscovery -->
   <link rel="alternate" type="application/rss+xml" title="OhMyFork.dev – Unified Feed" href="/rss.xml" />
-  </head>
+</head>
 
-  <body>
-    <div id="root"></div>
-    <script>
-      // GitHub Pages SPA redirect handling
-      (function() {
-        var redirect = sessionStorage.redirect;
-        delete sessionStorage.redirect;
-        if (redirect && redirect !== location.href) {
-          history.replaceState(null, null, redirect);
-        }
-      })();
-    </script>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<body>
+  <div id="root"></div>
+  <script>
+    // GitHub Pages SPA redirect handling
+    (function () {
+      var redirect = sessionStorage.redirect;
+      delete sessionStorage.redirect;
+      if (redirect && redirect !== location.href) {
+        history.replaceState(null, null, redirect);
+      }
+    })();
+  </script>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>

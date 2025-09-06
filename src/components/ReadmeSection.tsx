@@ -1,8 +1,7 @@
 import {
-  Calendar, Coffee, Github, Linkedin, ListTodo, Mail, MapPin, PanelsTopLeft, Twitter
+  Calendar, Coffee, FileText, Github, Linkedin, ListTodo, Mail, MapPin, PanelsTopLeft
 } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
-import { ContributionsGrid } from './ContributionsGrid';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -20,6 +19,10 @@ const badgeColors = [
 function useAnimatedBadgeColor(intervalMs = 900) {
   const [colorIdx, setColorIdx] = useState(0);
   useEffect(() => {
+    // Respect reduced motion preference
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (media.matches) return;
+
     const interval = setInterval(() => {
       setColorIdx((idx) => (idx + 1) % badgeColors.length);
     }, intervalMs);
@@ -48,6 +51,14 @@ function useCountUp(target: number, duration = 1200, start = 0, ref: React.RefOb
 
   useEffect(() => {
     if (!hasAnimated) return;
+
+    // Respect reduced motion preference
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (media.matches) {
+      setCount(target);
+      return;
+    }
+
     let startTimestamp: number | null = null;
     const step = (timestamp: number) => {
       if (!startTimestamp) startTimestamp = timestamp;
@@ -143,6 +154,12 @@ export function ReadmeSection() {
                     Email
                   </a>
                 </Button>
+                <Button asChild variant="outline" size="sm" className="justify-start">
+                  <a href={`${import.meta.env.BASE_URL}cv.pdf`} target="_blank" rel="noopener noreferrer" className="text-primary no-underline">
+                    <FileText className="w-4 h-4 mr-2" />
+                    Download CV
+                  </a>
+                </Button>
               </div>
             </div>
           </div>
@@ -164,7 +181,7 @@ export function ReadmeSection() {
             {/* </div> */}
           </div>
 
-          <h3 className="text-lg font-semibold mb-4 text-foreground">🔧 Tech Stack</h3>
+          <h2 className="text-base sm:text-lg font-semibold mb-4 text-foreground">🔧 Tech Stack</h2>
           <div className="flex flex-wrap gap-2 mb-8">
             {[
               'JavaScript', 'Nodejs', 'TypeScript', 'Java', 'PHP', 'Python', 'Go',
@@ -179,7 +196,7 @@ export function ReadmeSection() {
             ))}
           </div>
 
-          <h3 className="text-lg font-semibold mb-4 text-foreground">📊 Stats beyond GitHub</h3>
+          <h2 className="text-base sm:text-lg font-semibold mb-4 text-foreground">📊 Stats beyond GitHub</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
             <div className="text-center p-6 border border-border rounded-lg bg-muted/20 flex flex-col items-center">
               <Coffee className="w-8 h-8 text-primary mb-2" />
