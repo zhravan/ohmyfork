@@ -2,11 +2,11 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { GitHubHeader } from '@/components/GitHubHeader';
 import { Button } from '@/components/ui/button';
 import { loadContent } from '@/lib/content-loader';
+import { stripBackticks } from '@/lib/string-utils';
 import type { WikiNote } from '@/types/content';
 import { MDXProvider } from '@mdx-js/react';
 import { CodeBlock } from '@/components/mdx/CodeBlock';
@@ -28,7 +28,8 @@ export default function WikiShell() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [query, setQuery] = useState('');
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+
+
 
   useEffect(() => {
     let active = true;
@@ -37,11 +38,8 @@ export default function WikiShell() {
         setLoading(true);
         const res = await loadContent<WikiNote>('wiki', {}, { page: 1, limit: 1000 });
         if (!active) return;
-        const items = (res.items as WikiDoc[]).sort((a, b) => {
-          const da = a.date ? new Date(a.date).getTime() : 0;
-          const db = b.date ? new Date(b.date).getTime() : 0;
-          return db - da; // newest first
-        });
+        // Keep items unsorted here; we'll derive alphabetical lists for the sidebar
+        const items = (res.items as WikiDoc[]);
         setDocs(items);
       } catch (e: unknown) {
         if (!active) return;
@@ -56,31 +54,34 @@ export default function WikiShell() {
     };
   }, []);
 
-  const allTags = useMemo(() => {
-    const s = new Set<string>();
-    for (const i of docs) if (i.tags) for (const t of i.tags) s.add(t);
-    return Array.from(s).sort((a, b) => a.localeCompare(b));
-  }, [docs]);
+  // Redirect to Home (or first page) when visiting /wiki without a slug to match GitHub Wiki behavior
+  useEffect(() => {
+    if (!loading && docs.length > 0 && !slug) {
+      const home = docs.find(d => (d.slug || '').toLowerCase() === 'home');
+      const target = home?.slug || docs.slice().sort((a, b) => (stripBackticks(a.title || a.slug).localeCompare(stripBackticks(b.title || b.slug))))[0]?.slug;
+      if (target) navigate(`/wiki/${target}`, { replace: true });
+    }
+  }, [loading, docs, slug, navigate]);
 
-  const filtered = useMemo(() => {
+  // Sidebar list: alphabetical by title/slug, filtered by query
+  const pagesList = useMemo(() => {
     const q = query.toLowerCase().trim();
-    const byTags = selectedTags.length
-      ? docs.filter((d) => (d.tags || []).some((t) => selectedTags.includes(t)))
-      : docs;
-    if (!q) return byTags;
-    return byTags.filter((d) => [d.title, d.section, d.description, ...(d.tags || [])]
-      .filter(Boolean)
-      .join(' ')
-      .toLowerCase()
-      .includes(q)
+    const list = docs
+      .slice()
+      .sort((a, b) => stripBackticks(a.title || a.slug).localeCompare(stripBackticks(b.title || b.slug)));
+    if (!q) return list;
+    return list.filter((d) =>
+      [d.title, d.description, d.section, ...(d.tags || [])]
+        .filter(Boolean)
+        .join(' ')
+        .toLowerCase()
+        .includes(q)
     );
-  }, [docs, query, selectedTags]);
+  }, [docs, query]);
 
   const current = useMemo(() => {
-    return filtered.find((d) => (d.slug || '').toLowerCase() === (slug || '').toLowerCase()) || null;
-  }, [filtered, slug]);
-
-  const strip = (s?: string) => (s || '').replace(/`/g, '');
+    return docs.find((d) => (d.slug || '').toLowerCase() === (slug || '').toLowerCase()) || null;
+  }, [docs, slug]);
 
   const mdxComponents = {
     h1: ({ children, ...props }: any) => (
@@ -126,151 +127,89 @@ export default function WikiShell() {
     <div className="min-h-screen bg-background">
       <GitHubHeader />
       <div className="container mx-auto px-3 sm:px-4 py-6 sm:py-8">
-        {/* Header: Title, search, tags */}
-        <header className="mb-6 sm:mb-8">
-          <div className="flex flex-col gap-3">
-            <div className="flex items-baseline justify-between">
-              <h1 className="text-xl sm:text-2xl font-bold tracking-tight">Digital Garden</h1>
-              <div className="text-xs text-muted-foreground">{docs.length} notes</div>
-            </div>
-            <p className="text-sm text-muted-foreground">
-              A living collection of notes, ideas, and references. Wander, connect, and grow thoughts over time.
-            </p>
-            <div className="flex flex-col gap-2">
-              <Input
-                placeholder="Search notes, tags, thoughts…"
-                aria-label="Search notes"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-              />
-              <div className="flex flex-wrap items-center gap-1.5">
-                <Badge
-                  variant={selectedTags.length === 0 ? 'default' : 'outline'}
-                  onClick={() => setSelectedTags([])}
-                  className="cursor-pointer"
-                >
-                  All
-                </Badge>
-                {allTags.map((t) => {
-                  const active = selectedTags.includes(t);
-                  return (
-                    <Badge
-                      key={t}
-                      variant={active ? 'default' : 'outline'}
-                      onClick={() => setSelectedTags((prev) => (active ? prev.filter((x) => x !== t) : [...prev, t]))}
-                      className="cursor-pointer"
-                    >
-                      {t}
-                    </Badge>
-                  );
-                })}
+        <div className="grid grid-cols-1 md:grid-cols-[260px_minmax(0,1fr)] gap-6 items-start">
+          {/* Sidebar: Pages list */}
+          <aside className="md:sticky md:top-4 self-start">
+            <div className="border border-border rounded-md bg-card">
+              <div className="p-3 border-b border-border">
+                <div className="flex items-center justify-between mb-2">
+                  <h2 className="text-sm font-semibold">Pages</h2>
+                  <span className="text-xs text-muted-foreground">{docs.length}</span>
+                </div>
+                <Input
+                  placeholder="Find a page…"
+                  aria-label="Find a page"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                />
               </div>
+              <nav className="max-h-[70vh] overflow-auto py-1" aria-label="Wiki pages">
+                {loading && <div className="px-3 py-2 text-xs text-muted-foreground">Loading…</div>}
+                {error && <div className="px-3 py-2 text-xs text-destructive">{error}</div>}
+                {!loading && pagesList.length === 0 && (
+                  <div className="px-3 py-2 text-xs text-muted-foreground">No matching pages</div>
+                )}
+                <ul>
+                  {pagesList.map((p) => {
+                    const isActive = (p.slug || '').toLowerCase() === (slug || '').toLowerCase();
+                    return (
+                      <li key={p.slug}>
+                        <Link
+                          to={`/wiki/${p.slug}`}
+                          className={
+                            `block px-3 py-2 text-sm border-b border-border last:border-b-0 hover:bg-muted/40 ` +
+                            (isActive ? 'font-semibold text-foreground' : 'text-muted-foreground')
+                          }
+                          aria-current={isActive ? 'page' : undefined}
+                        >
+                          {stripBackticks(p.title || p.slug)}
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </nav>
             </div>
-          </div>
-        </header>
+          </aside>
 
-        {/* Garden grid or Reader based on slug */}
-        {!slug && (
+          {/* Main content */}
           <section>
-            {loading && <div className="text-sm text-muted-foreground">Loading…</div>}
-            {error && <div className="text-sm text-destructive">{error}</div>}
-            {!loading && filtered.length === 0 && (
-              <div className="text-sm text-muted-foreground">No notes found.</div>
-            )}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filtered.map((n) => (
-                <Link
-                  to={`/wiki/${n.slug}`}
-                  key={n.slug}
-                  className="group rounded-xl border border-border bg-card p-4 hover:bg-muted/30 transition-colors"
-                >
-                  <h3 className="text-base font-semibold tracking-tight truncate group-hover:text-primary">
-                    {strip(n.title || n.slug)}
-                  </h3>
-                  {n.description && (
-                    <p className="mt-1 text-sm text-muted-foreground line-clamp-3">{n.description}</p>
-                  )}
-                  <div className="mt-3 flex flex-wrap gap-1">
-                    {n.tags?.slice(0, 4).map((t) => (
-                      <span key={t} className="text-[10px] px-1 py-0.5 rounded border border-border text-muted-foreground">{t}</span>
-                    ))}
-                    {n.date && (
-                      <time className="ml-auto text-[11px] text-muted-foreground" dateTime={n.date}>
-                        {new Date(n.date).toLocaleDateString()}
-                      </time>
-                    )}
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {slug && (
-          <section>
-            <div className="max-w-3xl mx-auto rounded-xl border border-border bg-card shadow-sm p-5 sm:p-7">
-              <div className="mb-4 flex items-center justify-between">
+            <div className="border border-border rounded-md bg-card">
+              <div className="px-4 sm:px-6 py-4 border-b border-border flex items-center gap-2">
                 <Button asChild variant="outline" size="sm">
-                  <Link to="/wiki">← Back to garden</Link>
+                  <Link to="/wiki">Wiki Home</Link>
                 </Button>
+                {current?.date && (
+                  <time className="ml-auto text-xs text-muted-foreground" dateTime={current.date}>
+                    Last updated {new Date(current.date).toLocaleDateString()}
+                  </time>
+                )}
               </div>
-              {loading && <div className="text-sm text-muted-foreground">Loading…</div>}
-              {error && <div className="text-sm text-destructive">{error}</div>}
-              {!loading && !current && (
-                <div className="text-sm text-muted-foreground">Note not found.</div>
-              )}
-              {current && (
-                <article>
-                  <h1 className="text-3xl font-bold tracking-tight mb-2">{strip(current.title || current.slug)}</h1>
-                  <div className="flex flex-wrap items-center gap-2 mb-4">
-                    {current.section && <span className="text-xs text-muted-foreground">{current.section}</span>}
-                    {current.tags?.map((t) => (
-                      <span key={t} className="text-[11px] px-1.5 py-0.5 rounded border border-border text-muted-foreground">{t}</span>
-                    ))}
-                    {current.date && (
-                      <time dateTime={current.date} className="text-[11px] text-muted-foreground ml-auto">{new Date(current.date).toLocaleDateString()}</time>
-                    )}
-                  </div>
-                  <Separator className="my-4" />
-                  <div id="wiki-article" className="prose prose-slate dark:prose-invert max-w-none prose-sm sm:prose-base md:prose-lg">
-                    {current.Component && (
-                      <MDXProvider components={mdxComponents}>
-                        <current.Component />
-                      </MDXProvider>
-                    )}
-                  </div>
-                  {current.tags && current.tags.length > 0 && (
-                    <div className="mt-8">
-                      <div className="text-sm font-semibold mb-2">Related notes</div>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                        {docs
-                          .filter((d) => d.slug !== current.slug && d.tags && d.tags.some((t) => current.tags?.includes(t)))
-                          .slice(0, 6)
-                          .map((d) => (
-                            <Link
-                              key={d.slug}
-                              to={`/wiki/${d.slug}`}
-                              className="text-left p-3 border border-border rounded-md hover:bg-muted/30"
-                            >
-                              <div className="text-sm font-medium truncate">{strip(d.title || d.slug)}</div>
-                              {d.description && <div className="text-xs text-muted-foreground truncate">{d.description}</div>}
-                              {d.tags && (
-                                <div className="mt-1 flex flex-wrap gap-1">
-                                  {d.tags.filter((t) => current.tags?.includes(t)).slice(0, 3).map((t) => (
-                                    <span key={t} className="text-[10px] px-1 py-0.5 rounded border border-border text-muted-foreground">{t}</span>
-                                  ))}
-                                </div>
-                              )}
-                            </Link>
-                          ))}
-                      </div>
+              <div className="px-4 sm:px-6 py-6">
+                {loading && <div className="text-sm text-muted-foreground">Loading…</div>}
+                {error && <div className="text-sm text-destructive">{error}</div>}
+                {!loading && !current && (
+                  <div className="text-sm text-muted-foreground">Page not found.</div>
+                )}
+                {current && (
+                  <article className="max-w-[980px]">
+                    <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight mb-3">
+                      {stripBackticks(current.title || current.slug)}
+                    </h1>
+                    <Separator className="my-4" />
+                    <div id="wiki-article" className="prose prose-slate dark:prose-invert max-w-none prose-sm sm:prose-base prose-code:before:content-none prose-code:after:content-none">
+                      {current.Component && (
+                        <MDXProvider components={mdxComponents}>
+                          <current.Component />
+                        </MDXProvider>
+                      )}
                     </div>
-                  )}
-                </article>
-              )}
+                  </article>
+                )}
+              </div>
             </div>
           </section>
-        )}
+        </div>
       </div>
     </div>
   );

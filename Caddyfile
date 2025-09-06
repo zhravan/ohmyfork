@@ -3,6 +3,14 @@
   encode zstd gzip
   # Serve the requested file if it exists, otherwise fall back to index.html (SPA routing)
   try_files {path} /index.html
+  
+  # Friendly aliases for RSS feed
+  redir /feed /rss.xml 308
+  redir /atom.xml /rss.xml 308
+
+  # Headers for RSS
+  header /rss.xml Content-Type "application/rss+xml; charset=utf-8"
+  header /rss.xml Cache-Control "public, max-age=600"
   file_server
 }
 

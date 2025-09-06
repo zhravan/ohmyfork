@@ -43,9 +43,29 @@ export function GitHubHeader() {
   };
 
   const handleWatch = () => {
+    // Open RSS feed in a new tab alongside the alert
+    // Use BASE_URL to be robust when the app is hosted under a subpath
+    let rssHref = '/rss.xml';
+    try {
+      const rssUrl = new URL('rss.xml', window.location.origin + import.meta.env.BASE_URL);
+      rssHref = rssUrl.toString();
+      window.open(rssHref, '_blank', 'noopener,noreferrer');
+    } catch (err) {
+      // Fallback to root path if URL construction fails
+      window.open(rssHref, '_blank', 'noopener,noreferrer');
+    }
+
     showMessage({
       title: "You're officially watching my journey. Buckle up!",
-      description: "You'll be notified of all updates to this repository",
+      description: (
+        <span>
+          You'll be notified of all updates to this repository. Tip: subscribe via the{' '}
+          <a href={rssHref} target="_blank" rel="noopener noreferrer" className="underline">
+            RSS feed
+          </a>
+          .
+        </span>
+      ),
     });
   };
 

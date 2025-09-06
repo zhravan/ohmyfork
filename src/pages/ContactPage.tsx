@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 
 export default function ContactPage() {
-  const [status, setStatus] = React.useState<'idle'|'submitting'|'success'>('idle');
+  const [status, setStatus] = React.useState<'idle' | 'submitting' | 'success'>('idle');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,7 +24,7 @@ export default function ContactPage() {
       <GitHubHeader />
 
       <div className="container mx-auto px-2 sm:px-4 py-6">
-  <h1 className="sr-only">Contact & Social</h1>
+        <h1 className="sr-only">Contact & Social</h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           {/* Contact Information */}
@@ -99,8 +99,8 @@ export default function ContactPage() {
 
                   const developer: SocialLink[] = [
                     { name: 'GitHub', href: 'https://github.com/zhravan', icon: 'https://cdn-icons-png.flaticon.com/256/25/25231.png' },
-                    { name: 'GitLab (zhravan)', href: 'https://gitlab.com/zhravan', icon: 'https://about.gitlab.com/images/press/logo/png/gitlab-icon-rgb.png' },
-                    { name: 'GitLab (shravan_20)', href: 'https://gitlab.com/shravan_20', icon: 'https://about.gitlab.com/images/press/logo/png/gitlab-icon-rgb.png' },
+                    { name: 'GitLab', href: 'https://gitlab.com/zhravan', icon: 'https://about.gitlab.com/images/press/logo/png/gitlab-icon-rgb.png' },
+                    { name: 'GitLab (mirror)', href: 'https://gitlab.com/shravan_20', icon: 'https://about.gitlab.com/images/press/logo/png/gitlab-icon-rgb.png' },
                     { name: 'Stack Overflow', href: 'https://stackoverflow.com/users/11899809/zhravan', icon: 'https://cdn.sstatic.net/Sites/stackoverflow/Img/favicon.ico' },
                     { name: 'LeetCode', href: 'https://leetcode.com/u/zhravan/', icon: 'https://leetcode.com/static/images/LeetCode_logo_rvs.png' },
                     { name: 'HackerEarth', href: 'https://www.hackerearth.com/@zhravan/', icon: 'https://upload.wikimedia.org/wikipedia/commons/e/e8/HackerEarth_logo.png' },
