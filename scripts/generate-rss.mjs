@@ -20,6 +20,12 @@ const PUBLIC_DIR = path.join(ROOT, 'public');
 const FEED_PATH = path.join(PUBLIC_DIR, 'rss.xml');
 
 const SITE_URL = (process.env.SITE_URL || process.env.VITE_SITE_URL || 'https://ohmyfork.dev').replace(/\/$/, '');
+// Site icon used for RSS <image> and feed readers. Fallbacks to the icon used in index.html.
+const SITE_ICON = (
+  process.env.SITE_ICON ||
+  process.env.VITE_SITE_ICON ||
+  'https://ohmyscript.com/wp-content/uploads/2020/07/cropped-circle-cropped-2.png'
+);
 
 /** Map content type to route/link builder and field picks */
 const typeConfig = {
@@ -131,13 +137,21 @@ ${cats ? cats + '\n' : ''}    </item>`;
   }).join('\n');
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>${xmlEscape(channelTitle)}</title>
     <link>${SITE_URL}</link>
     <description>${xmlEscape(channelDescription)}</description>
     <language>en-us</language>
     <lastBuildDate>${now}</lastBuildDate>
+    <atom:link rel="self" type="application/rss+xml" href="${SITE_URL}/rss.xml" />
+    <image>
+      <url>${xmlEscape(SITE_ICON)}</url>
+      <title>${xmlEscape(channelTitle)}</title>
+      <link>${SITE_URL}</link>
+      <width>128</width>
+      <height>128</height>
+    </image>
 ${itemsXml}
   </channel>
 </rss>\n`;

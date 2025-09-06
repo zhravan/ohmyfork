@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>OhMyFork.dev – Unified Feed</title>
     <link>https://ohmyfork.dev</link>
     <description>Blogs, Newsletters, Bug Tales, and Wiki updates</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Sep 2025 17:53:23 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 06 Sep 2025 22:35:09 GMT</lastBuildDate>
+    <atom:link rel="self" type="application/rss+xml" href="https://ohmyfork.dev/rss.xml" />
+    <image>
+      <url>https://ohmyscript.com/wp-content/uploads/2020/07/cropped-circle-cropped-2.png</url>
+      <title>OhMyFork.dev – Unified Feed</title>
+      <link>https://ohmyfork.dev</link>
+      <width>128</width>
+      <height>128</height>
+    </image>
     <item>
       <title>32-bit vs 64-bit: One-Byte Explainer</title>
       <link>https://ohmyfork.dev/blogs/32-bit-vs-64-bit-explainer</link>
