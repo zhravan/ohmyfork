@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>OhMyFork.dev – Unified Feed</title>
+    <link>https://ohmyfork.dev</link>
+    <description>Blogs, Newsletters, Bug Tales, and Wiki updates</description>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 06 Sep 2025 17:53:23 GMT</lastBuildDate>
+    <item>
+      <title>32-bit vs 64-bit: One-Byte Explainer</title>
+      <link>https://ohmyfork.dev/blogs/32-bit-vs-64-bit-explainer</link>
+      <guid isPermaLink="false">blogs:32-bit-vs-64-bit-explainer</guid>
+      <pubDate>Sun, 10 Aug 2025 00:00:00 GMT</pubDate>
+      <description>A quick analogy to understand why 64-bit systems process more data at once than 32-bit systems.</description>
+      <author>Shravan K B</author>
+      <category>Computer Architecture</category>
+      <category>Bits</category>
+      <category>Explainer</category>
+    </item>
+    <item>
+      <title>API with Deno: Oak Framework + Mongo</title>
+      <link>https://ohmyfork.dev/blogs/api-with-deno-oak-and-mongo</link>
+      <guid isPermaLink="false">blogs:api-with-deno-oak-and-mongo</guid>
+      <pubDate>Sun, 10 Aug 2025 00:00:00 GMT</pubDate>
+      <description>Building a REST API using Deno with Oak and MongoDB, covering structure, routes, controllers, services, and repository layers.</description>
+      <author>Shravan K B</author>
+      <category>Deno</category>
+      <category>Oak</category>
+      <category>MongoDB</category>
+      <category>Backend</category>
+    </item>
+    <item>
+      <title>Express App Scaffolding and Structure</title>
+      <link>https://ohmyfork.dev/blogs/express-app-scaffolding-and-structure</link>
+      <guid isPermaLink="false">blogs:express-app-scaffolding-and-structure</guid>
+      <pubDate>Sun, 10 Aug 2025 00:00:00 GMT</pubDate>
+      <description>A beginner-friendly guide to structuring an Express.js application with models, routes, controllers, services, and repositories.</description>
+      <author>Shravan K B</author>
+      <category>Express</category>
+      <category>Node.js</category>
+      <category>Architecture</category>
+    </item>
+    <item>
+      <title>From Free Tier to VPS: My Journey and Setup</title>
+      <link>https://ohmyfork.dev/blogs/from-free-tier-to-vps</link>
+      <guid isPermaLink="false">blogs:from-free-tier-to-vps</guid>
+      <pubDate>Sun, 10 Aug 2025 00:00:00 GMT</pubDate>
+      <description>Reflection on moving from free-tier hosting to a VPS, covering DNS, Nginx, SSL, ports, and lessons learned.</description>
+      <author>Shravan K B</author>
+      <category>DevOps</category>
+      <category>VPS</category>
+      <category>Nginx</category>
+      <category>SSL</category>
+      <category>DNS</category>
+    </item>
+    <item>
+      <title>From Intern to Developer: Takeaways from My Early Journey</title>
+      <link>https://ohmyfork.dev/blogs/intern-to-developer-journey</link>
+      <guid isPermaLink="false">blogs:intern-to-developer-journey</guid>
+      <pubDate>Sun, 10 Aug 2025 00:00:00 GMT</pubDate>
+      <description>Key lessons, mistakes, and principles from transitioning from a graduate intern to a developer.</description>
+      <author>Shravan K B</author>
+      <category>Career</category>
+      <category>Learning</category>
+      <category>Best Practices</category>
+    </item>
+    <item>
+      <title>Must-Know Programming Principles</title>
+      <link>https://ohmyfork.dev/blogs/must-know-programming-principles</link>
+      <guid isPermaLink="false">blogs:must-know-programming-principles</guid>
+      <pubDate>Sun, 10 Aug 2025 00:00:00 GMT</pubDate>
+      <description>DRY, KISS, YAGNI, Law of Demeter, SoC, Boy Scout Rule, TDA, and more foundational principles to write clean, maintainable code.</description>
+      <author>Shravan K B</author>
+      <category>Best Practices</category>
+      <category>Principles</category>
+      <category>Clean Code</category>
+    </item>
+    <item>
+      <title>Inside Nixopus: Database Migrations</title>
+      <link>https://ohmyfork.dev/blogs/nixopus-database-migrations</link>
+      <guid isPermaLink="false">blogs:nixopus-database-migrations</guid>
+      <pubDate>Sun, 10 Aug 2025 00:00:00 GMT</pubDate>
+      <description>How we designed and automated domain-driven, transactional, bidirectional database migrations for Nixopus.</description>
+      <author>Shravan K B</author>
+      <category>Databases</category>
+      <category>Migrations</category>
+      <category>Architecture</category>
+      <category>Nixopus</category>
+    </item>
+    <item>
+      <title>Object-Oriented Programming Simplified</title>
+      <link>https://ohmyfork.dev/blogs/object-oriented-programming-simplified</link>
+      <guid isPermaLink="false">blogs:object-oriented-programming-simplified</guid>
+      <pubDate>Sun, 10 Aug 2025 00:00:00 GMT</pubDate>
+      <description>OOP explained with simple analogies: abstraction, encapsulation, inheritance, and polymorphism in plain language.</description>
+      <author>Shravan K B</author>
+      <category>OOP</category>
+      <category>Basics</category>
+      <category>Programming</category>
+    </item>
+    <item>
+      <title>Pragmatic Programmer Ethics</title>
+      <link>https://ohmyfork.dev/blogs/pragmatic-programmer-ethics</link>
+      <guid isPermaLink="false">blogs:pragmatic-programmer-ethics</guid>
+      <pubDate>Sun, 10 Aug 2025 00:00:00 GMT</pubDate>
+      <description>Practices and mindset for pragmatic developers: accountability, avoiding tech debt, MVP thinking, knowledge portfolio, and effective communication.</description>
+      <author>Shravan K B</author>
+      <category>Pragmatism</category>
+      <category>Ethics</category>
+      <category>Career</category>
+    </item>
+    <item>
+      <title>Programming Philosophy: The Art and Science of Problem Solving</title>
+      <link>https://ohmyfork.dev/blogs/programming-philosophy-art-and-science</link>
+      <guid isPermaLink="false">blogs:programming-philosophy-art-and-science</guid>
+      <pubDate>Sun, 10 Aug 2025 00:00:00 GMT</pubDate>
+      <description>How I perceive programming as human thinking, communication with machines, and the everyday practice of decision-making and execution.</description>
+      <author>Shravan K B</author>
+      <category>Philosophy</category>
+      <category>Programming</category>
+      <category>Mindset</category>
+    </item>
+    <item>
+      <title>SOLID Principles vs STUPID Anti-Patterns</title>
+      <link>https://ohmyfork.dev/blogs/solid-principles-vs-stupid-anti-patterns</link>
+      <guid isPermaLink="false">blogs:solid-principles-vs-stupid-anti-patterns</guid>
+      <pubDate>Sun, 10 Aug 2025 00:00:00 GMT</pubDate>
+      <description>A practical walkthrough of SOLID principles with contrasting examples of STUPID anti-patterns to avoid.</description>
+      <author>Shravan K B</author>
+      <category>SOLID</category>
+      <category>OOP</category>
+      <category>Best Practices</category>
+      <category>Design Principles</category>
+    </item>
+    <item>
+      <title>Sorting with setTimeout: A JavaScript Curiosity</title>
+      <link>https://ohmyfork.dev/blogs/sorting-with-settimeout</link>
+      <guid isPermaLink="false">blogs:sorting-with-settimeout</guid>
+      <pubDate>Sun, 10 Aug 2025 00:00:00 GMT</pubDate>
+      <description>A fun thought experiment: using setTimeout delays to print numbers in order and why it&apos;s not for production.</description>
+      <author>Shravan K B</author>
+      <category>JavaScript</category>
+      <category>Async</category>
+      <category>Event Loop</category>
+    </item>
+    <item>
+      <title>Version Control Basics: Git and GitHub</title>
+      <link>https://ohmyfork.dev/blogs/version-control-basics-git-and-github</link>
+      <guid isPermaLink="false">blogs:version-control-basics-git-and-github</guid>
+      <pubDate>Sun, 10 Aug 2025 00:00:00 GMT</pubDate>
+      <description>A beginner’s guide to version control concepts with links to detailed posts on Git and GitHub.</description>
+      <author>Shravan K B</author>
+      <category>Git</category>
+      <category>GitHub</category>
+      <category>Version Control</category>
+    </item>
+    <item>
+      <title>Your `Sample` Note with `Backticks`</title>
+      <link>https://ohmyfork.dev/wiki/your-note</link>
+      <guid isPermaLink="false">wiki:your-note</guid>
+      <pubDate>Wed, 15 Jan 2025 00:00:00 GMT</pubDate>
+      <description>A sample note to demonstrate backtick handling in titles</description>
+      <category>example</category>
+      <category>test</category>
+    </item>
+    <item>
+      <title>Terminal Shortcuts &amp; Commands</title>
+      <link>https://ohmyfork.dev/wiki/terminal-shortcuts</link>
+      <guid isPermaLink="false">wiki:terminal-shortcuts</guid>
+      <pubDate>Thu, 02 Jan 2025 00:00:00 GMT</pubDate>
+      <description>Essential terminal shortcuts and commands for efficient development workflow.</description>
+      <category>cli</category>
+      <category>reference</category>
+    </item>
+    <item>
+      <title>Home</title>
+      <link>https://ohmyfork.dev/wiki/home</link>
+      <guid isPermaLink="false">wiki:home</guid>
+      <pubDate>Wed, 01 Jan 2025 00:00:00 GMT</pubDate>
+      <description>Welcome to the wiki home. Start exploring sections from the left.</description>
+      <category>overview</category>
+    </item>
+    <item>
+      <title>Building Scalable React Applications with TypeScript</title>
+      <link>https://ohmyfork.dev/blogs/building-scalable-react-apps</link>
+      <guid isPermaLink="false">blogs:building-scalable-react-apps</guid>
+      <pubDate>Mon, 15 Jan 2024 00:00:00 GMT</pubDate>
+      <description>Learn how to structure large React applications using TypeScript for better maintainability and developer experience.</description>
+      <author>Shravan K B</author>
+      <category>React</category>
+      <category>TypeScript</category>
+      <category>Architecture</category>
+    </item>
+    <item>
+      <title>The Developer&apos;s Weekly #42</title>
+      <link>https://ohmyfork.dev/newsletter</link>
+      <guid isPermaLink="false">newsletters:issue-42</guid>
+      <pubDate>Mon, 15 Jan 2024 00:00:00 GMT</pubDate>
+      <description>This week: React Server Components deep dive, debugging techniques that saved my career, and why I&apos;m excited about TypeScript 5.3.</description>
+      <category>Newsletter</category>
+      <category>React</category>
+      <category>TypeScript</category>
+    </item>
+    <item>
+      <title>Mastering Async/Await in JavaScript</title>
+      <link>https://ohmyfork.dev/blogs/mastering-async-await</link>
+      <guid isPermaLink="false">blogs:mastering-async-await</guid>
+      <pubDate>Wed, 10 Jan 2024 00:00:00 GMT</pubDate>
+      <description>Deep dive into asynchronous programming patterns and best practices for handling promises in modern JavaScript.</description>
+      <author>Shravan K B</author>
+      <category>JavaScript</category>
+      <category>Async</category>
+      <category>Promises</category>
+    </item>
+    <item>
+      <title>The Vanishing CSS: A Tale of Disappearing Styles</title>
+      <link>https://ohmyfork.dev/bug-tales</link>
+      <guid isPermaLink="false">bug-tales:disappearing-styles</guid>
+      <pubDate>Wed, 10 Jan 2024 00:00:00 GMT</pubDate>
+      <description>Severity: high | Status: solved</description>
+      <category>CSS</category>
+      <category>Frontend</category>
+      <category>Browser Bug</category>
+    </item>
+    <item>
+      <title>The Developer&apos;s Weekly #41</title>
+      <link>https://ohmyfork.dev/newsletter</link>
+      <guid isPermaLink="false">newsletters:issue-41</guid>
+      <pubDate>Mon, 08 Jan 2024 00:00:00 GMT</pubDate>
+      <description>Breaking down the new CSS container queries, a retrospective on my first year freelancing, and the tools that boost my productivity.</description>
+      <category>Newsletter</category>
+      <category>CSS</category>
+      <category>Freelancing</category>
+      <category>Productivity</category>
+      <category>Tools</category>
+    </item>
+    <item>
+      <title>The Infinite Loop of API Calls</title>
+      <link>https://ohmyfork.dev/bug-tales</link>
+      <guid isPermaLink="false">bug-tales:infinite-loop-api-calls</guid>
+      <pubDate>Mon, 08 Jan 2024 00:00:00 GMT</pubDate>
+      <description>Severity: critical | Status: solved</description>
+      <category>React</category>
+      <category>API</category>
+      <category>Performance</category>
+    </item>
+    <item>
+      <title>The Ghost in the Machine: Phantom Form Submissions</title>
+      <link>https://ohmyfork.dev/bug-tales</link>
+      <guid isPermaLink="false">bug-tales:phantom-form-submissions</guid>
+      <pubDate>Fri, 05 Jan 2024 00:00:00 GMT</pubDate>
+      <description>Severity: medium | Status: investigating</description>
+      <category>Forms</category>
+      <category>JavaScript</category>
+      <category>Mystery</category>
+    </item>
+    <item>
+      <title>The Developer&apos;s Weekly #40</title>
+      <link>https://ohmyfork.dev/newsletter</link>
+      <guid isPermaLink="false">newsletters:issue-40</guid>
+      <pubDate>Mon, 01 Jan 2024 00:00:00 GMT</pubDate>
+      <description>Docker optimization secrets, the psychology of code reviews, and why I switched from Redux to Zustand (and you might too).</description>
+      <category>Newsletter</category>
+      <category>Docker</category>
+      <category>Reviews</category>
+      <category>Zustand</category>
+      <category>Redux</category>
+    </item>
+  </channel>
+</rss>
