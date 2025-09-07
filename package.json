@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+  "dev": "node ./scripts/generate-rss.mjs && vite",
+  "build": "node ./scripts/generate-rss.mjs && vite build",
     "build:dev": "vite build --mode development",
     "build:prod": "vite build --mode production",
     "lint": "biome lint .",
@@ -73,6 +73,8 @@
     "shiki": "3.9.2",
     "tailwindcss": "^3.4.11",
     "typescript": "^5.5.3",
-    "vite": "^5.4.1"
+  "vite": "^5.4.1",
+  "fast-glob": "^3.3.2",
+  "gray-matter": "^4.0.3"
   }
 }

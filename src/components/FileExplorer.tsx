@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { FileIcon } from './FileIcon';
 import { loadContent } from '@/lib/content-loader';
+import { stripBackticks } from '@/lib/string-utils';
 import type { WikiNote } from '@/types/content';
 
 interface FileNode {
@@ -79,9 +80,9 @@ export function FileExplorer() {
         type: 'directory',
         path: `/wiki#${encodeURIComponent(section)}`,
         children: notes
-          .sort((a, b) => (a.title || '').localeCompare(b.title || ''))
+          .sort((a, b) => (stripBackticks(a.title) || '').localeCompare(stripBackticks(b.title) || ''))
           .map((n) => ({
-            name: n.title || n.slug,
+            name: stripBackticks(n.title || n.slug),
             type: 'file',
             path: `/wiki/${n.slug}`,
           })),

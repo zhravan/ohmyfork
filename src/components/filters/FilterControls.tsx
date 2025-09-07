@@ -84,3 +84,28 @@ function SelectItem({ value, children }: { value: string; children: React.ReactN
   );
 }
 
+export function PageSizeSelect({
+  value,
+  onChange,
+  options = [5, 10, 20, 50]
+}: { value: number; onChange: (v: number) => void; options?: number[] }) {
+  return (
+    <Select.Root value={String(value)} onValueChange={(v) => onChange(parseInt(v, 10))}>
+      <Select.Trigger className="inline-flex items-center justify-between rounded-md border border-border bg-background px-2 py-1 text-xs gap-2 min-w-[5.5rem]">
+        <Select.Value />
+        <Select.Icon>
+          <ChevronDown className="w-4 h-4" />
+        </Select.Icon>
+      </Select.Trigger>
+      <Select.Content className="rounded-md border border-border bg-background shadow-md">
+        <Select.ScrollUpButton className="flex items-center justify-center py-1"><ChevronUp className="w-4 h-4" /></Select.ScrollUpButton>
+        <Select.Viewport className="p-1">
+          {options.map((n) => (
+            <SelectItem key={n} value={String(n)}>{n} / page</SelectItem>
+          ))}
+        </Select.Viewport>
+      </Select.Content>
+    </Select.Root>
+  );
+}
+

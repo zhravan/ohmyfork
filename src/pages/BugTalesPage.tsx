@@ -10,10 +10,10 @@ import {
 } from '@/components/ui/pagination';
 import { useContent, useContentTags } from '@/hooks/use-content';
 import { Input } from '@/components/ui/input';
-import { TagMultiSelect, SortSelect } from '@/components/filters/FilterControls';
+import { TagMultiSelect, SortSelect, PageSizeSelect } from '@/components/filters/FilterControls';
 import type { BugTale, ContentItem } from '@/types/content';
 
-const TALES_PER_PAGE = 6;
+const DEFAULT_TALES_PER_PAGE = 5;
 
 export default function BugTalesPage() {
   const [selectedBug, setSelectedBug] = useState<ContentItem<BugTale> | null>(null);
@@ -21,9 +21,10 @@ export default function BugTalesPage() {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [sort, setSort] = useState<'date-desc'|'date-asc'|'title-asc'|'title-desc'>('date-desc');
   const { tags } = useContentTags('bug-tales');
-  const { content: tales, total, page, totalPages, hasNext, hasPrev, goToPage, nextPage, prevPage, search } =
-    useContent<BugTale>('bug-tales', {}, { page: 1, limit: TALES_PER_PAGE });
-  const currentTales = tales as ContentItem<BugTale>[];
+  const { content: tales, total, page, totalPages, hasNext, hasPrev, goToPage, nextPage, prevPage, search, setPageSize, paginationOptions } =
+    useContent<BugTale>('bug-tales', {}, { page: 1, limit: DEFAULT_TALES_PER_PAGE });
+  // Loosen type here to avoid noisy strict typing on mapped MDX frontmatter
+  const currentTales = tales as any[];
   useEffect(() => {
     search({ query: q, tags: selectedTags, sort });
   }, [q, selectedTags, sort]);
@@ -63,6 +64,8 @@ export default function BugTalesPage() {
             <TagMultiSelect options={tags} value={selectedTags} onChange={setSelectedTags} />
             <span className="ml-auto text-xs text-muted-foreground">Sort:</span>
             <SortSelect value={sort} onChange={setSort} />
+            <span className="ml-2 text-xs text-muted-foreground">Per page:</span>
+            <PageSizeSelect value={paginationOptions.limit} onChange={setPageSize} options={[5,10,20,50]} />
           </div>
         </div>
 

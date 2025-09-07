@@ -7,29 +7,22 @@ import { NewsletterPreviewModal } from '@/components/NewsletterPreviewModal';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { TagMultiSelect, SortSelect } from '@/components/filters/FilterControls';
+import { TagMultiSelect, SortSelect, PageSizeSelect } from '@/components/filters/FilterControls';
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
+import type { NewsletterIssue as NewsletterIssueType, ContentItem } from '@/types/content';
 import { Label } from '@/components/ui/label';
-
-interface NewsletterIssue {
-  title: string;
-  description: string;
-  date: string;
-  topics: string[];
-  readTime: string;
-  Component?: React.ComponentType;
-}
 
 export default function NewsletterPage() {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
-  const [selectedIssue, setSelectedIssue] = useState<NewsletterIssue | null>(null);
+  const [selectedIssue, setSelectedIssue] = useState<ContentItem<NewsletterIssueType> | null>(null);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [q, setQ] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [sort, setSort] = useState<'date-desc'|'date-asc'|'title-asc'|'title-desc'>('date-desc');
   const { tags } = useContentTags('newsletters');
-  const { content: issues, search } = useContent<NewsletterIssue>('newsletters', {}, { page: 1, limit: 100 });
+  const { content: issues, search, total, page, totalPages, hasNext, hasPrev, goToPage, nextPage, prevPage, setPageSize, paginationOptions } = useContent<NewsletterIssueType>('newsletters', {}, { page: 1, limit: 5 });
   useEffect(() => { search({ query: q, tags: selectedTags, sort }); }, [q, selectedTags, sort, search]);
 
   const handleSubscribe = (e: React.FormEvent) => {
@@ -43,7 +36,7 @@ export default function NewsletterPage() {
     }, 3000);
   };
 
-  const handleIssueClick = (issue: NewsletterIssue) => {
+  const handleIssueClick = (issue: ContentItem<NewsletterIssueType>) => {
     setSelectedIssue(issue);
     setIsPreviewOpen(true);
   };
@@ -143,13 +136,15 @@ export default function NewsletterPage() {
                 <TagMultiSelect options={tags} value={selectedTags} onChange={setSelectedTags} />
                 <span className="ml-auto text-xs text-muted-foreground">Sort:</span>
                 <SortSelect value={sort} onChange={setSort} />
+                <span className="ml-2 text-xs text-muted-foreground">Per page:</span>
+                <PageSizeSelect value={paginationOptions.limit} onChange={setPageSize} options={[5,10,20,50]} />
               </div>
             </div>
             <div className="border border-border rounded-md bg-background">
               <div className="bg-muted/30 px-3 sm:px-4 py-3 border-b border-border">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                   <span className="font-mono text-xs sm:text-sm text-foreground">newsletter/</span>
-                  <span className="text-xs sm:text-sm text-muted-foreground">{(issues as any[]).length} issues</span>
+                  <span className="text-xs sm:text-sm text-muted-foreground">{total} issues</span>
                 </div>
               </div>
               <div className="divide-y divide-border">
@@ -193,13 +188,57 @@ export default function NewsletterPage() {
               </div>
             </div>
           </div>
+          {totalPages > 1 && (
+            <div className="mt-8 flex justify-center">
+              <Pagination>
+                <PaginationContent>
+                  <PaginationItem>
+                    <PaginationPrevious
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (hasPrev) prevPage();
+                      }}
+                      className={!hasPrev ? "pointer-events-none opacity-50" : ""}
+                    />
+                  </PaginationItem>
+
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+                    <PaginationItem key={p}>
+                      <PaginationLink
+                        href="#"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          goToPage(p);
+                        }}
+                        isActive={page === p}
+                      >
+                        {p}
+                      </PaginationLink>
+                    </PaginationItem>
+                  ))}
+
+                  <PaginationItem>
+                    <PaginationNext
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (hasNext) nextPage();
+                      }}
+                      className={!hasNext ? "pointer-events-none opacity-50" : ""}
+                    />
+                  </PaginationItem>
+                </PaginationContent>
+              </Pagination>
+            </div>
+          )}
         </div>
       </div>
 
       <NewsletterPreviewModal 
         isOpen={isPreviewOpen}
         onClose={() => setIsPreviewOpen(false)}
-        issue={selectedIssue}
+  issue={selectedIssue as any}
       />
     </div>
   );
