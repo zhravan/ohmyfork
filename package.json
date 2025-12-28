@@ -6,14 +6,16 @@
   "scripts": {
   "dev": "node ./scripts/generate-rss.mjs && vite",
   "build": "node ./scripts/generate-rss.mjs && vite build",
-    "build:dev": "vite build --mode development",
-    "build:prod": "vite build --mode production",
-    "lint": "biome lint .",
-    "lint:fix": "biome lint --apply-unsafe .",
-    "format": "biome format .",
-    "format:write": "biome format --write .",
-    "check": "biome check --apply-unsafe .",
-    "preview": "vite preview"
+  "start": "node ./scripts/generate-rss.mjs && vite",
+  "build:dev": "vite build --mode development",
+  "build:dev": "vite build --mode development",
+  "build:prod": "vite build --mode production",
+  "lint": "biome lint .",
+  "lint:fix": "biome lint --apply-unsafe .",
+  "format": "biome format .",
+  "format:write": "biome format --write .",
+  "check": "biome check --apply-unsafe .",
+  "preview": "vite preview"
   },
   "dependencies": {
     "@mdx-js/react": "^3.1.0",
