@@ -7,6 +7,7 @@ import remarkFrontmatter from "remark-frontmatter";
 import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 
 // https://vitejs.dev/config/
+
 // Set the base path for GitHub Pages deployment
 // Replace 'ohmyfork' with your repo name if different
 // Use `command` to determine dev vs build, so a production build with
